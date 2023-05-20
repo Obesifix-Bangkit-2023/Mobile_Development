@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Obesifix</string>
-    <!-- navbar -->
     <string name="title_home">Home</string>
     <string name="title_calculate">Calculate</string>
     <string name="title_scan">Scan</string>
@@ -13,15 +12,9 @@
     <!-- onboarding 2 -->
     <string name="kkalcalculate">Calorie Calculation</string>
     <string name="desc_calculate">Calculate food calories for effective intake monitoring.</string>
-    <!-- onboaring 3 -->
+    <!-- onboarding 3 -->
     <string name="foodreccomen">Food Recommendations</string>
     <string name="des_foodreccomen">Personalized suggestions based on calories and user preferences.</string>
     <string name="getstarted">Get Started</string>
-    <!-- login -->
-    <string name="google">Login with Google</string>
-    <string name="header_login">Login</string>
-    <string name="desc_login">Login and Begin Empowering Your Health!</string>
-    <string name="footer">You are completely safe</string>
-    <string name="term">Read our Terms and Conditions</string>
 
 </resources>
