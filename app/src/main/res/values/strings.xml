@@ -5,4 +5,16 @@
     <string name="title_scan">Scan</string>
     <string name="title_mentoring">Mentoring</string>
     <string name="title_profile">Profile</string>
+    <!-- onboarding 1 -->
+    <string name="skip">Skip Tour</string>
+    <string name="foodscanner">Food Scanner Calorie</string>
+    <string name="desc_foodscanner">Capture food with your camera, get detailed nutritional info instantly!</string>
+    <!-- onboarding 2 -->
+    <string name="kkalcalculate">Calorie Calculation</string>
+    <string name="desc_calculate">Calculate food calories for effective intake monitoring.</string>
+    <!-- onboaring 3 -->
+    <string name="foodreccomen">Food Recommendations</string>
+    <string name="des_foodreccomen">Personalized suggestions based on calories and user preferences.</string>
+    <string name="getstarted">Get Started</string>
+
 </resources>
