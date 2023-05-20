@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
 import org.obesifix.obesifix.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,12 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
+        navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
+
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_calculate, R.id.navigation_scan, R.id.navigation_mentoring, R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
