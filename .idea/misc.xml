@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1725" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/bg_rounded_edittext.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/button_rounded.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_calculate.xml" value="0.2185" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
@@ -17,6 +19,8 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_scan.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_main.xml" value="0.11851851851851852" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_preference.xml" value="0.264" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_calculate.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_dashboard.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_mentoring.xml" value="0.27447916666666666" />
@@ -24,7 +28,7 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_onboarding1.xml" value="0.264" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_onboarding2.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_onboarding3.xml" value="0.27447916666666666" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_profile.xml" value="0.27447916666666666" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_profile.xml" value="0.6" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_scan.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />
       </map>
@@ -35,5 +39,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.264" />
+      </ProjectState>
+    </option>
   </component>
 </project>
