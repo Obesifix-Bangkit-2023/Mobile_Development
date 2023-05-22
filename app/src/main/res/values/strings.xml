@@ -46,6 +46,12 @@
     <string name="activity_level">Activity Level</string>
     <string name="eat_preference">Eating Preference</string>
     <string name="submit_button">Submit</string>
-
+    <!--home fragment-->
+    <string name="motivation_card">Search for Nutritional Insights in Your Food!</string>
+    <string name="recommendation">Recommendation for you</string>
+    <string name="see_all">See all ></string>
+    <!-- item_col_home_recommendation for home fragment -->
+    <string name="name_recommendation">Recommendation</string>
+    <string name="cal_recommendation">0 Cal</string>
 
 </resources>
