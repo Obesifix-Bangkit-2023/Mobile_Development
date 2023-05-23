@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "817427779112",
+    "project_id": "obesifix-bangkit23",
+    "storage_bucket": "obesifix-bangkit23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817427779112:android:48a2d3ea0a39a7868aef1d",
+        "android_client_info": {
+          "package_name": "org.obesifix.obesifix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817427779112-u8t251hhnvhqdh1ft0fijl8q7ff9e60a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW6mLyudi3vz_-DL8pP_n9bosj9iTkhoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817427779112-jtcivkc7mruo07ooc7l16c01k2dpla1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
