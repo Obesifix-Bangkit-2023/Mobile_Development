@@ -1,9 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detail.DetailActivity">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.detail.DetailActivity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="165dp"
+            android:background="@drawable/ellipse_img" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/tv_name_recommendation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="@string/name_recommendation"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/img_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="220dp"
+                android:background="@drawable/recommen_img"
+                android:radius="20dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_calorie_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/img_recommendation"
+                app:layout_constraintStart_toStartOf="@+id/img_recommendation"
+                app:layout_constraintTop_toBottomOf="@+id/img_recommendation">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/img_cal"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/cal"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.51" />
+
+                    <TextView
+                        android:id="@+id/tv_title_cal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/title_cal"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/img_cal"
+                        app:layout_constraintTop_toTopOf="@+id/img_cal" />
+
+                    <TextView
+                        android:id="@+id/tv_cal_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/cal_desc"
+                        android:textColor="@color/teal_200"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_cal"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title_cal" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_fat_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/card_view_calorie_recommendation"
+                app:layout_constraintStart_toStartOf="@+id/card_view_calorie_recommendation"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_calorie_recommendation">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/img_fat"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/fat"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.51" />
+
+                    <TextView
+                        android:id="@+id/tv_title_fat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/title_fat"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/img_fat"
+                        app:layout_constraintTop_toTopOf="@+id/img_fat" />
+
+                    <TextView
+                        android:id="@+id/tv_fat_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/fat_desc"
+                        android:textColor="@color/teal_200"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title_fat"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_fat"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title_fat" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_protein_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/card_view_fat_recommendation"
+                app:layout_constraintStart_toStartOf="@+id/card_view_fat_recommendation"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_fat_recommendation">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/img_protein"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/protein"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.51" />
+
+                    <TextView
+                        android:id="@+id/tv_title_protein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/title_protein"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/img_protein"
+                        app:layout_constraintTop_toTopOf="@+id/img_protein" />
+
+                    <TextView
+                        android:id="@+id/tv_protein_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/protein_desc"
+                        android:textColor="@color/teal_200"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title_protein"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_protein"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title_protein" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_carbo_recommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/card_view_protein_recommendation"
+                app:layout_constraintStart_toStartOf="@+id/card_view_protein_recommendation"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_protein_recommendation">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/img_carbo"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/carbo"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.51" />
+
+                    <TextView
+                        android:id="@+id/tv_title_carbo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/title_carbo"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/img_carbo"
+                        app:layout_constraintTop_toTopOf="@+id/img_carbo" />
+
+                    <TextView
+                        android:id="@+id/tv_carbo_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/carbo_desc"
+                        android:textColor="@color/teal_200"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title_carbo"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_carbo"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title_carbo" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/submit"
+                app:layout_constraintEnd_toEndOf="@+id/card_view_carbo_recommendation"
+                app:layout_constraintStart_toStartOf="@+id/card_view_carbo_recommendation"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_carbo_recommendation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</ScrollView>

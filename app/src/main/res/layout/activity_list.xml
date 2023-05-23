@@ -13,8 +13,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="165dp"
-            android:background="@drawable/ellipse_img"
-            android:contentDescription="@string/recommendation_desc_picture" />
+            android:background="@drawable/ellipse_img"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
