@@ -53,5 +53,21 @@
     <!-- item_col_home_recommendation for home fragment -->
     <string name="name_recommendation">Recommendation</string>
     <string name="cal_recommendation">0 Cal</string>
+    <!-- fragment calculate -->
+    <string name="title_name">Name: </string>
+    <string name="title_status">Status: </string>
+    <string name="name_desc">User</string>
+    <string name="status_desc">Normal</string>
+    <string name="header_calculation">Calculate Your Food\'s Health!</string>
+    <string name="title_cal">Calorie</string>
+    <string name="cal_desc">0 from 3302 Kcal</string>
+    <string name="title_fat">Fat</string>
+    <string name="fat_desc">0 from 51.2g</string>
+    <string name="title_protein">Protein</string>
+    <string name="protein_desc">0 from 115.4g</string>
+    <string name="title_carbo">Carbohydrate</string>
+    <string name="carbo_desc">0 from 346.2g</string>
+    <string name="submit">Add</string>
+
 
 </resources>
