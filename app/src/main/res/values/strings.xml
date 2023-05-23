@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Obesifix</string>
+    <string name="recommendation_desc_picture">picture of recommendation</string>
     <!-- navbar -->
     <string name="title_home">Home</string>
     <string name="title_calculate">Calculate</string>
@@ -30,19 +31,19 @@
     <string name="name">Username</string>
     <string name="email">Username@gmail.com</string>
     <!-- activity preference -->
-    <string name="title_preference">Hello! First we need to know more about yourself</string>
+    <string name="title_preference">Hello! First we need to know more about you</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>
     <string name="enter_age">Enter Your Age</string>
-    <string name="enter_weight">Enter Your Weight</string>
-    <string name="enter_height">Enter Your Height</string>
+    <string name="enter_weight">Enter Your Weight on kg</string>
+    <string name="enter_height">Enter Your Height on cm</string>
     <string name="fruit">Fruit</string>
     <string name="vegetable">Vegetable</string>
     <string name="meat">Meat</string>
     <string name="age">Age</string>
-    <string name="weight">Weight</string>
-    <string name="height">Height</string>
+    <string name="weight">Weight(kg)</string>
+    <string name="height">Height(cm)</string>
     <string name="activity_level">Activity Level</string>
     <string name="eat_preference">Eating Preference</string>
     <string name="submit_button">Submit</string>
@@ -68,6 +69,8 @@
     <string name="title_carbo">Carbohydrate</string>
     <string name="carbo_desc">0 from 346.2g</string>
     <string name="submit">Add</string>
+    <!-- Activity List   -->
+    <string name="search_bar">Search…</string>
 
 
 </resources>
