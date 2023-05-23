@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
     implementation 'com.tbuonomo:dotsindicator:4.3'
 
-    //google services auth
+//   google services auth
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     //datastore
