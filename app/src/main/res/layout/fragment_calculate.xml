@@ -115,7 +115,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- ADD ANOTHER HERE = 4card and 1 button-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_calorie_recommendation"
                 android:layout_width="0dp"
@@ -138,11 +137,11 @@
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/cal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.51"
-                        tools:src="@tools:sample/avatars" />
+                        app:layout_constraintVertical_bias="0.51"/>
 
                     <TextView
                         android:id="@+id/tv_title_cal"
@@ -191,11 +190,11 @@
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/fat"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.51"
-                        tools:src="@tools:sample/avatars" />
+                        app:layout_constraintVertical_bias="0.51"/>
 
                     <TextView
                         android:id="@+id/tv_title_fat"
@@ -244,11 +243,11 @@
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/protein"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.51"
-                        tools:src="@tools:sample/avatars" />
+                        app:layout_constraintVertical_bias="0.51"/>
 
                     <TextView
                         android:id="@+id/tv_title_protein"
@@ -297,11 +296,11 @@
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/carbo"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.51"
-                        tools:src="@tools:sample/avatars" />
+                        app:layout_constraintVertical_bias="0.51"/>
 
                     <TextView
                         android:id="@+id/tv_title_carbo"
