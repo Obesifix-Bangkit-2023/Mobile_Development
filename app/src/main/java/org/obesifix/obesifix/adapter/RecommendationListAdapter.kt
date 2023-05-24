@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.obesifix.obesifix.databinding.ItemColHomeRecommendationBinding
 
 class RecommendationListAdapter:
-    PagingDataAdapter<,RecommendationListAdapter.MyViewHolder>(DIFF_CALLBACK){
+    PagingDataAdapter< ,RecommendationListAdapter.MyViewHolder>(DIFF_CALLBACK){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemColHomeRecommendationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
