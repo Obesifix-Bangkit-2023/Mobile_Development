@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/cal_recommendation"
-            android:textColor="@color/red"
+            android:textColor="@color/teal_200"
             app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_title_cal"

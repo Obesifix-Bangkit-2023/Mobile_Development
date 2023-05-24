@@ -71,6 +71,8 @@
     <string name="submit">Add</string>
     <!-- Activity List   -->
     <string name="search_bar">Search…</string>
+    <!-- Item loading Layout for Paging   -->
+    <string name="retry">Try Again</string>
 
 
 </resources>

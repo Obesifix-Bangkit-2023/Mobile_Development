@@ -51,17 +51,26 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //pageindicator
+    //page indicator
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
     implementation 'com.tbuonomo:dotsindicator:4.3'
 
-//   google services auth
+    //   google services auth
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     //paging
-    def paging_version = "3.0.0"
+    def paging_version = "3.1.1"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.15.0'
+
+    //retrofit for API
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+
 }
