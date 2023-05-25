@@ -73,6 +73,10 @@
     <string name="search_bar">Search…</string>
     <!-- Item loading Layout for Paging   -->
     <string name="retry">Try Again</string>
+    <!-- splashscreen -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- page scan -->
+    <string name="scanyourfood">Check your food and beverage now!</string>
 
 
 </resources>
