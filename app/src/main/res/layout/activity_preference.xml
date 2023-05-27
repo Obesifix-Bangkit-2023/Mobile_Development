@@ -136,35 +136,14 @@
             app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
             app:layout_constraintTop_toBottomOf="@+id/titleActivityLevel" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutCheckBox"
+        <Spinner
+            android:id="@+id/spinnerEating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/spinnerActivities"
-            app:layout_constraintStart_toStartOf="@+id/spinnerActivities"
-            app:layout_constraintTop_toBottomOf="@+id/eatingPreference">
-
-            <!-- Food and Beverages -->
-            <CheckBox
-                android:id="@+id/checkBoxFruit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fruit" />
-
-            <CheckBox
-                android:id="@+id/checkBoxVegetable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vegetable" />
-
-            <CheckBox
-                android:id="@+id/checkBoxMeat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/meat" />
-        </LinearLayout>
+            app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
+            app:layout_constraintTop_toBottomOf="@+id/eatingPreference" />
 
         <Button
             android:id="@+id/submitButton"
@@ -172,9 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/submit_button"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayoutCheckBox"
-            app:layout_constraintStart_toStartOf="@+id/linearLayoutCheckBox"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCheckBox" />
+            app:layout_constraintEnd_toEndOf="@+id/spinnerEating"
+            app:layout_constraintStart_toStartOf="@+id/spinnerEating"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerEating" />
 
         <TextView
             android:id="@+id/titleAge"

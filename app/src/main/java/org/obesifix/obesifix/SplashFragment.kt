@@ -18,7 +18,7 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        FirebaseAuth.getInstance().getCurrentUser()
+        FirebaseAuth.getInstance().currentUser
         val user = FirebaseAuth.getInstance().currentUser
         Handler().postDelayed({
             //kondisi if aktif jika sudah pernah membuka app

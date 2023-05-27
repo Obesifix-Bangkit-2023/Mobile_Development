@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -55,7 +56,7 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
     implementation 'com.tbuonomo:dotsindicator:4.3'
 
-    //   google services auth
+    //google services auth
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     //datastore
@@ -76,5 +77,13 @@ dependencies {
     //lottie animation for not found
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //flow
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.41"
+    kapt "com.google.dagger:hilt-compiler:2.41"
 
 }

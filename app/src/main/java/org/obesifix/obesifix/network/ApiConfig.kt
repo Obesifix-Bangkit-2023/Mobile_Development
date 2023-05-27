@@ -14,7 +14,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://obesifix-bangkit23-387502.et.r.appspot.com/")
+                .baseUrl("https://test-obesifix-server.et.r.appspot.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
@@ -22,3 +22,4 @@ class ApiConfig {
         }
     }
 }
+//https://obesifix-bangkit23-387502.et.r.appspot.com/

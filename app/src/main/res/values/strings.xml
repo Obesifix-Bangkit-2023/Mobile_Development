@@ -24,6 +24,7 @@
     <string name="desc_login">Login and Begin Empowering Your Health!</string>
     <string name="footer">You are completely safe</string>
     <string name="term">Read our Terms and Conditions</string>
+    <string name="failed_login">Failed to login</string>
     <!-- profile -->
     <string name="my_profil">My Profil</string>
     <string name="about">About Obesifix</string>
@@ -45,7 +46,7 @@
     <string name="weight">Weight(kg)</string>
     <string name="height">Height(cm)</string>
     <string name="activity_level">Activity Level</string>
-    <string name="eat_preference">Eating Preference</string>
+    <string name="eat_preference">Eating Preference(Multiple Choose)</string>
     <string name="submit_button">Submit</string>
     <!--home fragment-->
     <string name="motivation_card">Search for Nutritional Insights in Your Food!</string>
@@ -61,22 +62,26 @@
     <string name="status_desc">Normal</string>
     <string name="header_calculation">Calculate Your Food\'s Health!</string>
     <string name="title_cal">Calorie</string>
-    <string name="cal_desc">0 from 3302 Kcal</string>
+    <string name="cal_desc">0 from 0 Kcal</string>
     <string name="title_fat">Fat</string>
-    <string name="fat_desc">0 from 51.2g</string>
+    <string name="fat_desc">0 from 0g</string>
     <string name="title_protein">Protein</string>
-    <string name="protein_desc">0 from 115.4g</string>
+    <string name="protein_desc">0 from 0g</string>
     <string name="title_carbo">Carbohydrate</string>
-    <string name="carbo_desc">0 from 346.2g</string>
+    <string name="carbo_desc">0 from 0g</string>
     <string name="submit">Add</string>
-    <!-- Activity List   -->
+    <!-- activity List   -->
     <string name="search_bar">Search…</string>
-    <!-- Item loading Layout for Paging   -->
+    <!-- item loading Layout for Paging   -->
     <string name="retry">Try Again</string>
     <!-- splashscreen -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- page scan -->
     <string name="scanyourfood">Check your food and beverage now!</string>
-
+    <!-- detail page -->
+    <string name="title_portion">Portion</string>
+    <string name="portion_desc">0 Cup</string>
+    <string name="title_tag">Tag</string>
+    <string name="tag_desc">#tag</string>
 
 </resources>
