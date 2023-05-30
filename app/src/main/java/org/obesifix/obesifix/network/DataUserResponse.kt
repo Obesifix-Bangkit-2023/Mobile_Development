@@ -38,10 +38,10 @@ data class UserData(
 	val gender: String? = null,
 
 	@field:SerializedName("height")
-	val height: Int? = null,
+	val height: Float? = null,
 
 	@field:SerializedName("weight")
-	val weight: Int? = null,
+	val weight: Float? = null,
 
 	@field:SerializedName("activity")
 	val activity: String? = null,

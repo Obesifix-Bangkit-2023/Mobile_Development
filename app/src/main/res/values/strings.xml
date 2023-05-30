@@ -48,6 +48,7 @@
     <string name="activity_level">Activity Level</string>
     <string name="eat_preference">Eating Preference(Multiple Choose)</string>
     <string name="submit_button">Submit</string>
+    <string name="selected_foods">Selected Food Items:</string>
     <!--home fragment-->
     <string name="motivation_card">Search for Nutritional Insights in Your Food!</string>
     <string name="recommendation">Recommendation for you</string>

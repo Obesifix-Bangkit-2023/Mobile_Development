@@ -3,11 +3,11 @@ package org.obesifix.obesifix.ui.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -28,7 +28,6 @@ import org.obesifix.obesifix.MainActivity
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityLoginBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.onboarding.ViewPagerFragment
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.preference.PreferenceActivity
 

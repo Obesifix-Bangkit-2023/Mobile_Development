@@ -1,10 +1,8 @@
 package org.obesifix.obesifix.ui.login
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.obesifix.obesifix.network.body.RegisterBody
-import org.obesifix.obesifix.preference.UserPreference
 import javax.inject.Inject
 
 @HiltViewModel
@@ -12,6 +10,7 @@ class LoginViewModel@Inject constructor(private val loginRepository: LoginReposi
 
     val loginResponse = loginRepository.loginResponse
     val registerResponse = loginRepository.registerResponse
+    val isLoading = loginRepository.isLoading
 
     fun requestLogin(token: String) =
         loginRepository.requestLogin(token)

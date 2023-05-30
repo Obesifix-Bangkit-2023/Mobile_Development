@@ -2,8 +2,8 @@ package org.obesifix.obesifix.preference
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>){
