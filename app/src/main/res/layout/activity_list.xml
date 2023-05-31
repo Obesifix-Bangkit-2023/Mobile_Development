@@ -40,13 +40,14 @@
                     android:padding="8dp"
                     android:scaleType="centerInside" />
 
-                <EditText
+                <SearchView
                     android:id="@+id/editTextSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/search_bar"
                     android:inputType="text"
                     android:background="@null"
+                    android:searchIcon="@drawable/ic_baseline_search_24"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
 

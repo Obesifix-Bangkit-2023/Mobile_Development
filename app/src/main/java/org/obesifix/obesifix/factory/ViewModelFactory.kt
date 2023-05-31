@@ -7,6 +7,7 @@ import org.obesifix.obesifix.di.Injection
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
+import org.obesifix.obesifix.ui.home.list.ListViewModel
 import org.obesifix.obesifix.ui.login.LoginViewModel
 
 
@@ -22,6 +23,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(Injection.homeRepository(context, pref)) as T
+            }
+            modelClass.isAssignableFrom(ListViewModel::class.java) -> {
+                ListViewModel(Injection.listRepository()) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

@@ -35,7 +35,7 @@ class HomeRepository@Inject constructor(private val context: Context, private va
             }
 
         }catch (e:Exception){
-            Log.d("DETAIL","getSearchItem is error")
+            Log.d("HOME","getRecommendation is error")
         }finally {
             _isLoading.value = false
         }

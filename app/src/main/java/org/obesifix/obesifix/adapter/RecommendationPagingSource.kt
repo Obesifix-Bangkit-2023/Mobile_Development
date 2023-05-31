@@ -13,18 +13,18 @@ class RecommendationPagingSource(private val apiService: ApiService,
         const val INITIAL_PAGE_INDEX = 1
     }
 
-    override suspend fun load(params: PagingSource.LoadParams<Int>): PagingSource.LoadResult<Int, FoodListItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FoodListItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val response = apiService.getRecommendationUser(token, id)
 
-            PagingSource.LoadResult.Page(
-                data = response.foodList.orEmpty().filterNotNull(),
+            LoadResult.Page(
+                data = response.foodList.orEmpty(),
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
                 nextKey = if (response.foodList?.isNotEmpty() == true) null else position + 1
             )
         } catch (exception: Exception) {
-            return PagingSource.LoadResult.Error(exception)
+            return LoadResult.Error(exception)
         }
     }
 
