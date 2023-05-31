@@ -37,8 +37,8 @@ interface ApiService {
     ): Call<PredictionResponse>
 
     @GET("recomendation/{userId}")
-    fun getRecommendationUser(
+    suspend fun getRecommendationUser(
         @Header("Authorization") token: String,
         @Query("userId") userId: String? = null,
-    ): Call<RecommendationResponse>
+    ): RecommendationResponse
 }

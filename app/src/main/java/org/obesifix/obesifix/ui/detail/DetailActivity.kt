@@ -2,9 +2,7 @@ package org.obesifix.obesifix.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailBinding
-import org.obesifix.obesifix.databinding.ActivityLoginBinding
 
 class DetailActivity : AppCompatActivity() {
 
@@ -26,5 +24,8 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    companion object{
+        const val EXTRA_ID = "extra_id"
+    }
 
 }

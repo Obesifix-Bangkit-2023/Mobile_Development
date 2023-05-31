@@ -1,33 +1,38 @@
-//package org.obesifix.obesifix.adapter
-//
-//import androidx.paging.PagingSource
-//import androidx.paging.PagingState
-//import org.obesifix.obesifix.network.ApiService
-//
-//class RecommendationPagingSource(private val apiService: ApiService): PagingSource<Int, RecommendationResponseItem>() {
-//    private companion object {
-//        const val INITIAL_PAGE_INDEX = 1
-//    }
-//
-//    override suspend fun load(params: PagingSource.LoadParams<Int>): PagingSource.LoadResult<Int, RecommendationResponseItem> {
-//        return try {
-//            val page = params.key ?: INITIAL_PAGE_INDEX
-//            val responseData = apiService.getRecommendation(page, params.loadSize)
-//
-//            PagingSource.LoadResult.Page(
-//                data = responseData,
-//                prevKey = if (page == 1) null else page - 1,
-//                nextKey = if (responseData.isNullOrEmpty()) null else page + 1
-//            )
-//        } catch (exception: Exception) {
-//            return PagingSource.LoadResult.Error(exception)
-//        }
-//    }
-//
-//    override fun getRefreshKey(state: PagingState<Int, RecommendationResponseItem>): Int? {
-//        return state.anchorPosition?.let { anchorPosition ->
-//            val anchorPage = state.closestPageToPosition(anchorPosition)
-//            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-//        }
-//    }
-//}
+package org.obesifix.obesifix.adapter
+
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import org.obesifix.obesifix.network.ApiService
+import org.obesifix.obesifix.network.FoodListItem
+
+class RecommendationPagingSource(private val apiService: ApiService,
+                                 private val token: String,
+                                 private val id: String): PagingSource<Int, FoodListItem>() {
+
+    private companion object {
+        const val INITIAL_PAGE_INDEX = 1
+    }
+
+    override suspend fun load(params: PagingSource.LoadParams<Int>): PagingSource.LoadResult<Int, FoodListItem> {
+        return try {
+            val position = params.key ?: INITIAL_PAGE_INDEX
+            val response = apiService.getRecommendationUser(token, id)
+
+            PagingSource.LoadResult.Page(
+                data = response.foodList.orEmpty().filterNotNull(),
+                prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
+                nextKey = if (response.foodList?.isNotEmpty() == true) null else position + 1
+            )
+        } catch (exception: Exception) {
+            return PagingSource.LoadResult.Error(exception)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, FoodListItem>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
+    }
+
+}

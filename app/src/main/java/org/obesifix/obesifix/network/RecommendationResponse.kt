@@ -1,6 +1,8 @@
 package org.obesifix.obesifix.network
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class RecommendationResponse(
 
@@ -14,6 +16,7 @@ data class RecommendationResponse(
 	val statusCode: Int? = null
 )
 
+@Parcelize
 data class FoodListItem(
 
 	@field:SerializedName("image")
@@ -23,20 +26,20 @@ data class FoodListItem(
 	val foodCategory: String? = null,
 
 	@field:SerializedName("protein")
-	val protein: Any? = null,
+	val protein: Float? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,
 
 	@field:SerializedName("calorie")
-	val calorie: Any? = null,
+	val calorie: Float? = null,
 
 	@field:SerializedName("fat")
-	val fat: Any? = null,
+	val fat: Float? = null,
 
 	@field:SerializedName("keyword")
 	val keyword: String? = null,
 
 	@field:SerializedName("carbohydrate")
-	val carbohydrate: Any? = null
-)
+	val carbohydrate: Float? = null
+) : Parcelable
