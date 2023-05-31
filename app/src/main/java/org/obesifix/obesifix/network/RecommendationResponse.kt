@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class RecommendationResponse(
 
 	@field:SerializedName("food_list")
-	val foodList: List<FoodListItem?>? = null,
+	val foodList: List<FoodListItem>? = null,
 
 	@field:SerializedName("status")
 	val status: Boolean? = null,

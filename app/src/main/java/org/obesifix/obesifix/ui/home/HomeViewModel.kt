@@ -3,11 +3,21 @@ package org.obesifix.obesifix.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.obesifix.obesifix.ui.calculate.CalculateRepository
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel@Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
+    val listItem = homeRepository.listItem
+    val isLoading = homeRepository.isLoading
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun getRecommendation(token:String, id:String){
+        viewModelScope.launch {
+            homeRepository.getRecommendation(token,id)
+        }
     }
-    val text: LiveData<String> = _text
+
 }
