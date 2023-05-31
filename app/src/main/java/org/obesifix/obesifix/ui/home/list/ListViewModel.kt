@@ -1,4 +1,6 @@
 package org.obesifix.obesifix.ui.home.list
 
-class ListViewModel {
+import androidx.lifecycle.ViewModel
+
+class ListViewModel: ViewModel() {
 }

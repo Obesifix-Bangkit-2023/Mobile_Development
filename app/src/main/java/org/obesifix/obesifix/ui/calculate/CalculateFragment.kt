@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.obesifix.obesifix.MainActivity
@@ -59,28 +60,28 @@ class CalculateFragment : Fragment() {
     private fun setupAction() {
         val user: FirebaseUser? = auth.currentUser
         val userName: String? = auth.currentUser?.displayName
-        val id: String? = auth.currentUser?.uid
-
         var token: String? = null
         user?.getIdToken(false)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     token = task.result?.token
                     if (token != null) {
+                        // Token retrieval successful
+                        val idFlow: Flow<String> = userPreference.getUserId()
+                        lifecycleScope.launchWhenStarted {
+                            idFlow.collect { id ->
+                                calculateViewModel.getUserData(token!!, id)
+                            }
+                        }
                     } else {
                         // Token is null
-                        Log.d("TOKEN","TOKEN IS NULL")
+                        Log.d("TOKEN", "TOKEN IS NULL")
                     }
                 } else {
                     // Task failed
-                    Log.d("TOKEN","FAILED TO CONNECT TO FIREBASE CLASS")
+                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
                 }
             }
-        token?.let {
-            if (id != null) {
-                calculateViewModel.getUserData(it, id)
-            }
-        }
 
         calculateViewModel.isLoading.observe(viewLifecycleOwner){
             showLoading(it)

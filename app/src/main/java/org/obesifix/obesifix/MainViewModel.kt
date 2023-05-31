@@ -1,4 +1,6 @@
 package org.obesifix.obesifix
 
-class MainViewModel {
+import androidx.lifecycle.ViewModel
+
+class MainViewModel: ViewModel(){
 }
