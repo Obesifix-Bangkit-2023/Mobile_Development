@@ -8,9 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.obesifix.obesifix.network.FoodListItem
-import org.obesifix.obesifix.ui.home.HomeRepository
 import javax.inject.Inject
 
 @HiltViewModel

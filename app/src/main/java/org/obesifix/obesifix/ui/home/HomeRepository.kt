@@ -1,20 +1,12 @@
 package org.obesifix.obesifix.ui.home
 
-import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.obesifix.obesifix.R
 import org.obesifix.obesifix.network.ApiConfig
-import org.obesifix.obesifix.network.DataUserResponse
 import org.obesifix.obesifix.network.FoodListItem
-import org.obesifix.obesifix.network.RecommendationResponse
 import org.obesifix.obesifix.preference.UserPreference
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepository@Inject constructor(private val context: Context, private val pref: UserPreference) {

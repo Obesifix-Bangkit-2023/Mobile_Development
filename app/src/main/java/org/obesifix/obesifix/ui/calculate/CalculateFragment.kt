@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -20,7 +22,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
+import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
+import org.obesifix.obesifix.ui.detail.DetailActivity
 import org.obesifix.obesifix.ui.scan.ScanFragment
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -31,6 +35,7 @@ class CalculateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
     private lateinit var auth: FirebaseAuth
+    private var recommendationList: FoodListItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +47,9 @@ class CalculateFragment : Fragment() {
         )[CalculateViewModel::class.java]
         userPreference = UserPreference.getInstance(requireContext().dataStore)
         _binding = FragmentCalculateBinding.inflate(inflater, container, false)
-
+        arguments?.let {
+            recommendationList = it.getParcelable(EXTRA_ID)!!
+        }
         return binding.root
     }
 
@@ -51,7 +58,13 @@ class CalculateFragment : Fragment() {
         _binding = FragmentCalculateBinding.bind(view)
         auth = Firebase.auth
         setupAction()
+        setupAddData()
+    }
 
+    private fun setupAddData() {
+        recommendationList?.let {
+            calculateViewModel.addNutrition(it)
+        }
     }
 
     private fun setupAction() {
@@ -107,4 +120,7 @@ class CalculateFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
+    companion object{
+        const val EXTRA_ID = "extra_id"
+    }
 }

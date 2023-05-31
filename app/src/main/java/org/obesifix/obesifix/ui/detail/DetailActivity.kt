@@ -1,10 +1,12 @@
 package org.obesifix.obesifix.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import org.obesifix.obesifix.databinding.ActivityDetailBinding
 import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.ui.calculate.CalculateFragment
 
 class DetailActivity : AppCompatActivity() {
 
@@ -32,7 +34,9 @@ class DetailActivity : AppCompatActivity() {
         binding.tvCarboDesc.text = data.carbohydrate.toString()
         binding.tvTagDesc.text = data.keyword
         binding.addButton.setOnClickListener {
-
+            val intentAdd = Intent(this, CalculateFragment::class.java)
+            intentAdd.putExtra(CalculateFragment.EXTRA_ID, data)
+            startActivity(intentAdd)
         }
 
     }

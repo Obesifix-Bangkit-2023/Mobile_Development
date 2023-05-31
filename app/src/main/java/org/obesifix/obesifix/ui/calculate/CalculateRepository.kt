@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.network.ApiConfig
 import org.obesifix.obesifix.network.DataUserResponse
+import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -206,8 +207,11 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
         _fatNeed.value = fatNeed
     }
 
-    fun addCalculation(){
-        //API Predict then add to current
+    fun addCalculation(data:FoodListItem){
+        _calCurrent.value = _calCurrent.value?.plus(data.calorie!!)
+        _fatCurrent.value = _fatCurrent.value?.plus(data.fat!!)
+        _proteinCurrent.value = _proteinCurrent.value?.plus(data.fat!!)
+        _carbCurrent.value = _carbCurrent.value?.plus(data.fat!!)
     }
 
 

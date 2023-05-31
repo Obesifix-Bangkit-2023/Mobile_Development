@@ -3,6 +3,7 @@ package org.obesifix.obesifix.ui.calculate
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.obesifix.obesifix.network.FoodListItem
 import javax.inject.Inject
 
 data class NutritionData(
@@ -44,6 +45,9 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
         return nutritionDataLiveData
     }
 
+    fun addNutrition(data: FoodListItem){
+        calculateRepository.addCalculation(data)
+    }
 
 
 }

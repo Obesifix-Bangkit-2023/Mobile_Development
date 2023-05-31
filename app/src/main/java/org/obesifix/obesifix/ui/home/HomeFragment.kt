@@ -20,11 +20,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
-import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
-import org.obesifix.obesifix.ui.calculate.CalculateViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class HomeFragment : Fragment() {
