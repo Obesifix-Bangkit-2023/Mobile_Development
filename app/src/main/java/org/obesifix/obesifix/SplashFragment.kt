@@ -1,34 +1,29 @@
 package org.obesifix.obesifix
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import org.obesifix.obesifix.onboarding.ViewPagerFragment
+import org.obesifix.obesifix.ui.login.LoginActivity
 
 
-class SplashFragment : Fragment() {
+class SplashFragment : AppCompatActivity() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        FirebaseAuth.getInstance().currentUser
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_splash)
+
         val user = FirebaseAuth.getInstance().currentUser
         Handler().postDelayed({
-            //kondisi if aktif jika sudah pernah membuka app
+            // Kondisi if aktif jika sudah pernah membuka app
             if (user != null) {
-                findNavController().navigate(R.id.action_splashFragment_to_loginActivity)
+                startActivity(Intent(this, LoginActivity::class.java))
             } else {
-                findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
+                startActivity(Intent(this, ViewPagerFragment::class.java))
             }
-        }, 4000 )
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+            finish()
+        }, 4000)
     }
-
-
 }
