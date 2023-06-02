@@ -14,7 +14,9 @@
             android:id="@+id/title_preference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@string/title_preference"
             android:textSize="20sp"
@@ -136,37 +138,16 @@
             app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
             app:layout_constraintTop_toBottomOf="@+id/titleActivityLevel" />
 
-        <Spinner
-            android:id="@+id/spinnerEating"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipEating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            app:chipSpacing="8dp"
+            app:singleSelection="false"
             app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
             app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
             app:layout_constraintTop_toBottomOf="@+id/eatingPreference" />
 
-        <TextView
-            android:id="@+id/selectedFoodItemsTextView_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/selected_foods"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/spinnerEating"
-            app:layout_constraintStart_toStartOf="@+id/spinnerEating"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerEating" />
-
-        <TextView
-            android:id="@+id/selectedFoodItemsTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/selected_foods"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/selectedFoodItemsTextView_title"
-            app:layout_constraintStart_toStartOf="@+id/selectedFoodItemsTextView_title"
-            app:layout_constraintTop_toBottomOf="@+id/selectedFoodItemsTextView_title" />
 
         <Button
             android:id="@+id/submitButton"
@@ -174,9 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/submit_button"
-            app:layout_constraintEnd_toEndOf="@+id/spinnerEating"
-            app:layout_constraintStart_toStartOf="@+id/spinnerEating"
-            app:layout_constraintTop_toBottomOf="@+id/selectedFoodItemsTextView" />
+            app:layout_constraintEnd_toEndOf="@+id/chipEating"
+            app:layout_constraintStart_toStartOf="@+id/chipEating"
+            app:layout_constraintTop_toBottomOf="@+id/chipEating" />
 
         <TextView
             android:id="@+id/titleAge"
