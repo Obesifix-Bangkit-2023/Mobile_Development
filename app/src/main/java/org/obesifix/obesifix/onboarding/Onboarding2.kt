@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import org.obesifix.obesifix.R
 
 
@@ -16,8 +18,12 @@ class Onboarding2 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_onboarding2, container, false)
+        val fragment = inflater.inflate(R.layout.fragment_onboarding2, container, false)
+        val SkipTour = fragment.findViewById<TextView>(R.id.skip2)
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
+        SkipTour.setOnClickListener {
+            viewPager?.currentItem = 2
+        }
+        return fragment
     }
-
-
 }

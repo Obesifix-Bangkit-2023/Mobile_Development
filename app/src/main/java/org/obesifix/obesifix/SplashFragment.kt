@@ -13,6 +13,7 @@ class SplashFragment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.fragment_splash)
 
         val user = FirebaseAuth.getInstance().currentUser
