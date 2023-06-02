@@ -14,11 +14,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.obesifix.obesifix.MainActivity
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityPreferenceBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.body.RegisterBody
@@ -87,52 +90,27 @@ class PreferenceActivity : AppCompatActivity() {
         binding.weightEditText.addTextChangedListener(textWatcher)
         binding.heightEditText.addTextChangedListener(textWatcher)
 
-        val foodOptions = arrayOf(
-            "Choose your preference here",
-            "Fruit",
-            "Vegetable",
-            "Beef",
-            "Chicken",
-            "Duck",
-            "Pork",
-            "Lamb",
-            "Fish",
-            "Seafood",
-            "Bread",
-            "Soup",
-            "Soy Product",
-            "Dairy Product",
-            "Rice",
-            "Cookies",
-            "Pasta",
-            "Breakfast",
-            "Dessert",
-            "Lunch"
-        )
-        val adapterFood = ArrayAdapter(this, android.R.layout.simple_spinner_item, foodOptions)
-        binding.spinnerEating.setSelection(0)
-        adapterFood.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.spinnerEating.adapter = adapterFood
-        binding.spinnerEating.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = foodOptions[position]
-                if (position > 0) {
-                    if (selectedFoodItems.contains(selectedItem)) {
-                        selectedFoodItems.remove(selectedItem)
-                    } else {
-                        selectedFoodItems.add(selectedItem)
-                    }
+        val foodOptions = FoodOptions.foodOptions
+        foodOptions.forEach { item ->
+            val chip = Chip(this)
+            chip.text = item
+            chip.isCheckable = true
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selectedFoodItems.add(item)
+                } else {
+                    selectedFoodItems.remove(item)
                 }
-                // Update the UI to show the selected items
-                binding.selectedFoodItemsTextView.text = selectedFoodItems.joinToString(", ")
                 // Trigger textWatcher to reevaluate the button's enabled state
                 textWatcher.afterTextChanged(null)
             }
+            binding.chipEating.addView(chip)
+        }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle the case where no option is selected
-            }
+        // To preselect items:
+        selectedFoodItems.forEach { item ->
+            val chip = binding.chipEating.findViewWithTag<Chip>(item)
+            chip?.isChecked = true
         }
 
         val user: FirebaseUser? = auth.currentUser
