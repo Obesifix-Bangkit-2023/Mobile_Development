@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -24,7 +22,6 @@ import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
-import org.obesifix.obesifix.ui.detail.DetailActivity
 import org.obesifix.obesifix.ui.scan.ScanFragment
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -50,6 +47,7 @@ class CalculateFragment : Fragment() {
         arguments?.let {
             recommendationList = it.getParcelable(EXTRA_ID)!!
         }
+        calculateViewModel.triggerAlarmReset()
         return binding.root
     }
 
@@ -103,10 +101,10 @@ class CalculateFragment : Fragment() {
         }
 
         calculateViewModel.getNutritionDataLiveData().observe(viewLifecycleOwner){ nutritionData ->
-            binding.tvCalDesc.text = "${nutritionData.calCurrent} from ${nutritionData.calNeed}"
-            binding.tvFatDesc.text = "${nutritionData.fatCurrent} from ${nutritionData.fatNeed}"
-            binding.tvProteinDesc.text = "${nutritionData.proteinCurrent} from ${nutritionData.proteinNeed}"
-            binding.tvCarboDesc.text = "${nutritionData.carbCurrent} from ${nutritionData.carbNeed}"
+            binding.tvCalDesc.text = "${nutritionData.calCurrent} from ${nutritionData.calNeed}Kcal"
+            binding.tvFatDesc.text = "${nutritionData.fatCurrent} from ${nutritionData.fatNeed}g"
+            binding.tvProteinDesc.text = "${nutritionData.proteinCurrent} from ${nutritionData.proteinNeed}g"
+            binding.tvCarboDesc.text = "${nutritionData.carbCurrent} from ${nutritionData.carbNeed}g"
         }
 
         binding.addButton.setOnClickListener {

@@ -30,6 +30,7 @@ interface ApiService {
         @Body registerBody: RegisterBody
     ): Call<EditResponse>
 
+    @Multipart
     @POST("prediction")
     fun prediction(
         @Header("Authorization") token: String,

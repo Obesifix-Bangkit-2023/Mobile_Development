@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
+import org.obesifix.obesifix.ui.home.list.ListActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class HomeFragment : Fragment() {
@@ -53,6 +55,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
         auth = Firebase.auth
+
+        binding.tvSeeAllRecommendation.setOnClickListener {
+            val intent = Intent(requireContext(), ListActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
 
         rvRecommendation = binding.innerRecyclerView
         rvRecommendation.setHasFixedSize(true)

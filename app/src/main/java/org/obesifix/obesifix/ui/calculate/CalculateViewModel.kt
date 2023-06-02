@@ -49,5 +49,8 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
         calculateRepository.addCalculation(data)
     }
 
+    fun triggerAlarmReset(){
+        calculateRepository.scheduleDataReset()
+    }
 
 }

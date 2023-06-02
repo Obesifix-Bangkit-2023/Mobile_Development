@@ -19,7 +19,7 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
                 LoginViewModel(Injection.loginRepository(context, pref)) as T
             }
             modelClass.isAssignableFrom(CalculateViewModel::class.java) -> {
-                CalculateViewModel(Injection.calculateRepository(context, pref)) as T
+                CalculateViewModel(Injection.calculateRepository(context)) as T
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(Injection.homeRepository(context, pref)) as T

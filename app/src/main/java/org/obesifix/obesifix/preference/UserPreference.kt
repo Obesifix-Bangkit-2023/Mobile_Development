@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.map
 
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>){
+    //lokal hanya id dan token(otomatis di firebase class)
+    //need revision
 
     fun getUser(): Flow<UserModel> {
         return dataStore.data.map { preferences ->

@@ -25,7 +25,8 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
                 .load(item.image)
                 .into(holder.binding.imgCal)
             holder.binding.tvTitleCal.text = item.name
-            holder.binding.tvCalDesc.text = item.calorie.toString()
+            val calKcal = item.calorie?.div(1000).toString()
+            holder.binding.tvCalDesc.text = calKcal
         }
         holder.itemView.setOnClickListener{
             val intentDetail = Intent(holder.itemView.context, DetailActivity::class.java)

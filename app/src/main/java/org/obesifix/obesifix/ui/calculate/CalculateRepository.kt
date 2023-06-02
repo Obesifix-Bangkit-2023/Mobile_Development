@@ -1,7 +1,11 @@
 package org.obesifix.obesifix.ui.calculate
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -10,14 +14,14 @@ import org.obesifix.obesifix.R
 import org.obesifix.obesifix.network.ApiConfig
 import org.obesifix.obesifix.network.DataUserResponse
 import org.obesifix.obesifix.network.FoodListItem
-import org.obesifix.obesifix.preference.UserPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.pow
 
-class CalculateRepository@Inject constructor(private val context: Context, private val pref: UserPreference) {
+class CalculateRepository@Inject constructor(private val context: Context) {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -112,14 +116,12 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                if(activity.equals("sedentary")){
-                    activityPoint = 1.00f
-                }else if(activity.equals("low activity")){
-                    activityPoint = 1.11f
-                }else if(activity.equals("active")){
-                    activityPoint = 1.25f
-                }else if(activity.equals("very active")){
-                    activityPoint = 1.48f
+                activityPoint = when (activity) {
+                    "sedentary" -> 1.00f
+                    "low activity" -> 1.11f
+                    "active" -> 1.25f
+                    "very active" -> 1.48f
+                    else -> 0.0f
                 }
 
                 val eer = 662 - (9.35 * age!!) + activityPoint * (15.91 * weight!! + 539.6 * height!!)
@@ -132,14 +134,12 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                if(activity.equals("sedentary")){
-                    activityPoint = 1.00f
-                }else if(activity.equals("low activity")){
-                    activityPoint = 1.12f
-                }else if(activity.equals("active")){
-                    activityPoint = 1.27f
-                }else if(activity.equals("very active")){
-                    activityPoint = 1.45f
+                activityPoint = when (activity) {
+                    "sedentary" -> 1.00f
+                    "low activity" -> 1.12f
+                    "active" -> 1.27f
+                    "very active" -> 1.45f
+                    else -> 0.0f
                 }
 
                 val eer = 354 - (6.91 * age!!) + activityPoint * (9.36 * weight!! + 726 * height!!)
@@ -152,18 +152,16 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
                 //Male
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint: Float = 0.0f
+                var activityPoint = 0.0f
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                if(activity.equals("sedentary")){
-                    activityPoint = 1.00f
-                }else if(activity.equals("low activity")){
-                    activityPoint = 1.12f
-                }else if(activity.equals("active")){
-                    activityPoint = 1.29f
-                }else if(activity.equals("very active")){
-                    activityPoint = 1.59f
+                activityPoint = when (activity) {
+                    "sedentary" -> 1.00f
+                    "low activity" -> 1.12f
+                    "active" -> 1.29f
+                    "very active" -> 1.59f
+                    else -> 0.0f
                 }
 
                 val eer = 1086 - (10.1 * age!!) + activityPoint * (13.7 * weight!! + 416 * height!!)
@@ -172,18 +170,16 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
                 //Female
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint: Float = 0.0f
+                var activityPoint: Float
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                if(activity.equals("sedentary")){
-                    activityPoint = 1.00f
-                }else if(activity.equals("low activity")){
-                    activityPoint = 1.16f
-                }else if(activity.equals("active")){
-                    activityPoint = 1.27f
-                }else if(activity.equals("very active")){
-                    activityPoint = 1.44f
+                activityPoint = when (activity) {
+                    "sedentary" -> 1.00f
+                    "low activity" -> 1.16f
+                    "active" -> 1.27f
+                    "very active" -> 1.44f
+                    else -> 0.0f
                 }
 
                 val eer = 448 - (7.95 * age!!) + activityPoint * (11.4 * weight!! + 619 * height!!)
@@ -207,12 +203,40 @@ class CalculateRepository@Inject constructor(private val context: Context, priva
         _fatNeed.value = fatNeed
     }
 
-    fun addCalculation(data:FoodListItem){
-        _calCurrent.value = _calCurrent.value?.plus(data.calorie!!)
-        _fatCurrent.value = _fatCurrent.value?.plus(data.fat!!)
-        _proteinCurrent.value = _proteinCurrent.value?.plus(data.fat!!)
-        _carbCurrent.value = _carbCurrent.value?.plus(data.fat!!)
+    fun addCalculation(data: FoodListItem) {
+        _calCurrent.value = (_calCurrent.value ?: 0f) + (data.calorie ?: 0f)
+        _fatCurrent.value = (_fatCurrent.value ?: 0f) + (data.fat ?: 0f)
+        _proteinCurrent.value = (_proteinCurrent.value ?: 0f) + (data.protein ?: 0f)
+        _carbCurrent.value = (_carbCurrent.value ?: 0f) + (data.carbohydrate ?: 0f)
     }
 
+    fun resetData() {
+        _calCurrent.value = 0f
+        _fatCurrent.value = 0f
+        _proteinCurrent.value = 0f
+        _carbCurrent.value = 0f
+
+        Toast.makeText(context, "Reset the calculation data", Toast.LENGTH_SHORT).show()
+    }
+
+    fun scheduleDataReset() {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val resetIntent = Intent(context, DataResetReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, resetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+    }
+
+    class DataResetReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val repository = CalculateRepository(context)
+            repository.resetData()
+        }
+    }
 
 }

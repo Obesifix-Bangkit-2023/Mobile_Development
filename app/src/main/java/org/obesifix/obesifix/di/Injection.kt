@@ -12,8 +12,8 @@ object Injection {
         return LoginRepository(context,userPreference)
     }
 
-    fun calculateRepository(context: Context, userPreference: UserPreference):CalculateRepository{
-        return CalculateRepository(context,userPreference)
+    fun calculateRepository(context: Context):CalculateRepository{
+        return CalculateRepository(context)
     }
 
     fun homeRepository(context: Context, userPreference: UserPreference): HomeRepository {
