@@ -14,7 +14,11 @@
         android:id="@+id/navigation_calculate"
         android:name="org.obesifix.obesifix.ui.calculate.CalculateFragment"
         android:label="@string/title_calculate"
-        tools:layout="@layout/fragment_calculate" />
+        tools:layout="@layout/fragment_calculate">
+        <argument
+            android:name="data"
+            app:argType="org.obesifix.obesifix.network.FoodListItem"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_scan"
@@ -33,6 +37,7 @@
         android:name="org.obesifix.obesifix.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
 
     <fragment
         android:id="@+id/splashFragment"

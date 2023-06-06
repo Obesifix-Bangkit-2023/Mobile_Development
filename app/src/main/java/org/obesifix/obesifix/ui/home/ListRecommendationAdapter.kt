@@ -30,7 +30,7 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
         }
         holder.itemView.setOnClickListener{
             val intentDetail = Intent(holder.itemView.context, DetailActivity::class.java)
-            intentDetail.putExtra(DetailActivity.EXTRA_ID ,listRecommendation.toTypedArray())
+            intentDetail.putExtra(DetailActivity.EXTRA_ID, listRecommendation[position])
             holder.itemView.context.startActivity(intentDetail)
         }
     }

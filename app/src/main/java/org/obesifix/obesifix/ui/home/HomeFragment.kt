@@ -59,7 +59,6 @@ class HomeFragment : Fragment() {
         binding.tvSeeAllRecommendation.setOnClickListener {
             val intent = Intent(requireContext(), ListActivity::class.java)
             startActivity(intent)
-            requireActivity().finish()
         }
 
         rvRecommendation = binding.innerRecyclerView
@@ -72,7 +71,6 @@ class HomeFragment : Fragment() {
         homeViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
 
         homeViewModel.listItem.observe(viewLifecycleOwner){items->
             val adapter = items?.let { ListRecommendationAdapter(it) }

@@ -3,6 +3,7 @@ package org.obesifix.obesifix.factory
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.obesifix.obesifix.MainViewModel
 import org.obesifix.obesifix.di.Injection
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateViewModel
@@ -26,6 +27,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
             }
             modelClass.isAssignableFrom(ListViewModel::class.java) -> {
                 ListViewModel(Injection.listRepository()) as T
+            }
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                MainViewModel(Injection.mainRepository(context, pref)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

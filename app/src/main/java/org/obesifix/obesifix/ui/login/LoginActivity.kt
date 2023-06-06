@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         loginViewModel =
             ViewModelProvider(this,
                 ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore))
@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
+        Log.d("SIGN IN","INSIDE SIGN IN FUNCTION")
         val signInIntent = googleSignInClient.signInIntent
         resultLauncher.launch(signInIntent)
     }
@@ -75,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
     private var resultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        Log.d("RESULT SIGN IN","INSIDE RESULT SIGN IN FUNCTION")
         if (result.resultCode == Activity.RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
@@ -84,12 +86,16 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
+                Log.d(TAG, "Google sign in failed", e)
             }
+        } else {
+            Log.d(TAG, "Result code is not OK: ${result.resultCode}")
         }
+        Log.d("RESULT SIGN IN 2","INSIDE RESULT SIGN IN2 FUNCTION")
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
+        Log.d("firebaseAuthWithGoogle","INSIDE firebaseAuthWithGoogle FUNCTION")
         val credential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -100,44 +106,43 @@ class LoginActivity : AppCompatActivity() {
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Log.d(TAG, "signInWithCredential:failure", task.exception)
                     updateUI(null)
                 }
             }
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-        if(currentUser != null){
-            currentUser.getIdToken(false)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val token = task.result?.token
-                        if (token != null) {
-                            loginViewModel.requestLogin(token)
-                            resultLogin()
-                        } else {
-                            // Token is null
-                            Log.d("TOKEN","TOKEN IS NULL")
-                        }
-                    } else {
-                        // Task failed
-                        Log.d("TOKEN","FAILED TO CONNECT TO FIREBASE CLASS")
-                    }
+        Log.d("UPDATE UI","INSIDE UPDATE UI FUNCTION")
+        currentUser?.getIdToken(false)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("TASK","TASK IS SUCCESS")
+                val token = task.result?.token
+                if (token != null) {
+                    Log.d("TASK","TOKEN IS NOT NULL")
+                    loginViewModel.requestLogin(token)
+                    resultLogin()
+                } else {
+                    // Token is null
+                    Log.d("TOKEN","TOKEN IS NULL")
                 }
-        }else{
-            Log.d("FIREBASE USER", "FIREBASE USER IS NULL")
+            } else {
+                // Task failed
+                Log.d("TOKEN","FAILED TO CONNECT TO FIREBASE CLASS")
+            }
         }
+
     }
 
-    private fun resultLogin(){
-        loginViewModel.loginResponse.observe(this){ response ->
-            if(response.status?.equals(false) == true){
+    private fun resultLogin() {
+        Log.d("RESULT LOGIN", "INSIDE RESULT LOGIN FUNCTION")
+        loginViewModel.loginResponse.observe(this) { response ->
+            if (response.status == false) {
                 startActivity(Intent(this@LoginActivity, PreferenceActivity::class.java))
-                finish()
-            }else{
+            } else {
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                finish()
             }
+            finish()
         }
     }
 

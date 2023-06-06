@@ -14,12 +14,12 @@ import org.obesifix.obesifix.network.ApiConfig
 import org.obesifix.obesifix.network.LoginResponse
 import org.obesifix.obesifix.network.RegisterResponse
 import org.obesifix.obesifix.network.body.RegisterBody
+import org.obesifix.obesifix.preference.UserModel
 import org.obesifix.obesifix.preference.UserPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
-
 class LoginRepository@Inject constructor(private val context: Context, private val pref: UserPreference) {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
@@ -30,9 +30,9 @@ class LoginRepository@Inject constructor(private val context: Context, private v
     private val _registerResponse = MutableLiveData<RegisterResponse>()
     val registerResponse = _registerResponse
 
-    fun saveUserId(id: String) {
+    fun saveUser(user: UserModel) {
         CoroutineScope(Dispatchers.IO).launch {
-            pref.saveUserId(id)
+            pref.saveUser(user)
         }
     }
 
@@ -41,11 +41,20 @@ class LoginRepository@Inject constructor(private val context: Context, private v
         val client = ApiConfig.getApiService().register("Bearer $token", registerBody)
         client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                Log.d("REQ REG","INSIDE")
                 _isLoading.value = false
                 if(response.isSuccessful){
+                    Log.d("REQ REG","SUCCESS")
                     _registerResponse.value = response.body()
-                    response.body()?.userId?.let { saveUserId(it) }
-
+                    val model = response.body()?.userId?.let {
+                        UserModel(
+                            it,
+                            true
+                        )
+                    }
+                    if (model != null) {
+                        saveUser(model)
+                    }
                 }else{
                     Toast.makeText(context, context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
                     Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
@@ -65,10 +74,13 @@ class LoginRepository@Inject constructor(private val context: Context, private v
         val client = ApiConfig.getApiService().login("Bearer $token")
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d("REQ LOGIN","INSIDE")
                 if(response.isSuccessful){
+                    Log.d("REQ LOGIN","SUCCESS")
                     _loginResponse.value = response.body()
-                }else{
-                    Toast.makeText(context, context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
+                } else {
+                    _loginResponse.value = LoginResponse(false) // Set a default LoginResponse with status as false
+                    Toast.makeText(context, context.getString(R.string.new_user), Toast.LENGTH_SHORT ).show()
                     Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
                 }
             }

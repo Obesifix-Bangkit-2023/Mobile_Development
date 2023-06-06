@@ -1,22 +1,30 @@
 package org.obesifix.obesifix.ui.detail
 
 import android.content.Intent
+import android.nfc.NfcAdapter.EXTRA_ID
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import org.obesifix.obesifix.MainActivity
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailBinding
 import org.obesifix.obesifix.network.FoodListItem
-import org.obesifix.obesifix.ui.calculate.CalculateFragment
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var data: FoodListItem
+    private var data: FoodListItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        data = intent.getParcelableExtra(EXTRA_ID)!!
+        supportActionBar?.hide()
+        data = intent.getParcelableExtra(EXTRA_ID)
         setupAction()
     }
 
@@ -24,21 +32,22 @@ class DetailActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             onBackPressed()
         }
-        binding.tvNameRecommendation.text = data.name
-        Glide.with(binding.root.context)
-            .load(data.image)
-            .into(binding.imgCal)
-        binding.tvCalDesc.text = data.calorie.toString()
-        binding.tvFatDesc.text = data.fat.toString()
-        binding.tvProteinDesc.text = data.protein.toString()
-        binding.tvCarboDesc.text = data.carbohydrate.toString()
-        binding.tvTagDesc.text = data.keyword
-        binding.addButton.setOnClickListener {
-            val intentAdd = Intent(this, CalculateFragment::class.java)
-            intentAdd.putExtra(CalculateFragment.EXTRA_ID, data)
-            startActivity(intentAdd)
-        }
 
+        binding.tvNameRecommendation.text = data?.name ?: ""
+        Glide.with(binding.root.context)
+            .load(data?.image)
+            .into(binding.imgRecommendation)
+        binding.tvCalDesc.text = "${data?.calorie.toString()} Kcal"
+        binding.tvFatDesc.text = "${data?.fat.toString()} g"
+        binding.tvProteinDesc.text = "${data?.protein.toString()} g"
+        binding.tvCarboDesc.text = "${data?.carbohydrate.toString()} g"
+        binding.tvTagDesc.text = data?.keyword
+        binding.addButton.setOnClickListener {
+            Log.d("DATA PARCELDCT", "${data?.calorie}, ${data?.image}")
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("data", data)
+            startActivity(intent)
+        }
     }
 
     companion object{

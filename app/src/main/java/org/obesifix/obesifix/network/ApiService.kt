@@ -21,7 +21,7 @@ interface ApiService {
     @GET("user/{userId}")
     fun getDataUser(
         @Header("Authorization") token: String,
-        @Query("userId") userId: String? = null,
+        @Path("userId") userId: String? = null,
     ): Call<DataUserResponse>
 
     @PUT("user/{userId}")
@@ -39,6 +39,6 @@ interface ApiService {
     @GET("recomendation/{userId}")
     suspend fun getRecommendationUser(
         @Header("Authorization") token: String,
-        @Query("userId") userId: String? = null,
+        @Path("userId") userId: String? = null,
     ): RecommendationResponse
 }

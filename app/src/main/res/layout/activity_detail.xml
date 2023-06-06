@@ -11,7 +11,7 @@
         tools:context=".ui.detail.DetailActivity">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="165dp"
             android:background="@drawable/ellipse_img" />
 
@@ -83,7 +83,7 @@
                         android:layout_width="53dp"
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
-                        android:background="@drawable/cal"
+                        android:background="@drawable/calorie_static"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
                         android:layout_width="53dp"
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
-                        android:background="@drawable/fat"
+                        android:background="@drawable/fat_static"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +189,7 @@
                         android:layout_width="53dp"
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
-                        android:background="@drawable/protein"
+                        android:background="@drawable/protein_static"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -242,7 +242,7 @@
                         android:layout_width="53dp"
                         android:layout_height="53dp"
                         android:layout_marginStart="28dp"
-                        android:background="@drawable/carbo"
+                        android:background="@drawable/carbo_static"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.di
 
 import android.content.Context
+import org.obesifix.obesifix.MainRepository
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateRepository
 import org.obesifix.obesifix.ui.home.HomeRepository
@@ -22,5 +23,9 @@ object Injection {
 
     fun listRepository(): ListRepository {
         return ListRepository()
+    }
+
+    fun mainRepository(context: Context, userPreference: UserPreference): MainRepository {
+        return MainRepository(context,userPreference)
     }
 }

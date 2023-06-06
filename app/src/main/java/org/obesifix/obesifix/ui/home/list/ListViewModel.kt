@@ -23,8 +23,7 @@ class ListViewModel@Inject constructor(private val listRepository: ListRepositor
         id: String,
         query: String
     ): LiveData<PagingData<FoodListItem>> {
-        val recommendationLiveData = listRepository.getRecommendation(token, id)
-        return recommendationLiveData.map { pagingData ->
+        return listRepository.getRecommendation(token, id).map { pagingData ->
             pagingData.filter { item ->
                 item.name?.contains(query, ignoreCase = true) ?: false
             }

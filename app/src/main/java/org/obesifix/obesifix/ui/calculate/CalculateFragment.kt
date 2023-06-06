@@ -1,28 +1,32 @@
 package org.obesifix.obesifix.ui.calculate
 
 import android.content.Context
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import org.obesifix.obesifix.R
+import org.obesifix.obesifix.SharedViewModel
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
-import org.obesifix.obesifix.ui.scan.ScanFragment
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class CalculateFragment : Fragment() {
@@ -32,8 +36,9 @@ class CalculateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
     private lateinit var auth: FirebaseAuth
-    private var recommendationList: FoodListItem? = null
+    private lateinit var sharedViewModel: SharedViewModel
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +49,10 @@ class CalculateFragment : Fragment() {
         )[CalculateViewModel::class.java]
         userPreference = UserPreference.getInstance(requireContext().dataStore)
         _binding = FragmentCalculateBinding.inflate(inflater, container, false)
-        arguments?.let {
-            recommendationList = it.getParcelable(EXTRA_ID)!!
-        }
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+
         calculateViewModel.triggerAlarmReset()
         return binding.root
     }
@@ -56,12 +62,14 @@ class CalculateFragment : Fragment() {
         _binding = FragmentCalculateBinding.bind(view)
         auth = Firebase.auth
         setupAction()
-        setupAddData()
+        setupAdd()
     }
 
-    private fun setupAddData() {
-        recommendationList?.let {
-            calculateViewModel.addNutrition(it)
+    private fun setupAdd() {
+        sharedViewModel.getParcelData().observe(viewLifecycleOwner){ data ->
+            Log.d("datasetupAdd", "ini setup $data")
+            calculateViewModel.addNutrition(data)
+            //ngebug kereset
         }
     }
 
@@ -69,7 +77,7 @@ class CalculateFragment : Fragment() {
         val user: FirebaseUser? = auth.currentUser
         val userName: String? = auth.currentUser?.displayName
         var token: String? = null
-        user?.getIdToken(false)
+        user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     token = task.result?.token
@@ -79,6 +87,12 @@ class CalculateFragment : Fragment() {
                         lifecycleScope.launchWhenStarted {
                             idFlow.collect { id ->
                                 calculateViewModel.getUserData(token!!, id)
+                                calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner){ nutritionData ->
+                                    binding.tvCalDesc.text = "${nutritionData.calCurrent} from ${nutritionData.calNeed} Kcal"
+                                    binding.tvFatDesc.text = "${nutritionData.fatCurrent} from ${nutritionData.fatNeed} g"
+                                    binding.tvProteinDesc.text = "${nutritionData.proteinCurrent} from ${nutritionData.proteinNeed} g"
+                                    binding.tvCarboDesc.text = "${nutritionData.carbCurrent} from ${nutritionData.carbNeed} g"
+                                }
                             }
                         }
                     } else {
@@ -100,17 +114,10 @@ class CalculateFragment : Fragment() {
             binding.tvStatusDesc.text = status
         }
 
-        calculateViewModel.getNutritionDataLiveData().observe(viewLifecycleOwner){ nutritionData ->
-            binding.tvCalDesc.text = "${nutritionData.calCurrent} from ${nutritionData.calNeed}Kcal"
-            binding.tvFatDesc.text = "${nutritionData.fatCurrent} from ${nutritionData.fatNeed}g"
-            binding.tvProteinDesc.text = "${nutritionData.proteinCurrent} from ${nutritionData.proteinNeed}g"
-            binding.tvCarboDesc.text = "${nutritionData.carbCurrent} from ${nutritionData.carbNeed}g"
-        }
-
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         binding.addButton.setOnClickListener {
-            val intent = Intent(requireContext(), ScanFragment::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            val desiredTabId = R.id.navigation_scan
+            bottomNavigationView.selectedItemId = desiredTabId
         }
     }
 
@@ -118,7 +125,4 @@ class CalculateFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    companion object{
-        const val EXTRA_ID = "extra_id"
-    }
 }

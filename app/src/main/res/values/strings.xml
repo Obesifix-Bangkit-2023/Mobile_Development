@@ -25,6 +25,7 @@
     <string name="footer">You are completely safe</string>
     <string name="term">Read our Terms and Conditions</string>
     <string name="failed_login">Failed to login</string>
+    <string name="new_user">Register First</string>
     <!-- profile -->
     <string name="my_profil">My Profil</string>
     <string name="about">About Obesifix</string>

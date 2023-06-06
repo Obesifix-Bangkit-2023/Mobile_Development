@@ -6,8 +6,10 @@ import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.obesifix.obesifix.R
@@ -54,6 +56,13 @@ class CalculateRepository@Inject constructor(private val context: Context) {
 
     private val _userDataResponse = MutableLiveData<DataUserResponse>()
     val userDataResponse = _userDataResponse
+
+    init{
+        _calCurrent.value = 0f
+        _fatCurrent.value = 0f
+        _carbCurrent.value = 0f
+        _proteinCurrent.value = 0f
+    }
 
     fun getUserData(token:String, id: String){
         _isLoading.value = true
@@ -103,6 +112,7 @@ class CalculateRepository@Inject constructor(private val context: Context) {
                 _status.value = "Cannot Recognized"
             }
         }
+        Log.d(ContentValues.TAG, "getUserStatus ${_status.value}")
     }
 
     fun getCalNeed(){
@@ -112,11 +122,10 @@ class CalculateRepository@Inject constructor(private val context: Context) {
                 //Male
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint: Float = 0.0f
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                activityPoint = when (activity) {
+                val activityPoint = when (activity) {
                     "sedentary" -> 1.00f
                     "low activity" -> 1.11f
                     "active" -> 1.25f
@@ -126,15 +135,15 @@ class CalculateRepository@Inject constructor(private val context: Context) {
 
                 val eer = 662 - (9.35 * age!!) + activityPoint * (15.91 * weight!! + 539.6 * height!!)
                 _calNeed.value = eer.toFloat()
+                Log.d(ContentValues.TAG, "getCalNeed undernormal male${_calNeed.value}")
             }else{
                 //Female
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint: Float = 0.0f
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                activityPoint = when (activity) {
+                val activityPoint: Float = when (activity) {
                     "sedentary" -> 1.00f
                     "low activity" -> 1.12f
                     "active" -> 1.27f
@@ -144,6 +153,7 @@ class CalculateRepository@Inject constructor(private val context: Context) {
 
                 val eer = 354 - (6.91 * age!!) + activityPoint * (9.36 * weight!! + 726 * height!!)
                 _calNeed.value = eer.toFloat()
+                Log.d(ContentValues.TAG, "getCalNeed undernormal female${_calNeed.value}")
             }
 
         }else{
@@ -152,11 +162,10 @@ class CalculateRepository@Inject constructor(private val context: Context) {
                 //Male
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint = 0.0f
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                activityPoint = when (activity) {
+                val activityPoint = when (activity) {
                     "sedentary" -> 1.00f
                     "low activity" -> 1.12f
                     "active" -> 1.29f
@@ -166,15 +175,15 @@ class CalculateRepository@Inject constructor(private val context: Context) {
 
                 val eer = 1086 - (10.1 * age!!) + activityPoint * (13.7 * weight!! + 416 * height!!)
                 _calNeed.value = eer.toFloat()
+                Log.d(ContentValues.TAG, "getCalNeed over male${_calNeed.value}")
             }else{
                 //Female
                 val age = _userDataResponse.value?.data?.age
                 val activity = _userDataResponse.value?.data?.activity
-                var activityPoint: Float
                 val weight = _userDataResponse.value?.data?.weight
                 val height = _userDataResponse.value?.data?.height
 
-                activityPoint = when (activity) {
+                val activityPoint: Float = when (activity) {
                     "sedentary" -> 1.00f
                     "low activity" -> 1.16f
                     "active" -> 1.27f
@@ -184,6 +193,7 @@ class CalculateRepository@Inject constructor(private val context: Context) {
 
                 val eer = 448 - (7.95 * age!!) + activityPoint * (11.4 * weight!! + 619 * height!!)
                 _calNeed.value = eer.toFloat()
+                Log.d(ContentValues.TAG, "getCalNeed over female${_calNeed.value}")
             }
         }
     }
@@ -191,16 +201,20 @@ class CalculateRepository@Inject constructor(private val context: Context) {
     fun getCarbNeed() {
         val carbNeed = (60f / 100f) * (_calNeed.value ?: 0f) / 4f
         _carbNeed.value = carbNeed
+        Log.d(ContentValues.TAG, "getCarbNeed ${_carbNeed.value}")
+        Log.d(ContentValues.TAG, "getCarbNeed var $carbNeed")
     }
 
     fun getProteinNeed() {
         val proteinNeed = (20f / 100f) * (_calNeed.value ?: 0f) / 4f
         _proteinNeed.value = proteinNeed
+        Log.d(ContentValues.TAG, "getProteinNeed ${_proteinNeed.value}")
     }
 
     fun getFatNeed() {
         val fatNeed = (20f / 100f) * (_calNeed.value ?: 0f) / 4f
         _fatNeed.value = fatNeed
+        Log.d(ContentValues.TAG, "getFatNeed ${_fatNeed.value}")
     }
 
     fun addCalculation(data: FoodListItem) {
@@ -219,10 +233,11 @@ class CalculateRepository@Inject constructor(private val context: Context) {
         Toast.makeText(context, "Reset the calculation data", Toast.LENGTH_SHORT).show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun scheduleDataReset() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val resetIntent = Intent(context, DataResetReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, resetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, resetIntent,  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE )
 
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)

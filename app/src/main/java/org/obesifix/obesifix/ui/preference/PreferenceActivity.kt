@@ -15,13 +15,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.obesifix.obesifix.MainActivity
-import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityPreferenceBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.body.RegisterBody
@@ -165,7 +163,7 @@ class PreferenceActivity : AppCompatActivity() {
             val isFoodItemsEmpty = selectedFoodItems.isEmpty()
 
             binding.submitButton.isEnabled = !isAgeEmpty && !isWeightEmpty && !isHeightEmpty &&
-                    isGenderSelected && !activitySelectedOption.isNullOrBlank() && !isFoodItemsEmpty
+                    isGenderSelected && activitySelectedOption.isNotBlank() && !isFoodItemsEmpty
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

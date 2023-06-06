@@ -8,7 +8,9 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/button_rounded.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/edittext_underline.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_notifications_white_24.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_calculate.xml" value="0.2185" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_home.xml" value="0.1" />
@@ -18,8 +20,9 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_profile.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_scan.xml" value="0.1" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.264" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_list.xml" value="0.264" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail_scan_food.xml" value="0.2" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_list.xml" value="0.11607142857142858" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_main.xml" value="0.11851851851851852" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_preference.xml" value="0.1" />

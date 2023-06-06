@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import org.obesifix.obesifix.R
 import org.obesifix.obesifix.adapter.LoadingStateAdapter
 import org.obesifix.obesifix.adapter.RecommendationListAdapter
 import org.obesifix.obesifix.databinding.ActivityListBinding
@@ -45,6 +44,7 @@ class ListActivity : AppCompatActivity() {
             )[ListViewModel::class.java]
         userPreference = UserPreference.getInstance(dataStore)
         auth = Firebase.auth
+        supportActionBar?.hide()
         setupAction()
     }
 
@@ -56,7 +56,22 @@ class ListActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        search()
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = binding.editTextSearch
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { performSearch(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { performSearch(it) }
+                return true
+            }
+        })
+
         listViewModel.isLoading.observe(this){
             showLoading(it)
         }
@@ -84,26 +99,17 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    private fun search() {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = (findViewById(R.id.editTextSearch) as? SearchView)
-
-        searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView?.queryHint = resources.getString(R.string.search_bar)
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                listViewModel.getFilteredRecommendation(token,idFlow,query)
-                searchView.clearFocus()
-                return true
-            }
-            override fun onQueryTextChange(newText: String): Boolean {
-                listViewModel.getFilteredRecommendation(token,idFlow,newText)
-                return true
-            }
-        })
-    }
-
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun performSearch(query: String?) {
+        // You can perform your search logic here and update the adapter with the filtered results
+        // Make sure to use the appropriate method from your ViewModel to fetch the filtered data
+        if (query != null) {
+            listViewModel.getFilteredRecommendation(token, idFlow, query).observe(this) { pagingData ->
+                adapter.submitData(lifecycle, pagingData)
+            }
+        }
     }
 }
