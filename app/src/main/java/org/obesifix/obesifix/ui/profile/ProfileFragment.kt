@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
+import org.obesifix.obesifix.ui.about.AboutActivity
+import org.obesifix.obesifix.ui.home.list.ListActivity
 import org.obesifix.obesifix.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -54,6 +56,10 @@ class ProfileFragment : Fragment() {
             logoutUser()
         }
 
+        binding.MyProfile.setOnClickListener {
+            val intent = Intent(requireContext(), AboutActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 

@@ -81,7 +81,7 @@ class ListActivity : AppCompatActivity() {
         )
         val user: FirebaseUser? = auth.currentUser
 
-        user?.getIdToken(false)
+        user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     token = task.result?.token.toString()
