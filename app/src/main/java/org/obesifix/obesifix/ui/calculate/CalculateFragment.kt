@@ -52,7 +52,6 @@ class CalculateFragment : Fragment() {
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-
         calculateViewModel.triggerAlarmReset()
         return binding.root
     }
@@ -69,7 +68,6 @@ class CalculateFragment : Fragment() {
         sharedViewModel.getParcelData().observe(viewLifecycleOwner){ data ->
             Log.d("datasetupAdd", "ini setup $data")
             calculateViewModel.addNutrition(data)
-            //ngebug kereset
         }
     }
 

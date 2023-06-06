@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
         binding.tvName.text = userName
 
         var token: String? = null
-        user?.getIdToken(false)
+        user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     token = task.result?.token

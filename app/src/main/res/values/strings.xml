@@ -90,5 +90,6 @@
     <string name="portion_desc">0 Cup</string>
     <string name="title_tag">Tag</string>
     <string name="tag_desc">#tag</string>
-
+    <!-- about page   -->
+    <string name="about_text">About Us</string>
 </resources>
