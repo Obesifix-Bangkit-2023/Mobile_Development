@@ -110,6 +110,18 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_begin="91dp" />
 
+                    <ImageView
+                        android:id="@+id/img_char"
+                        android:layout_width="300dp"
+                        android:layout_height="116dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:srcCompat="@drawable/calculate_img" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
