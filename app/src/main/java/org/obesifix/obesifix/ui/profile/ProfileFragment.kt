@@ -56,7 +56,7 @@ class ProfileFragment : Fragment() {
             logoutUser()
         }
 
-        binding.MyProfile.setOnClickListener {
+        binding.About.setOnClickListener {
             val intent = Intent(requireContext(), AboutActivity::class.java)
             startActivity(intent)
         }
