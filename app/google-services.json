@@ -14,19 +14,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "817427779112-95hp534ic7r349v2ju04l3huku1rje2l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.obesifix.obesifix",
+            "certificate_hash": "c152e9e4a604e5a021d885f9e093786cf25506ba"
+          }
+        },
+        {
           "client_id": "817427779112-fp5jfvjqnu7e3d49plhls7f03d1a3tb3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "org.obesifix.obesifix",
             "certificate_hash": "9ad69ea9bb35acc3ae32145682be7cc1f6f0cec8"
-          }
-        },
-        {
-          "client_id": "817427779112-gn55aui1ld1vsehh1ni0abi3952lqcbj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.obesifix.obesifix",
-            "certificate_hash": "c152e9e4a604e5a021d885f9e093786cf25506ba"
           }
         },
         {

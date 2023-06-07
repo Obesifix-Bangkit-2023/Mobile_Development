@@ -78,6 +78,15 @@ class LoginRepository@Inject constructor(private val context: Context, private v
                 if(response.isSuccessful){
                     Log.d("REQ LOGIN","SUCCESS")
                     _loginResponse.value = response.body()
+                    val model = response.body()?.userId?.let {
+                        UserModel(
+                            it,
+                            true
+                        )
+                    }
+                    if (model != null) {
+                        saveUser(model)
+                    }
                 } else {
                     _loginResponse.value = LoginResponse(false) // Set a default LoginResponse with status as false
                     Toast.makeText(context, context.getString(R.string.new_user), Toast.LENGTH_SHORT ).show()

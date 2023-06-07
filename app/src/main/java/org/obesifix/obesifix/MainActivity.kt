@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.getUser().observe(this) { user ->
+            Log.d("main user","$user")
             if (!user.isLogin) {
                 startActivity(Intent(this, LoginActivity::class.java))
             }

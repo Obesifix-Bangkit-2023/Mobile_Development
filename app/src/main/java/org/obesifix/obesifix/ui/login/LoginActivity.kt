@@ -89,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, "Google sign in failed", e)
             }
         } else {
-            Log.d(TAG, "Result code is not OK: ${result.resultCode}")
+            Log.d(TAG, "Result code is not OK bcs $result: ${result.resultCode}")
         }
         Log.d("RESULT SIGN IN 2","INSIDE RESULT SIGN IN2 FUNCTION")
     }

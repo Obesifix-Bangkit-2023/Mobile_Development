@@ -224,34 +224,4 @@ class CalculateRepository@Inject constructor(private val context: Context) {
         _carbCurrent.value = (_carbCurrent.value ?: 0f) + (data.carbohydrate ?: 0f)
     }
 
-    fun resetData() {
-        _calCurrent.value = 0f
-        _fatCurrent.value = 0f
-        _proteinCurrent.value = 0f
-        _carbCurrent.value = 0f
-
-        Toast.makeText(context, "Reset the calculation data", Toast.LENGTH_SHORT).show()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun scheduleDataReset() {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val resetIntent = Intent(context, DataResetReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, resetIntent,  PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE )
-
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
-    }
-
-    class DataResetReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val repository = CalculateRepository(context)
-            repository.resetData()
-        }
-    }
-
 }

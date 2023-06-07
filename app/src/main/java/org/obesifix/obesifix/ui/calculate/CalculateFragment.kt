@@ -1,5 +1,6 @@
 package org.obesifix.obesifix.ui.calculate
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -27,6 +29,7 @@ import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
+import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class CalculateFragment : Fragment() {
@@ -52,7 +55,7 @@ class CalculateFragment : Fragment() {
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-        calculateViewModel.triggerAlarmReset()
+
         return binding.root
     }
 
@@ -117,10 +120,37 @@ class CalculateFragment : Fragment() {
             val desiredTabId = R.id.navigation_scan
             bottomNavigationView.selectedItemId = desiredTabId
         }
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentDate = "$day/${month + 1}/$year"
+        binding.tvDate.setText(currentDate)
+        binding.tvDate.setOnClickListener { showDatePickerDialog() }
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                binding.tvDate.setText(selectedDate)
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        datePickerDialog.show()
     }
 
 }

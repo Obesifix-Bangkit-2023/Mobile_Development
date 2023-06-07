@@ -67,11 +67,6 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
         calculateRepository.addCalculation(data)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun triggerAlarmReset(){
-        calculateRepository.scheduleDataReset()
-    }
-
     data class NutritionData(
         val calCurrent: Float?,
         val calNeed: Float?,
