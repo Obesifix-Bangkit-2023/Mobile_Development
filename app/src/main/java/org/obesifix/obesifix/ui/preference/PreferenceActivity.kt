@@ -44,7 +44,7 @@ class PreferenceActivity : AppCompatActivity() {
         supportActionBar?.hide() // Hide the default action bar
         loginViewModel =
             ViewModelProvider(this,
-                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore))
+                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore),application)
             )[LoginViewModel::class.java]
 
         auth = Firebase.auth

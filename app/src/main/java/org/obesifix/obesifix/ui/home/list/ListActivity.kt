@@ -40,7 +40,7 @@ class ListActivity : AppCompatActivity() {
         adapter = RecommendationListAdapter()
         listViewModel =
             ViewModelProvider(this,
-                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore))
+                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore), application)
             )[ListViewModel::class.java]
         userPreference = UserPreference.getInstance(dataStore)
         auth = Firebase.auth

@@ -1,55 +1,39 @@
 package org.obesifix.obesifix.ui.calculate
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
+import android.app.Application
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.obesifix.obesifix.R
+import org.obesifix.obesifix.database.entity.NutritionSummary
+import org.obesifix.obesifix.database.room.NutritionDao
+import org.obesifix.obesifix.database.room.NutritionRoomDatabase
 import org.obesifix.obesifix.network.ApiConfig
 import org.obesifix.obesifix.network.DataUserResponse
-import org.obesifix.obesifix.network.FoodListItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
 import kotlin.math.pow
 
-class CalculateRepository@Inject constructor(private val context: Context) {
+class CalculateRepository@Inject constructor(private val context: Context, application: Application) {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val _status = MutableLiveData<String>()
     val status = _status
 
-    private val _calCurrent = MutableLiveData<Float>()
-    val calCurrent = _calCurrent
-
     private val _calNeed = MutableLiveData<Float>()
     val calNeed = _calNeed
-
-    private val _fatCurrent = MutableLiveData<Float>()
-    val fatCurrent = _fatCurrent
 
     private val _fatNeed = MutableLiveData<Float>()
     val fatNeed = _fatNeed
 
-    private val _carbCurrent = MutableLiveData<Float>()
-    val carbCurrent = _carbCurrent
-
     private val _carbNeed = MutableLiveData<Float>()
     val carbNeed = _carbNeed
-
-    private val _proteinCurrent = MutableLiveData<Float>()
-    val proteinCurrent = _proteinCurrent
 
     private val _proteinNeed = MutableLiveData<Float>()
     val proteinNeed = _proteinNeed
@@ -57,11 +41,12 @@ class CalculateRepository@Inject constructor(private val context: Context) {
     private val _userDataResponse = MutableLiveData<DataUserResponse>()
     val userDataResponse = _userDataResponse
 
+    private var nutritionDao: NutritionDao?
+    private var nutritionDb: NutritionRoomDatabase?
+
     init{
-        _calCurrent.value = 0f
-        _fatCurrent.value = 0f
-        _carbCurrent.value = 0f
-        _proteinCurrent.value = 0f
+        nutritionDb = NutritionRoomDatabase.getDatabase(application)
+        nutritionDao = nutritionDb?.nutritionDao()
     }
 
     fun getUserData(token:String, id: String){
@@ -217,11 +202,8 @@ class CalculateRepository@Inject constructor(private val context: Context) {
         Log.d(ContentValues.TAG, "getFatNeed ${_fatNeed.value}")
     }
 
-    fun addCalculation(data: FoodListItem) {
-        _calCurrent.value = (_calCurrent.value ?: 0f) + (data.calorie ?: 0f)
-        _fatCurrent.value = (_fatCurrent.value ?: 0f) + (data.fat ?: 0f)
-        _proteinCurrent.value = (_proteinCurrent.value ?: 0f) + (data.protein ?: 0f)
-        _carbCurrent.value = (_carbCurrent.value ?: 0f) + (data.carbohydrate ?: 0f)
+    fun getDataNutritionByIdAndDate(id: String, date:String): LiveData<NutritionSummary>?{
+        Log.d("FUN RepoNC", "INSIDE")
+        return nutritionDao?.getNutritionByIdAndDate(id,date)
     }
-
 }

@@ -1,12 +1,11 @@
 package org.obesifix.obesifix.ui.calculate
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.database.entity.NutritionSummary
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,25 +18,13 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
     val nutritionLiveData: LiveData<NutritionData> = nutritionData
 
     init {
-        calculateRepository.calCurrent.observeForever {
-            updateNutritionData()
-        }
         calculateRepository.calNeed.observeForever {
-            updateNutritionData()
-        }
-        calculateRepository.fatCurrent.observeForever {
             updateNutritionData()
         }
         calculateRepository.fatNeed.observeForever {
             updateNutritionData()
         }
-        calculateRepository.carbCurrent.observeForever {
-            updateNutritionData()
-        }
         calculateRepository.carbNeed.observeForever {
-            updateNutritionData()
-        }
-        calculateRepository.proteinCurrent.observeForever {
             updateNutritionData()
         }
         calculateRepository.proteinNeed.observeForever {
@@ -47,13 +34,9 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
 
     private fun updateNutritionData() {
         val data = NutritionData(
-            calculateRepository.calCurrent.value,
             calculateRepository.calNeed.value,
-            calculateRepository.fatCurrent.value,
             calculateRepository.fatNeed.value,
-            calculateRepository.carbCurrent.value,
             calculateRepository.carbNeed.value,
-            calculateRepository.proteinCurrent.value,
             calculateRepository.proteinNeed.value
         )
         nutritionData.value = data
@@ -63,18 +46,25 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
         calculateRepository.getUserData(token,id)
     }
 
-    fun addNutrition(data: FoodListItem){
-        calculateRepository.addCalculation(data)
-    }
-
     data class NutritionData(
-        val calCurrent: Float?,
         val calNeed: Float?,
-        val fatCurrent: Float?,
         val fatNeed: Float?,
-        val carbCurrent: Float?,
         val carbNeed: Float?,
-        val proteinCurrent: Float?,
         val proteinNeed: Float?
     )
+
+    private val _nutritionData = MutableLiveData<NutritionSummary>()
+    val nutritionDataDb = _nutritionData
+
+    fun getDataNutritionByIdAndDate(id:String, date:String){
+        try{
+            calculateRepository.getDataNutritionByIdAndDate(id,date)?.observeForever{ nutritionCurrent ->
+                Log.d("FUN NC", "data nutritionCurrent $nutritionCurrent")
+                _nutritionData.value = nutritionCurrent
+                Log.d("FUN NC", "data nutritionCurrent ${_nutritionData.value}")
+            }
+        }catch (e:Exception){
+            Log.d("getDataNutrition","getDataIsError")
+        }
+    }
 }

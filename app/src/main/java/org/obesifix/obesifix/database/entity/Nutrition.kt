@@ -3,7 +3,6 @@ package org.obesifix.obesifix.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "nutrition")
 data class Nutrition(
@@ -26,8 +25,6 @@ data class Nutrition(
     @field:ColumnInfo(name = "carbohydrate")
     var carbohydrate: Float = 0f,
 
-
-
     @ColumnInfo(name = "date")
-    var date: Date = Date()
+    var date: String = ""
 )

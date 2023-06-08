@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         loginViewModel =
             ViewModelProvider(this,
-                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore))
+                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore), application)
             )[LoginViewModel::class.java]
 
         // Configure Google Sign In

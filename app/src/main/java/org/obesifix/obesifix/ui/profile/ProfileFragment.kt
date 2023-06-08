@@ -5,17 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import org.obesifix.obesifix.R
-import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
 import org.obesifix.obesifix.ui.about.AboutActivity
-import org.obesifix.obesifix.ui.home.list.ListActivity
 import org.obesifix.obesifix.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {

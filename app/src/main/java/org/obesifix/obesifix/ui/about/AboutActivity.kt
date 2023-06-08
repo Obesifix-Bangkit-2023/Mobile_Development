@@ -1,10 +1,8 @@
 package org.obesifix.obesifix.ui.about
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.obesifix.obesifix.R
+import androidx.appcompat.app.AppCompatActivity
 import org.obesifix.obesifix.databinding.ActivityAboutBinding
-import org.obesifix.obesifix.databinding.ActivityListBinding
 
 class AboutActivity : AppCompatActivity() {
 

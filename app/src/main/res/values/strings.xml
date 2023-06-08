@@ -58,20 +58,31 @@
     <string name="name_recommendation">Recommendation</string>
     <string name="cal_recommendation">0 Cal</string>
     <!-- fragment calculate -->
-    <string name="title_name">Name: </string>
-    <string name="title_status">Status: </string>
+    <string name="title_name">Name:</string>
+    <string name="title_status">Status:</string>
     <string name="name_desc">User</string>
     <string name="status_desc">Normal</string>
     <string name="header_calculation">Calculate Your Food\'s Health!</string>
+
     <string name="title_cal">Calorie</string>
-    <string name="cal_desc">0 from 0 Kcal</string>
+    <string name="cal_desc">0</string>
+    <string name="cal_need">from 0 Kcal</string>
+
     <string name="title_fat">Fat</string>
-    <string name="fat_desc">0 from 0g</string>
+    <string name="fat_desc">0</string>
+    <string name="fat_need">from 0g</string>
+
     <string name="title_protein">Protein</string>
-    <string name="protein_desc">0 from 0g</string>
+    <string name="protein_desc">0</string>
+    <string name="protein_need">from 0g</string>
+
     <string name="title_carbo">Carbohydrate</string>
-    <string name="carbo_desc">0 from 0g</string>
-    <string name="submit">Add</string>
+    <string name="carbo_desc">0</string>
+    <string name="carbo_need">from 0g</string>
+
+    <string name="another_current">that you have added</string>
+    <string name="submit">Let Add Data for Today</string>
+
     <!-- activity List   -->
     <string name="search_bar">Search…</string>
     <!-- item loading Layout for Paging   -->

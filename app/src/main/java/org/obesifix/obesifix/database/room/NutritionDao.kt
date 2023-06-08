@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.obesifix.obesifix.database.entity.Nutrition
 import org.obesifix.obesifix.database.entity.NutritionSummary
-import java.util.*
 
 @Dao
 interface NutritionDao {
@@ -18,6 +17,6 @@ interface NutritionDao {
             "SUM(nutrition.fat) AS totalFat, SUM(nutrition.protein) AS totalProtein, " +
             "SUM(nutrition.carbohydrate) AS totalCarbohydrate FROM nutrition " +
             "WHERE nutrition.userid = :id AND nutrition.date = :date;")
-    fun getNutritionByIdAndDate(id: String, date: Date): LiveData<NutritionSummary>
+    fun getNutritionByIdAndDate(id: String, date: String): LiveData<NutritionSummary>
 
 }

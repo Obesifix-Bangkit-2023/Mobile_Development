@@ -1,10 +1,11 @@
 package org.obesifix.obesifix.ui.calculate
 
+import android.app.Application
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,14 +25,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import org.obesifix.obesifix.R
-import org.obesifix.obesifix.SharedViewModel
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
+import java.text.SimpleDateFormat
 import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class CalculateFragment : Fragment() {
 
     private lateinit var calculateViewModel: CalculateViewModel
@@ -39,22 +40,40 @@ class CalculateFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
     private lateinit var auth: FirebaseAuth
-    private lateinit var sharedViewModel: SharedViewModel
+    private val calendar = Calendar.getInstance()
+    private val year = calendar.get(Calendar.YEAR)
+    private val month = calendar.get(Calendar.MONTH)
+    private val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    //selected Date
+    private var selectedDate = calendar.time
+
+    //selected Date formatted
+    private var formattedDate: String = ""
+
+    //current data
+    private val currentDate = calendar.time
+
+    //format
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val application = requireContext().applicationContext as Application
         calculateViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore))
+            ViewModelFactory(
+                requireContext(),
+                UserPreference.getInstance(requireContext().dataStore),
+                application
+            )
         )[CalculateViewModel::class.java]
         userPreference = UserPreference.getInstance(requireContext().dataStore)
         _binding = FragmentCalculateBinding.inflate(inflater, container, false)
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
 
         return binding.root
     }
@@ -64,20 +83,19 @@ class CalculateFragment : Fragment() {
         _binding = FragmentCalculateBinding.bind(view)
         auth = Firebase.auth
         setupAction()
-        setupAdd()
-    }
-
-    private fun setupAdd() {
-        sharedViewModel.getParcelData().observe(viewLifecycleOwner){ data ->
-            Log.d("datasetupAdd", "ini setup $data")
-            calculateViewModel.addNutrition(data)
-        }
     }
 
     private fun setupAction() {
         val user: FirebaseUser? = auth.currentUser
         val userName: String? = auth.currentUser?.displayName
-        var token: String? = null
+        var token: String?
+
+        //bug ketika sudah pindah tanggal, pindah fragment, kembali ke fragment lagi dapat data current bukan date
+        formattedDate = dateFormat.format(currentDate)
+        binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+
+        binding.tvDate.setOnClickListener { showDatePickerDialog() }
+
         user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -87,12 +105,16 @@ class CalculateFragment : Fragment() {
                         val idFlow: Flow<String> = userPreference.getUserId()
                         lifecycleScope.launchWhenStarted {
                             idFlow.collect { id ->
+
+                                calculateViewModel.getDataNutritionByIdAndDate(id, formattedDate)
                                 calculateViewModel.getUserData(token!!, id)
-                                calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner){ nutritionData ->
-                                    binding.tvCalDesc.text = "${nutritionData.calCurrent} from ${nutritionData.calNeed} Kcal"
-                                    binding.tvFatDesc.text = "${nutritionData.fatCurrent} from ${nutritionData.fatNeed} g"
-                                    binding.tvProteinDesc.text = "${nutritionData.proteinCurrent} from ${nutritionData.proteinNeed} g"
-                                    binding.tvCarboDesc.text = "${nutritionData.carbCurrent} from ${nutritionData.carbNeed} g"
+
+                                Log.d(
+                                    "Date",
+                                    "sd:$selectedDate, cd:$currentDate"
+                                )
+                                if (selectedDate.equals(currentDate)) {
+                                    currentDateData()
                                 }
                             }
                         }
@@ -106,28 +128,23 @@ class CalculateFragment : Fragment() {
                 }
             }
 
-        calculateViewModel.isLoading.observe(viewLifecycleOwner){
+        calculateViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
         binding.tvNameDesc.text = "$userName"
-        calculateViewModel.status.observe(viewLifecycleOwner){ status ->
+        calculateViewModel.status.observe(viewLifecycleOwner) { status ->
             binding.tvStatusDesc.text = status
         }
 
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        val bottomNavigationView =
+            requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         binding.addButton.setOnClickListener {
             val desiredTabId = R.id.navigation_scan
             bottomNavigationView.selectedItemId = desiredTabId
         }
 
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val currentDate = "$day/${month + 1}/$year"
-        binding.tvDate.setText(currentDate)
-        binding.tvDate.setOnClickListener { showDatePickerDialog() }
+
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -135,22 +152,91 @@ class CalculateFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
-                binding.tvDate.setText(selectedDate)
+                calendar.set(year, monthOfYear, dayOfMonth)
+                selectedDate = calendar.time
+
+                formattedDate = selectedDate.let { dateFormat.format(it) }.toString()
+
+                binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+                val userid = auth.currentUser?.uid
+                if (userid != null) {
+                    calculateViewModel.getDataNutritionByIdAndDate(userid, formattedDate)
+                    if (selectedDate.equals(currentDate)) {
+                       currentDateData()
+                    } else {
+                        //Current Data
+                        calculateViewModel.nutritionDataDb.observe(viewLifecycleOwner) { nutritionSummary ->
+                            Log.d(
+                                "nutritionSummary",
+                                "data nutritionSummary $nutritionSummary"
+                            )
+                            binding.tvCalDesc.text =
+                                "%.1f".format(nutritionSummary.totalCalorie)
+                            binding.tvFatDesc.text =
+                                "%.1f".format(nutritionSummary.totalFat)
+                            binding.tvProteinDesc.text =
+                                "%.1f".format(nutritionSummary.totalProtein)
+                            binding.tvCarboDesc.text =
+                                "%.1f".format(nutritionSummary.totalCarbohydrate)
+                        }
+
+                        val anotherDate = resources.getString(R.string.another_current)
+                        binding.tvCalNeed.text = anotherDate
+                        binding.tvFatNeed.text = anotherDate
+                        binding.tvProteinNeed.text = anotherDate
+                        binding.tvCarboNeed.text = anotherDate
+                    }
+                }
             },
             year,
             month,
             day
         )
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        // Set the maximum date to the current date
+        val currentDate = Calendar.getInstance()
+        datePickerDialog.datePicker.maxDate = currentDate.timeInMillis
         datePickerDialog.show()
+    }
+
+    private fun currentDateData() {
+        //Current Data
+        calculateViewModel.nutritionDataDb.observe(viewLifecycleOwner) { nutritionSummary ->
+            Log.d(
+                "nutritionSummary",
+                "data nutritionSummary $nutritionSummary"
+            )
+            binding.tvCalDesc.text =
+                "%.1f".format(nutritionSummary.totalCalorie)
+            binding.tvFatDesc.text =
+                "%.1f".format(nutritionSummary.totalFat)
+            binding.tvProteinDesc.text =
+                "%.1f".format(nutritionSummary.totalProtein)
+            binding.tvCarboDesc.text =
+                "%.1f".format(nutritionSummary.totalCarbohydrate)
+        }
+
+        //Need Data
+        calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner) { nutritionData ->
+            Log.d("nutritionData", "data nutritionData $nutritionData")
+            binding.tvCalNeed.text =
+                "from ${"%.1f".format(nutritionData.calNeed)} Kcal"
+            binding.tvFatNeed.text =
+                "from ${"%.1f".format(nutritionData.fatNeed)} g"
+            binding.tvProteinNeed.text =
+                "from ${"%.1f".format(nutritionData.proteinNeed)} g"
+            binding.tvCarboNeed.text =
+                "from ${"%.1f".format(nutritionData.carbNeed)} g"
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Reset selectedDate to the current date
+        formattedDate = dateFormat.format(currentDate)
+        binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
     }
 
 }

@@ -1,5 +1,6 @@
 package org.obesifix.obesifix.ui.home
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -41,9 +42,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val application = requireContext().applicationContext as Application
         homeViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore))
+            ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore), application)
         )[HomeViewModel::class.java]
         userPreference = UserPreference.getInstance(requireContext().dataStore)
 

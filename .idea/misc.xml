@@ -21,7 +21,7 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_profile.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_scan.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_about.xml" value="0.4" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.41759112519809827" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail_scan_food.xml" value="0.2" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_list.xml" value="0.2" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_login.xml" value="0.264" />
@@ -29,7 +29,7 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_preference.xml" value="0.2" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/dialog_checkbox_list.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/edittext_underline.xml" value="0.10944026733500417" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_calculate.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_calculate.xml" value="0.4" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_dashboard.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_mentoring.xml" value="0.27447916666666666" />

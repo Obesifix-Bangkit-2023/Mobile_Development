@@ -17,7 +17,6 @@ import org.obesifix.obesifix.databinding.ActivityMainBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
-import org.obesifix.obesifix.ui.calculate.CalculateFragment
 import org.obesifix.obesifix.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var sharedViewModel: SharedViewModel
+//    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         mainViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(this, UserPreference.getInstance(dataStore))
+            ViewModelFactory(this, UserPreference.getInstance(dataStore), application)
         )[MainViewModel::class.java]
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+//        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -49,8 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         val parcelData: FoodListItem? = intent.getParcelableExtra("data")
 
+//        just for moving to fragment calculate
         if (parcelData != null) {
-            sharedViewModel.setParcelData(parcelData)
+//            sharedViewModel.setParcelData(parcelData)
             val desiredTabId = R.id.navigation_calculate
             navView.selectedItemId = desiredTabId
         }
