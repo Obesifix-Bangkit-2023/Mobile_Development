@@ -51,12 +51,17 @@ class CalculateFragment : Fragment() {
     //selected Date formatted
     private var formattedDate: String = ""
 
-    //current data
+    //current Date
     private val currentDate = calendar.time
 
-    //format
+    //format Date
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
+    //nutrition Summary
+    private var nutriSummary: Float? = 0f
+
+    //nutrition Data
+    private var nutriData: Float?  = 0f
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -143,8 +148,7 @@ class CalculateFragment : Fragment() {
             val desiredTabId = R.id.navigation_scan
             bottomNavigationView.selectedItemId = desiredTabId
         }
-
-
+        warningShow()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -189,6 +193,7 @@ class CalculateFragment : Fragment() {
                         binding.tvProteinNeed.text = anotherDate
                         binding.tvCarboNeed.text = anotherDate
                     }
+                    warningShow()
                 }
             },
             year,
@@ -208,6 +213,7 @@ class CalculateFragment : Fragment() {
                 "nutritionSummary",
                 "data nutritionSummary $nutritionSummary"
             )
+            nutriSummary = nutritionSummary.totalCalorie
             binding.tvCalDesc.text =
                 "%.1f".format(nutritionSummary.totalCalorie)
             binding.tvFatDesc.text =
@@ -216,11 +222,13 @@ class CalculateFragment : Fragment() {
                 "%.1f".format(nutritionSummary.totalProtein)
             binding.tvCarboDesc.text =
                 "%.1f".format(nutritionSummary.totalCarbohydrate)
+            warningShow()
         }
 
         //Need Data
         calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner) { nutritionData ->
             Log.d("nutritionData", "data nutritionData $nutritionData")
+            nutriData = nutritionData.calNeed
             binding.tvCalNeed.text =
                 "from ${"%.1f".format(nutritionData.calNeed)} Kcal"
             binding.tvFatNeed.text =
@@ -229,6 +237,23 @@ class CalculateFragment : Fragment() {
                 "from ${"%.1f".format(nutritionData.proteinNeed)} g"
             binding.tvCarboNeed.text =
                 "from ${"%.1f".format(nutritionData.carbNeed)} g"
+            warningShow()
+        }
+        warningShow()
+    }
+
+    private fun warningShow() {
+        val nutriSummary: Float? = nutriSummary
+        val nutriData: Float? = nutriData
+
+        if (nutriSummary != null && nutriData != null) {
+            if (nutriSummary > nutriData) {
+                binding.imgWarning.visibility = View.VISIBLE // Show the ImageView
+            } else {
+                binding.imgWarning.visibility = View.GONE // Hide the ImageView
+            }
+        } else {
+            binding.imgWarning.visibility = View.GONE // Hide the ImageView when either value is null
         }
     }
 
@@ -238,5 +263,6 @@ class CalculateFragment : Fragment() {
         formattedDate = dateFormat.format(currentDate)
         binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
     }
+
 
 }

@@ -215,6 +215,19 @@
                         app:layout_constraintStart_toEndOf="@+id/tv_cal_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_cal_desc" />
 
+                    <ImageView
+                        android:id="@+id/img_warning"
+                        android:layout_width="38dp"
+                        android:layout_height="41dp"
+                        android:layout_marginEnd="24dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_cal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.978"
+                        app:layout_constraintStart_toEndOf="@+id/img_cal"
+                        app:layout_constraintTop_toTopOf="@+id/img_cal"
+                        app:layout_constraintVertical_bias="0.466"
+                        app:srcCompat="@drawable/warning" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
