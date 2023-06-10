@@ -83,6 +83,9 @@
     <string name="another_current">that you have added</string>
     <string name="submit">Add Data for Today</string>
 
+    <string name="calorie">Calorie</string>
+    <string name="warningkkal">Calorie is exceed</string>
+
     <!-- activity List   -->
     <string name="search_bar">Search…</string>
     <!-- item loading Layout for Paging   -->

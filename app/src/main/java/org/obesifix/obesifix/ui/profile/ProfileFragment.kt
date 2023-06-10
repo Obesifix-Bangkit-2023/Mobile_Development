@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
@@ -38,6 +40,7 @@ class ProfileFragment : Fragment() {
         profileImageUrl?.let {
             Glide.with(this)
                 .load(it)
+                .transform(CircleCrop())
                 .into(binding.profileImg)
         }
 
@@ -59,10 +62,27 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logoutUser() {
-        auth.signOut()
-        
-        val intent = Intent(activity, LoginActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+        // Build the alert dialog
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Logout")
+        alertDialogBuilder.setMessage("Are you sure you want to logout?")
+
+        alertDialogBuilder.setPositiveButton("Yes") { dialogInterface, _ ->
+            // User clicked "Yes," perform logout
+            auth.signOut()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+            dialogInterface.dismiss()
+        }
+
+        alertDialogBuilder.setNegativeButton("No") { dialogInterface, _ ->
+            // User clicked "No," dismiss the dialog
+            dialogInterface.dismiss()
+        }
+
+        // Show the alert dialog
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 }

@@ -25,6 +25,8 @@ class DetailScanFood : AppCompatActivity() {
         binding = ActivityDetailScanFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.backButton.setOnClickListener { onBackPressed() }
+
         val image = intent.getStringExtra(EXTRA_IMAGE)
 
         var nameFood = intent.getStringExtra(EXTRA_NAME_FOOD)
