@@ -51,9 +51,10 @@
     <string name="submit_button">Submit</string>
     <string name="selected_foods">Selected Food Items:</string>
     <!--home fragment-->
-    <string name="motivation_card">Search for Nutritional Insights in Your Food!</string>
+    <string name="motivation_card">Let’s Explore the nutritional insights of your food!</string>
     <string name="recommendation">Recommendation for you</string>
     <string name="see_all">See all ></string>
+    <string name="welcome">Welcome !</string>
     <!-- item_col_home_recommendation for home fragment -->
     <string name="name_recommendation">Recommendation</string>
     <string name="cal_recommendation">0 Cal</string>
@@ -97,6 +98,10 @@
     <string name="name_Food">Name Food</string>
     <string name="aboutfood">About Food</string>
     <string name="addfood">Add Food</string>
+    <string name="serving">Serving</string>
+    <string name="protein">Protein</string>
+    <string name="fat">Fat</string>
+    <string name="carbo">Carbo</string>
     <string name="desc_food">An omelet is a dish you might order for breakfast or brunch — its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It is quite common it to have fillings such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above An omelet is a dish you might order for breakfast or brunch its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It s fillings can be varied, such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above
 </string>
     <!-- detail page -->

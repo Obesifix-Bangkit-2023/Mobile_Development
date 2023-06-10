@@ -53,7 +53,7 @@ class DetailScanFood : AppCompatActivity() {
         binding.apply {
             imageView.setImageURI(Uri.parse(image))
             tvnameFood.text = nameFood
-            //tvServing.text = serving
+            tvServing.text = serving
             tvCalorie.text = calorie
             tvFat.text = fat
             tvProtein.text = protein
