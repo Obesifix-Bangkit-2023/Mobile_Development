@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.obesifix.obesifix.database.entity.Nutrition
 
-@Database(entities = [Nutrition::class], version = 2,  autoMigrations = [AutoMigration(from = 1, to = 2), ],exportSchema = false)
+@Database(entities = [Nutrition::class], version = 2,exportSchema = true)
 abstract class NutritionRoomDatabase:RoomDatabase() {
     abstract fun nutritionDao(): NutritionDao
 
@@ -20,6 +20,7 @@ abstract class NutritionRoomDatabase:RoomDatabase() {
                 synchronized(NutritionRoomDatabase::class.java) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         NutritionRoomDatabase::class.java, "nutrition_database")
+                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }

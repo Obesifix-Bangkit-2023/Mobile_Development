@@ -177,8 +177,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="8dp"
                 app:cardBackgroundColor="#FFFAE6"
+                app:cardCornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/cv_status"
                 app:layout_constraintStart_toStartOf="@+id/cv_status"
                 app:layout_constraintTop_toBottomOf="@+id/cv_status">
@@ -188,8 +188,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/warning_icon">
-                </ImageView>
+                    android:src="@drawable/warning_icon"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,19 +197,17 @@
                     android:fontFamily="@font/poppinssemibold"
                     android:padding="5dp"
                     android:text="@string/calorie"
-                    android:textColor="@color/black">
-                </TextView>
+                    android:textColor="@color/black"></TextView>
 
                 <TextView
-                    android:padding="5dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppinsregular"
+                    android:padding="5dp"
                     android:text="@string/warningkkal"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppinsregular">
-                </TextView>
+                    android:textColor="@color/black"></TextView>
 
             </androidx.cardview.widget.CardView>
 

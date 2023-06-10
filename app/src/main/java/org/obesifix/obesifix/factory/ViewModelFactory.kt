@@ -38,7 +38,7 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(application,Injection.detailRepository(application)) as T
             }
-            modelClass.isAssignableFrom(HistoryRepository::class.java) -> {
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
                 HistoryViewModel(Injection.historyRepository(application)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
