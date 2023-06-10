@@ -62,6 +62,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvTagDesc.text = data?.keyword
 
         val userid = auth.currentUser?.uid
+        val foodname = data?.name
         val calorie = data?.calorie
         val fat = data?.fat
         val protein = data?.protein
@@ -72,8 +73,8 @@ class DetailActivity : AppCompatActivity() {
         binding.addButton.setOnClickListener {
             Log.d("DATA PARCELDCT", "${data?.calorie}, ${data?.image}")
 
-            if (userid != null && calorie != null && fat != null && protein != null && carbohydrate != null) {
-                detailViewModel.addNutrition(userid,calorie,fat,protein,carbohydrate,currentDate)
+            if (userid != null && calorie != null && fat != null && protein != null && carbohydrate != null && foodname != null) {
+                detailViewModel.addNutrition(userid,foodname,calorie,fat,protein,carbohydrate,currentDate)
                 Log.d("DB DETAIL", "INSIDE")
             }
 

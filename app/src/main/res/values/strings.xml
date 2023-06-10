@@ -81,7 +81,7 @@
     <string name="carbo_need">from 0g</string>
 
     <string name="another_current">that you have added</string>
-    <string name="submit">Let Add Data for Today</string>
+    <string name="submit">Add Data for Today</string>
 
     <!-- activity List   -->
     <string name="search_bar">Search…</string>
@@ -104,4 +104,11 @@
     <!-- about page   -->
     <string name="about_text">About Us</string>
     <string name="about_detail_text">An application that helps you to track the nutritional information of the foods you eat.</string>
+    <!-- item history   -->
+    <string name="tv_food">Food Name</string>
+    <string name="total_cal">0 Kcal</string>
+    <string name="total_fat">0 g</string>
+    <string name="total_protein">0 g</string>
+    <string name="total_carb">0 g</string>
+    <string name="tv_history_today">Today\'s History</string>
 </resources>

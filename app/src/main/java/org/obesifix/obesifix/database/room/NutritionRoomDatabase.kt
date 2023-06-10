@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.obesifix.obesifix.database.entity.Nutrition
 
-@Database(entities = [Nutrition::class], version = 1, exportSchema = false)
+@Database(entities = [Nutrition::class], version = 2, exportSchema = false)
 abstract class NutritionRoomDatabase:RoomDatabase() {
     abstract fun nutritionDao(): NutritionDao
 

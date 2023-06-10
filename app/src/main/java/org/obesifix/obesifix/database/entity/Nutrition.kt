@@ -13,6 +13,9 @@ data class Nutrition(
     @field:ColumnInfo(name = "userid")
     var userid: String = "",
 
+    @field:ColumnInfo(name = "foodname")
+    var foodname: String = "",
+
     @field:ColumnInfo(name = "calorie")
     var calorie: Float = 0f,
 

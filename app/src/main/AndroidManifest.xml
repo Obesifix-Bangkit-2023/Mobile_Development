@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Obesifix"
         tools:targetApi="31">
         <activity
+            android:name=".ui.history.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
@@ -43,7 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".SplashFragment"
             android:exported="true">
@@ -53,6 +56,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="org.obesifix.obesifix.file-provider"

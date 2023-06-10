@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_history"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_food"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/img_delete"
+            android:layout_width="31dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_food"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.937"
+            app:layout_constraintStart_toEndOf="@+id/tv_food"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
+
+        <ImageView
+            android:id="@+id/img_cal"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_food"
+            app:layout_constraintTop_toBottomOf="@+id/tv_food"
+            app:srcCompat="@drawable/calorie_static" />
+
+        <TextView
+            android:id="@+id/tv_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/total_cal"
+            app:layout_constraintBottom_toBottomOf="@+id/img_cal"
+            app:layout_constraintStart_toEndOf="@+id/img_cal"
+            app:layout_constraintTop_toTopOf="@+id/img_cal" />
+
+        <ImageView
+            android:id="@+id/img_fat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/img_cal"
+            app:layout_constraintTop_toBottomOf="@+id/img_cal"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/fat_static" />
+
+        <TextView
+            android:id="@+id/tv_fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/total_fat"
+            app:layout_constraintBottom_toBottomOf="@+id/img_fat"
+            app:layout_constraintStart_toEndOf="@+id/img_fat"
+            app:layout_constraintTop_toTopOf="@+id/img_fat" />
+
+        <ImageView
+            android:id="@+id/img_protein"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_cal"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/img_cal"
+            app:srcCompat="@drawable/protein_static" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="175dp" />
+
+        <ImageView
+            android:id="@+id/img_carb"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_fat"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/img_fat"
+            app:srcCompat="@drawable/carbo_static" />
+
+        <TextView
+            android:id="@+id/tv_protein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/total_protein"
+            app:layout_constraintBottom_toBottomOf="@+id/img_protein"
+            app:layout_constraintStart_toEndOf="@+id/img_protein"
+            app:layout_constraintTop_toTopOf="@+id/img_protein" />
+
+        <TextView
+            android:id="@+id/tv_carb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/total_carb"
+            app:layout_constraintBottom_toBottomOf="@+id/img_carb"
+            app:layout_constraintStart_toEndOf="@+id/img_carb"
+            app:layout_constraintTop_toTopOf="@+id/img_carb" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

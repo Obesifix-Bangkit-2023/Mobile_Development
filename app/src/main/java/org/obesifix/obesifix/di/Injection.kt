@@ -6,6 +6,7 @@ import org.obesifix.obesifix.MainRepository
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateRepository
 import org.obesifix.obesifix.ui.detail.DetailRepository
+import org.obesifix.obesifix.ui.history.HistoryRepository
 import org.obesifix.obesifix.ui.home.HomeRepository
 import org.obesifix.obesifix.ui.home.list.ListRepository
 import org.obesifix.obesifix.ui.login.LoginRepository
@@ -33,5 +34,9 @@ object Injection {
 
     fun detailRepository(application: Application): DetailRepository{
         return DetailRepository(application)
+    }
+
+    fun historyRepository(application: Application):HistoryRepository{
+        return HistoryRepository(application)
     }
 }

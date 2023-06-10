@@ -9,8 +9,8 @@ import javax.inject.Inject
 class DetailViewModel@Inject constructor(application: Application, private val detailRepository: DetailRepository) :
     AndroidViewModel(application) {
 
-    fun addNutrition(userid: String, calorie: Float, fat: Float, protein: Float, carbohydrate: Float, date: String) {
-        detailRepository.addNutritionData(userid, calorie, fat, protein, carbohydrate, date)
+    fun addNutrition(userid: String, foodname: String, calorie: Float, fat: Float, protein: Float, carbohydrate: Float, date: String) {
+        detailRepository.addNutritionData(userid, foodname, calorie, fat, protein, carbohydrate, date)
     }
 
 }

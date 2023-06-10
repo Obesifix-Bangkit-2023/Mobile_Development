@@ -3,6 +3,8 @@ package org.obesifix.obesifix.ui.calculate
 import android.app.Application
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -28,6 +30,7 @@ import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
+import org.obesifix.obesifix.ui.history.HistoryActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -149,6 +152,10 @@ class CalculateFragment : Fragment() {
             bottomNavigationView.selectedItemId = desiredTabId
         }
         warningShow()
+        binding.imgHistory.setOnClickListener {
+            val intent = Intent(requireContext(), HistoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -248,12 +255,10 @@ class CalculateFragment : Fragment() {
 
         if (nutriSummary != null && nutriData != null) {
             if (nutriSummary > nutriData) {
-                binding.imgWarning.visibility = View.VISIBLE // Show the ImageView
+                binding.tvCalDesc.setTextColor(Color.RED)
             } else {
-                binding.imgWarning.visibility = View.GONE // Hide the ImageView
+                binding.tvCalDesc.setTextColor(resources.getColor(R.color.teal_200))
             }
-        } else {
-            binding.imgWarning.visibility = View.GONE // Hide the ImageView when either value is null
         }
     }
 

@@ -26,7 +26,7 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
                 .into(holder.binding.imgCal)
             holder.binding.tvTitleCal.text = item.name
             val calKcal = item.calorie?.div(1000).toString()
-            holder.binding.tvCalDesc.text = calKcal
+            holder.binding.tvCalDesc.text = "$calKcal Kcal"
         }
         holder.itemView.setOnClickListener{
             val intentDetail = Intent(holder.itemView.context, DetailActivity::class.java)
@@ -35,5 +35,5 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
         }
     }
 
-    override fun getItemCount() = listRecommendation.size
+    override fun getItemCount() = 4
 }

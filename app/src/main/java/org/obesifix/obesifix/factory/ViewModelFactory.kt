@@ -9,6 +9,8 @@ import org.obesifix.obesifix.di.Injection
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateViewModel
 import org.obesifix.obesifix.ui.detail.DetailViewModel
+import org.obesifix.obesifix.ui.history.HistoryRepository
+import org.obesifix.obesifix.ui.history.HistoryViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.home.list.ListViewModel
 import org.obesifix.obesifix.ui.login.LoginViewModel
@@ -35,6 +37,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
             }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(application,Injection.detailRepository(application)) as T
+            }
+            modelClass.isAssignableFrom(HistoryRepository::class.java) -> {
+                HistoryViewModel(Injection.historyRepository(application)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

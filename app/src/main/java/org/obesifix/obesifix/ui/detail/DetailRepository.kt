@@ -18,9 +18,9 @@ class DetailRepository@Inject constructor(application: Application) {
         nutritionDao = nutritionDb?.nutritionDao()
     }
 
-    fun addNutritionData(userid: String, calorie: Float, fat: Float, protein: Float, carbohydrate: Float, date: String) {
+    fun addNutritionData(userid: String, foodname: String, calorie: Float, fat: Float, protein: Float, carbohydrate: Float, date: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val nutrition = Nutrition(userid = userid, calorie = calorie, fat = fat, protein = protein, carbohydrate = carbohydrate, date = date)
+            val nutrition = Nutrition(userid = userid, foodname = foodname, calorie = calorie, fat = fat, protein = protein, carbohydrate = carbohydrate, date = date)
             nutritionDao?.addData(nutrition)
         }
     }
