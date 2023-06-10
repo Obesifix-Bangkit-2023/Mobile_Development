@@ -98,7 +98,8 @@ class CalculateFragment : Fragment() {
         val userName: String? = auth.currentUser?.displayName
         var token: String?
 
-        //bug ketika sudah pindah tanggal, pindah fragment, kembali ke fragment lagi dapat data current bukan date
+        binding.cardView3.visibility = View.GONE
+
         formattedDate = dateFormat.format(currentDate)
         binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
@@ -255,9 +256,9 @@ class CalculateFragment : Fragment() {
 
         if (nutriSummary != null && nutriData != null) {
             if (nutriSummary > nutriData) {
-                binding.tvCalDesc.setTextColor(Color.RED)
+                binding.cardView3.visibility = View.VISIBLE
             } else {
-                binding.tvCalDesc.setTextColor(resources.getColor(R.color.teal_200))
+                binding.cardView3.visibility = View.GONE
             }
         }
     }
