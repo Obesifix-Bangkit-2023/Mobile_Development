@@ -58,7 +58,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="300dp"
                 android:src="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,9 +68,19 @@
                 android:id="@+id/imageView4"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/calorie_static"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/serving_icon"
                 app:layout_constraintStart_toStartOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -78,7 +88,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/protein_static"
                 app:layout_constraintStart_toEndOf="@+id/imageView4"
@@ -88,7 +98,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/fat_static"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -98,11 +108,82 @@
                 android:id="@+id/imageView7"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/carbo_static"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <TextView
+                android:id="@+id/tv_serving"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                app:layout_constraintStart_toStartOf="@+id/imageView10"
+                app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                tools:text="20" />
+
+            <TextView
+                android:id="@+id/serving"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/serving"
+                android:textColor="#D07616"
+                android:fontFamily="@font/poppinsmedium"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                app:layout_constraintStart_toStartOf="@+id/imageView10"
+                app:layout_constraintTop_toBottomOf="@+id/tv_serving" />
+
+            <TextView
+                android:id="@+id/kkal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/calorie"
+                android:textColor="#D01647"
+                app:layout_constraintEnd_toEndOf="@+id/tvCalorie"
+                app:layout_constraintStart_toStartOf="@+id/tvCalorie"
+                app:layout_constraintTop_toBottomOf="@+id/tv_serving" />
+
+            <TextView
+                android:id="@+id/protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/protein"
+                android:textColor="#8BB01F"
+                app:layout_constraintEnd_toEndOf="@+id/tvProtein"
+                app:layout_constraintStart_toStartOf="@+id/tvProtein"
+                app:layout_constraintTop_toBottomOf="@+id/tv_serving" />
+
+            <TextView
+                android:id="@+id/fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/fat"
+                android:textColor="#5C16CE"
+                app:layout_constraintEnd_toEndOf="@+id/tvFat"
+                app:layout_constraintStart_toStartOf="@+id/tvFat"
+                app:layout_constraintTop_toBottomOf="@+id/tv_serving" />
+
+            <TextView
+                android:id="@+id/carbo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/carbo"
+                android:textColor="#197BD2"
+                app:layout_constraintEnd_toEndOf="@+id/tvCarbo"
+                app:layout_constraintStart_toStartOf="@+id/tvCarbo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_serving" />
+
 
             <TextView
                 android:id="@+id/tvCalorie"
@@ -169,7 +250,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="180dp"
                 android:layout_marginRight="16dp"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"

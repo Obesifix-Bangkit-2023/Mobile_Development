@@ -35,7 +35,7 @@ class HistoryAdapter(private val historyViewModel: HistoryViewModel):
                 tvCarb.text = data.carbohydrate.toString()
                 imgDelete.setOnClickListener {
                     val id = data.id
-                    historyViewModel.removeHistoryNutritionTodayById(id)
+                    //historyViewModel.removeHistoryNutritionTodayById(id)
                 }
             }
         }
