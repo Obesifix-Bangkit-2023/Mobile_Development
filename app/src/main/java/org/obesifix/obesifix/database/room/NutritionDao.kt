@@ -11,6 +11,7 @@ import org.obesifix.obesifix.database.entity.NutritionSummary
 
 @Dao
 interface NutritionDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addData(nutrition: Nutrition)
 

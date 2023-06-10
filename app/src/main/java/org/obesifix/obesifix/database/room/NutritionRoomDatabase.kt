@@ -1,12 +1,13 @@
 package org.obesifix.obesifix.database.room
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.obesifix.obesifix.database.entity.Nutrition
 
-@Database(entities = [Nutrition::class], version = 2, exportSchema = false)
+@Database(entities = [Nutrition::class], version = 2,  autoMigrations = [AutoMigration(from = 1, to = 2), ],exportSchema = false)
 abstract class NutritionRoomDatabase:RoomDatabase() {
     abstract fun nutritionDao(): NutritionDao
 
