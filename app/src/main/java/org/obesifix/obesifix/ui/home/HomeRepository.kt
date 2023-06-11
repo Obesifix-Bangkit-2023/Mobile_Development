@@ -19,8 +19,9 @@ class HomeRepository@Inject constructor(private val context: Context, private va
 
     suspend fun getRecommendation(token:String, id:String){
         _isLoading.value = true
+        val bearer = "Bearer $token"
         try{
-            val response = ApiConfig.getApiService().getRecommendationUser(token,id)
+            val response = ApiConfig.getApiService().getRecommendationUser(bearer,id)
             val items = response.foodList
             if (items?.isNotEmpty() == true) {
                 _listItem.value = response.foodList

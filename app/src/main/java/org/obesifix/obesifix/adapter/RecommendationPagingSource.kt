@@ -16,7 +16,7 @@ class RecommendationPagingSource(private val apiService: ApiService,
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FoodListItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val response = apiService.getRecommendationUser(token, id)
+            val response = apiService.getRecommendationUser("Bearer $token", id)
 
             LoadResult.Page(
                 data = response.foodList.orEmpty(),

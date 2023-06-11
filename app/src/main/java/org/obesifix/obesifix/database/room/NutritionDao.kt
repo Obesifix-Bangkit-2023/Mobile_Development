@@ -21,11 +21,13 @@ interface NutritionDao {
             "WHERE nutrition.userid = :id AND nutrition.date = :date;")
     fun getNutritionByIdAndDate(id: String, date: String): LiveData<NutritionSummary>
 
-    @Query("SELECT * FROM nutrition " +
-            "WHERE nutrition.userid = :id AND nutrition.date = :date;")
-    fun getListNutritionByIdAndDate(id: String, date: String): LiveData<List<HistoryNutrition>>
+//    @Query("SELECT * FROM nutrition WHERE nutrition.userid = :id AND nutrition.date = :date;")
+//    suspend fun getListNutritionByIdAndDate(id: String, date: String): List<HistoryNutrition>
 
-    @Query("DELETE FROM nutrition WHERE nutrition.id = :id")
+    @Query("SELECT * FROM nutrition WHERE nutrition.userid = :id AND nutrition.date = :date LIMIT :pageSize OFFSET :offset")
+    suspend fun getListNutritionByIdAndDate(id: String, date: String, pageSize: Int, offset: Int): List<HistoryNutrition>
+
+    @Query("DELETE FROM nutrition WHERE nutrition.id = :id;")
     suspend fun removeHistoryNutritionTodayById(id: Long):Int
 
 }

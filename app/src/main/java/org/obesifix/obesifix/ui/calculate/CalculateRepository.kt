@@ -203,7 +203,7 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     }
 
     fun getDataNutritionByIdAndDate(id: String, date:String): LiveData<NutritionSummary>?{
-        Log.d("FUN RepoNC", "INSIDE")
+        Log.d("FUN RepoNC", "INSIDE $id, $date")
         return nutritionDao?.getNutritionByIdAndDate(id,date)
     }
 }

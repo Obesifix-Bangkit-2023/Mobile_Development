@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.ui.history
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
@@ -9,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.obesifix.obesifix.adapter.history.HistoryPagingSource
 import org.obesifix.obesifix.database.entity.HistoryNutrition
@@ -28,9 +30,10 @@ class HistoryRepository@Inject constructor(private val application: Application)
     }
 
     fun getListNutritionByIdAndDate(id: String, date: String): LiveData<PagingData<HistoryNutrition>> {
+        Log.d("HR", "getListNutritionByIdAndDate Inside history repository $id, $date")
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 5,
             ),
             pagingSourceFactory = {
                 HistoryPagingSource(application, id, date)

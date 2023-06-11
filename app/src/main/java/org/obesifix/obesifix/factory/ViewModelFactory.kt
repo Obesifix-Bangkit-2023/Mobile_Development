@@ -9,7 +9,6 @@ import org.obesifix.obesifix.di.Injection
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateViewModel
 import org.obesifix.obesifix.ui.detail.DetailViewModel
-import org.obesifix.obesifix.ui.history.HistoryRepository
 import org.obesifix.obesifix.ui.history.HistoryViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.home.list.ListViewModel

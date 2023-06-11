@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
         val userName: String? = auth.currentUser?.displayName
         binding.tvName.text = userName
 
-        var token: String? = null
+        var token: String?
         user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -100,6 +100,7 @@ class HomeFragment : Fragment() {
                         val idFlow: Flow<String> = userPreference.getUserId()
                         lifecycleScope.launchWhenStarted {
                             idFlow.collect { id ->
+                                Log.d("TOKEN", "id flow $token")
                                 homeViewModel.getRecommendation(token!!, id)
                             }
                         }

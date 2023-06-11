@@ -11,11 +11,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.Flow
 import org.obesifix.obesifix.adapter.LoadingStateAdapter
 import org.obesifix.obesifix.adapter.RecommendationListAdapter
 import org.obesifix.obesifix.databinding.ActivityListBinding
@@ -23,6 +25,7 @@ import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class ListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListBinding
@@ -30,8 +33,8 @@ class ListActivity : AppCompatActivity() {
     private lateinit var listViewModel: ListViewModel
     private lateinit var adapter: RecommendationListAdapter
     private lateinit var userPreference: UserPreference
-    private lateinit var token:String
-    private lateinit var idFlow:String
+    private lateinit var token: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +42,13 @@ class ListActivity : AppCompatActivity() {
         setContentView(binding.root)
         adapter = RecommendationListAdapter()
         listViewModel =
-            ViewModelProvider(this,
-                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore), application)
+            ViewModelProvider(
+                this,
+                ViewModelFactory(
+                    applicationContext,
+                    UserPreference.getInstance(applicationContext.dataStore),
+                    application
+                )
             )[ListViewModel::class.java]
         userPreference = UserPreference.getInstance(dataStore)
         auth = Firebase.auth
@@ -72,7 +80,7 @@ class ListActivity : AppCompatActivity() {
             }
         })
 
-        listViewModel.isLoading.observe(this){
+        listViewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
@@ -86,10 +94,16 @@ class ListActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     token = task.result?.token.toString()
                     // Token retrieval successful
-                    idFlow = userPreference.getUserId().toString()
-                            listViewModel.getRecommendation(token,idFlow).observe(this@ListActivity){ pagingData ->
-                                adapter.submitData(lifecycle, pagingData)
-                            }
+                    val idFlow: Flow<String> = userPreference.getUserId()
+                    Log.d("id flow list", "list act $idFlow")
+                    lifecycleScope.launchWhenStarted {
+                        idFlow.collect { id ->
+                            listViewModel.getRecommendation(token, id)
+                                .observe(this@ListActivity) { pagingData ->
+                                    adapter.submitData(lifecycle, pagingData)
+                                }
+                        }
+                    }
                 } else {
                     // Task failed
                     Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
@@ -107,8 +121,14 @@ class ListActivity : AppCompatActivity() {
         // You can perform your search logic here and update the adapter with the filtered results
         // Make sure to use the appropriate method from your ViewModel to fetch the filtered data
         if (query != null) {
-            listViewModel.getFilteredRecommendation(token, idFlow, query).observe(this) { pagingData ->
-                adapter.submitData(lifecycle, pagingData)
+            val idFlow: Flow<String> = userPreference.getUserId()
+            lifecycleScope.launchWhenStarted {
+                idFlow.collect { id ->
+                    listViewModel.getFilteredRecommendation(token, id, query)
+                        .observe(this@ListActivity) { pagingData ->
+                            adapter.submitData(lifecycle, pagingData)
+                        }
+                }
             }
         }
     }

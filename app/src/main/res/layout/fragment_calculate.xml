@@ -179,6 +179,7 @@
                 android:layout_marginTop="8dp"
                 app:cardBackgroundColor="#FFFAE6"
                 app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/cv_status"
                 app:layout_constraintStart_toStartOf="@+id/cv_status"
                 app:layout_constraintTop_toBottomOf="@+id/cv_status">
@@ -255,7 +256,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/cal_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_cal"
@@ -267,7 +267,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/cal_need"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cal_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_cal_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_cal_desc" />
@@ -319,7 +318,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/fat_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_fat"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_fat"
@@ -331,7 +329,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/fat_need"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_fat_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_fat_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_fat_desc" />
@@ -383,7 +380,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/protein_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_protein"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_protein"
@@ -395,7 +391,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/protein_need"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_protein_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_protein_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_protein_desc" />
@@ -447,7 +442,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/carbo_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_carbo"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_carbo"
@@ -459,7 +453,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/carbo_need"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_carbo_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_carbo_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_carbo_desc" />
