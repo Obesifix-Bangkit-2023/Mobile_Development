@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/header_calculation"
+                    android:fontFamily="@font/poppinsbold"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -60,7 +61,7 @@
                 android:focusable="false"
                 android:inputType="none"
                 android:textColor="@color/white"
-                android:textStyle="bold"
+                android:fontFamily="@font/poppinsregular"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout_header"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout_header"
@@ -88,6 +89,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="32dp"
                         android:text="@string/title_name"
+                        android:fontFamily="@font/poppinssemibold"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/tv_name_desc"
                         app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +102,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/title_status"
+                        android:fontFamily="@font/poppinssemibold"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/tv_status_desc"
                         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:text="@string/name_desc"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.268"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -123,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/status_desc"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.268"
                         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -179,7 +182,7 @@
                 android:layout_marginTop="8dp"
                 app:cardBackgroundColor="#FFFAE6"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/cv_status"
                 app:layout_constraintStart_toStartOf="@+id/cv_status"
                 app:layout_constraintTop_toBottomOf="@+id/cv_status">
@@ -189,7 +192,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/warning_icon"></ImageView>
+                    android:src="@drawable/warning_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,7 +201,7 @@
                     android:fontFamily="@font/poppinssemibold"
                     android:padding="5dp"
                     android:text="@string/calorie"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,7 +211,7 @@
                     android:fontFamily="@font/poppinsregular"
                     android:padding="5dp"
                     android:text="@string/warningkkal"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black" />
 
             </androidx.cardview.widget.CardView>
 
@@ -246,7 +249,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_cal"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_cal"
                         app:layout_constraintTop_toTopOf="@+id/img_cal" />
 
@@ -256,6 +259,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/cal_desc"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_cal"
@@ -267,6 +271,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/cal_need"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cal_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_cal_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_cal_desc" />
@@ -308,7 +313,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_fat"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_fat"
                         app:layout_constraintTop_toTopOf="@+id/img_fat" />
 
@@ -318,6 +323,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/fat_desc"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_fat"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_fat"
@@ -329,6 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/fat_need"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_fat_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_fat_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_fat_desc" />
@@ -370,7 +377,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_protein"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_protein"
                         app:layout_constraintTop_toTopOf="@+id/img_protein" />
 
@@ -380,6 +387,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/protein_desc"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_protein"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_protein"
@@ -391,6 +399,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/protein_need"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_protein_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_protein_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_protein_desc" />
@@ -432,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_carbo"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_carbo"
                         app:layout_constraintTop_toTopOf="@+id/img_carbo" />
 
@@ -442,6 +451,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="@string/carbo_desc"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_carbo"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_carbo"
@@ -453,6 +463,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/carbo_need"
+                        android:fontFamily="@font/poppinsregular"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_carbo_desc"
                         app:layout_constraintStart_toEndOf="@+id/tv_carbo_desc"
                         app:layout_constraintTop_toTopOf="@+id/tv_carbo_desc" />
@@ -466,6 +477,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/submit"
+                android:fontFamily="@font/poppinsregular"
                 app:layout_constraintEnd_toEndOf="@+id/card_view_carbo_recommendation"
                 app:layout_constraintStart_toStartOf="@+id/card_view_carbo_recommendation"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_carbo_recommendation" />

@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="220dp"
                 android:background="@drawable/recommen_img"
-                android:radius="20dp"
+                android:radius="8dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_cal"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_cal"
                         app:layout_constraintTop_toTopOf="@+id/img_cal" />
 
@@ -104,9 +104,9 @@
                         android:id="@+id/tv_cal_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppinsregular"
                         android:text="@string/cal_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_cal"
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_fat"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_fat"
                         app:layout_constraintTop_toTopOf="@+id/img_fat" />
 
@@ -157,9 +157,9 @@
                         android:id="@+id/tv_fat_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppinsregular"
                         android:text="@string/fat_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_fat"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_fat"
@@ -200,8 +200,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:fontFamily="@font/poppinssemibold"
                         android:text="@string/title_protein"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/img_protein"
                         app:layout_constraintTop_toTopOf="@+id/img_protein" />
 
@@ -209,9 +209,9 @@
                         android:id="@+id/tv_protein_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppinsregular"
                         android:text="@string/protein_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_protein"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_protein"
@@ -254,7 +254,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/title_carbo"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinssemibold"
                         app:layout_constraintStart_toEndOf="@+id/img_carbo"
                         app:layout_constraintTop_toTopOf="@+id/img_carbo" />
 
@@ -262,9 +262,9 @@
                         android:id="@+id/tv_carbo_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppinsregular"
                         android:text="@string/carbo_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="@+id/tv_title_carbo"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_carbo"
@@ -289,25 +289,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
 
+                    <ImageView
+                        android:id="@+id/img_tag"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
+                        android:layout_marginStart="28dp"
+                        android:background="@drawable/tag_icon"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.51" />
+
                     <TextView
                         android:id="@+id/tv_title_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppinssemibold"
                         android:text="@string/title_tag"
-                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.065"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/img_tag"
+                        app:layout_constraintTop_toTopOf="@+id/img_tag" />
 
                     <TextView
                         android:id="@+id/tv_tag_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppinsregular"
                         android:text="@string/tag_desc"
-                        android:textColor="@color/teal_200"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_tag"
@@ -322,6 +333,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/submit"
+                android:fontFamily="@font/poppinsregular"
                 app:layout_constraintEnd_toEndOf="@+id/card_view_tag_recommendation"
                 app:layout_constraintStart_toStartOf="@+id/card_view_tag_recommendation"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_tag_recommendation" />
@@ -336,20 +348,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/not_found"
-                android:layout_width="0dp"
-                android:layout_height="480dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/notfound"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

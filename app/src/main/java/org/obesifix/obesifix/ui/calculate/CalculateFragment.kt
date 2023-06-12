@@ -63,7 +63,7 @@ class CalculateFragment : Fragment() {
     private var nutriSummary: Float? = 0f
 
     //nutrition Data
-    private var nutriData: Float?  = 0f
+    private var nutriData: Float? = 0f
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -93,6 +93,10 @@ class CalculateFragment : Fragment() {
     }
 
     private fun setupAction() {
+        calculateViewModel.status.observe(viewLifecycleOwner) { status ->
+            binding.tvStatusDesc.text = status
+        }
+
         val user: FirebaseUser? = auth.currentUser
         val userName: String? = auth.currentUser?.displayName
         var token: String?
@@ -113,7 +117,6 @@ class CalculateFragment : Fragment() {
                         val idFlow: Flow<String> = userPreference.getUserId()
                         lifecycleScope.launchWhenStarted {
                             idFlow.collect { id ->
-
                                 calculateViewModel.getDataNutritionByIdAndDate(id, formattedDate)
                                 calculateViewModel.getUserData(token!!, id)
 
@@ -141,9 +144,6 @@ class CalculateFragment : Fragment() {
         }
 
         binding.tvNameDesc.text = "$userName"
-        calculateViewModel.status.observe(viewLifecycleOwner) { status ->
-            binding.tvStatusDesc.text = status
-        }
 
         val bottomNavigationView =
             requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
@@ -176,7 +176,7 @@ class CalculateFragment : Fragment() {
                 if (userid != null) {
                     calculateViewModel.getDataNutritionByIdAndDate(userid, formattedDate)
                     if (selectedDate.equals(currentDate)) {
-                       currentDateData()
+                        currentDateData()
                     } else {
                         //Current Data
                         calculateViewModel.nutritionDataDb.observe(viewLifecycleOwner) { nutritionSummary ->
@@ -214,6 +214,21 @@ class CalculateFragment : Fragment() {
     }
 
     private fun currentDateData() {
+        //Need Data
+        calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner) { nutritionData ->
+            Log.d("nutritionData", "data nutritionData $nutritionData")
+            nutriData = nutritionData.calNeed
+            binding.tvCalNeed.text =
+                "from ${"%.1f".format(nutritionData.calNeed)} Kcal"
+            binding.tvFatNeed.text =
+                "from ${"%.1f".format(nutritionData.fatNeed)} g"
+            binding.tvProteinNeed.text =
+                "from ${"%.1f".format(nutritionData.proteinNeed)} g"
+            binding.tvCarboNeed.text =
+                "from ${"%.1f".format(nutritionData.carbNeed)} g"
+            warningShow()
+        }
+
         //Current Data
         calculateViewModel.nutritionDataDb.observe(viewLifecycleOwner) { nutritionSummary ->
             Log.d(
@@ -229,21 +244,6 @@ class CalculateFragment : Fragment() {
                 "%.1f".format(nutritionSummary.totalProtein)
             binding.tvCarboDesc.text =
                 "%.1f".format(nutritionSummary.totalCarbohydrate)
-            warningShow()
-        }
-
-        //Need Data
-        calculateViewModel.nutritionLiveData.observe(viewLifecycleOwner) { nutritionData ->
-            Log.d("nutritionData", "data nutritionData $nutritionData")
-            nutriData = nutritionData.calNeed
-            binding.tvCalNeed.text =
-                "from ${"%.1f".format(nutritionData.calNeed)} Kcal"
-            binding.tvFatNeed.text =
-                "from ${"%.1f".format(nutritionData.fatNeed)} g"
-            binding.tvProteinNeed.text =
-                "from ${"%.1f".format(nutritionData.proteinNeed)} g"
-            binding.tvCarboNeed.text =
-                "from ${"%.1f".format(nutritionData.carbNeed)} g"
             warningShow()
         }
         warningShow()

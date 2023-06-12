@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">Obesifix</string>
+    <string name="recommendation_desc_picture">Gambar Rekomendasi</string>
+    <!-- navbar -->
+    <string name="title_calculate">Kalkulasi</string>
+    <string name="title_scan">Pindai</string>
+    <string name="title_mentoring">Mentor</string>
+    <string name="title_profile">Profil</string>
+    <!-- onboarding 1 -->
+    <string name="skip">"Lewati "</string>
+    <string name="foodscanner">Pemindai Kalori Makanan</string>
+    <!-- onboarding 2 -->
+    <string name="kkalcalculate">Kalkulasi Kalori</string>
+    <!-- onboarding 3 -->
+    <!-- login -->
+    <string name="google">Masuk dengna Google</string>
+    <string name="header_login">Masuk</string>
+    <string name="term">Baca Ketentuan dan Syarat</string>
+    <string name="failed_login">Gagal masuk</string>
+    <string name="new_user">Daftar terlebih dahulu</string>
+    <!-- profile -->
+    <string name="about">Tentang Obesifix</string>
+    <string name="logout">Keluar</string>
+    <string name="name">Username</string>
+    <string name="email">Username@gmail.com</string>
+    <!-- activity preference -->
+    <string name="female">Perempuan</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="enter_age">Masukkan Umurmu</string>
+    <string name="enter_weight">Masukkan Berat Badan dalam Kg</string>
+    <string name="enter_height">Masukkan Tinggi Badan dalam Cm</string>
+    <string name="fruit">Buah</string>
+    <string name="vegetable">Sayur</string>
+    <string name="meat">Daging</string>
+    <string name="age">Umur</string>
+    <string name="weight">Berat Bada(kg)</string>
+    <string name="height">Tinggi Badan(cm)</string>
+    <string name="activity_level">Activity Level</string>
+    <string name="submit_button">Kirim</string>
+    <string name="selected_foods">Pilihan Makanan:</string>
+    <!--home fragment-->
+    <string name="recommendation">Rekomendasi untuk mu</string>
+    <string name="see_all">Lihat Semua ></string>
+    <string name="welcome">Selamat Datang !</string>
+    <!-- item_col_home_recommendation for home fragment -->
+    <string name="name_recommendation">Rekomendasi</string>
+    <string name="cal_recommendation">0 Cal</string>
+    <!-- fragment calculate -->
+    <string name="title_name">Nama:</string>
+    <string name="title_status">Status:</string>
+    <string name="name_desc">Pengguna</string>
+    <string name="status_desc">Normal</string>
+
+    <string name="title_cal">Kalori</string>
+    <string name="cal_desc">0</string>
+    <string name="cal_need">dari 0 Kcal</string>
+
+    <string name="title_fat">Lemak</string>
+    <string name="fat_desc">0</string>
+    <string name="fat_need">dari 0g</string>
+
+    <string name="title_protein">Protein</string>
+    <string name="protein_desc">0</string>
+    <string name="protein_need">dari 0g</string>
+
+    <string name="title_carbo">Karbohidrat</string>
+    <string name="carbo_desc">0</string>
+    <string name="carbo_need">dari 0g</string>
+
+    <string name="another_current">yang telah kamu tambahkan</string>
+    <string name="submit">Tambah Data untuk Hari Ini</string>
+
+    <string name="calorie">Kalori</string>
+    <string name="warningkkal">Kalori berlebih</string>
+
+    <!-- activity List   -->
+    <string name="search_bar">Cari....</string>
+    <!-- item loading Layout for Paging   -->
+    <string name="retry">Coba Lagi</string>
+    <!-- splashscreen -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- page scan -->
+    <string name="name_Food">Nama Makanan</string>
+    <string name="aboutfood">Tentang Makanan</string>
+    <string name="addfood">Tambah Makanan</string>
+    <string name="serving">Porsi</string>
+    <string name="protein">Protein</string>
+    <string name="fat">Lemak</string>
+    <string name="carbo">Karbohidrat</string>
+    <string name="desc_food">An omelet is a dish you might order for breakfast or brunch — its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It is quite common it to have fillings such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above An omelet is a dish you might order for breakfast or brunch its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It s fillings can be varied, such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above
+</string>
+    <!-- detail page -->
+    <string name="title_portion">Porsi</string>
+    <string name="portion_desc">0 Cup</string>
+    <string name="title_tag">Tag</string>
+    <string name="tag_desc">#tag</string>
+    <!-- about page   -->
+    <string name="about_text">Tentang Kami</string>
+    <!-- item history   -->
+    <string name="tv_food">Nama Makanan</string>
+    <string name="total_cal">0 Kcal</string>
+    <string name="total_fat">0 g</string>
+    <string name="total_protein">0 g</string>
+    <string name="total_carb">0 g</string>
+    <string name="tv_history_today">Riwayat Hari ini</string>
+    <!-- History Adapter-->
+    <string name="confirmation">Konfirmasi</string>
+    <string name="positive">Hapus</string>
+    <string name="negative">Batal</string>
+    <string name="desc_foodscanner">Potret makanan dengan kamera, dapatkan informasi detail nutrisi dengan  cepat!</string>
+    <string name="desc_calculate">Hitung kalori makanan untuk memonitor pemasukan secara efektif.</string>
+    <string name="foodreccomen">Rekomendasi Makanan</string>
+    <string name="des_foodreccomen">Saran pribadi tergantung pada kalori dan preferensi pengguna.</string>
+    <string name="getstarted">Mari Mulai</string>
+    <string name="desc_login">Masuk dan Mulai Tingkatkan Kesehatanmu!</string>
+    <string name="footer">Kamu sepenuhnya aman</string>
+    <string name="my_profil">Profilku</string>
+    <string name="title_preference">Hai! Kami ingin tau tentang kamu</string>
+    <string name="male">Laki-Laki</string>
+    <string name="motivation_card">Mari cari informasi nutrisi pada makananmu!</string>
+    <string name="header_calculation">Hitung Nutrisi Makananmu!</string>
+    <string name="scanyourfood">Cek makanan dan minumanmu sekarang!</string>
+    <string name="about_detail_text">Aplikasi untuk membantumu melacak informasinutrisi dari makanan yang kamu makan.</string>
+    <string name="message">Apakah kamu yakin ingin menhapus?</string>
+    <string name="title_home">Beranda</string>
+    <string name="eat_preference">Preferensi Makanan(Pilih banyak)</string>
+</resources>

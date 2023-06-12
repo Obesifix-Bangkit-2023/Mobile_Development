@@ -19,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppinssemibold"
             android:text="@string/tv_food"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.027"
@@ -47,7 +47,7 @@
             android:id="@+id/img_cal"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/tv_food"
             app:layout_constraintTop_toBottomOf="@+id/tv_food"
             app:srcCompat="@drawable/calorie_static" />
@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/total_cal"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintBottom_toBottomOf="@+id/img_cal"
             app:layout_constraintStart_toEndOf="@+id/img_cal"
             app:layout_constraintTop_toTopOf="@+id/img_cal" />
@@ -80,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/total_fat"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintBottom_toBottomOf="@+id/img_fat"
             app:layout_constraintStart_toEndOf="@+id/img_fat"
             app:layout_constraintTop_toTopOf="@+id/img_fat" />
@@ -115,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/total_protein"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintBottom_toBottomOf="@+id/img_protein"
             app:layout_constraintStart_toEndOf="@+id/img_protein"
             app:layout_constraintTop_toTopOf="@+id/img_protein" />
@@ -125,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/total_carb"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintBottom_toBottomOf="@+id/img_carb"
             app:layout_constraintStart_toEndOf="@+id/img_carb"
             app:layout_constraintTop_toTopOf="@+id/img_carb" />

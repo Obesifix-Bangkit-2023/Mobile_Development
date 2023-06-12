@@ -2,6 +2,7 @@ package org.obesifix.obesifix.adapter.history
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,7 @@ import org.obesifix.obesifix.database.entity.HistoryNutrition
 import org.obesifix.obesifix.database.room.NutritionDao
 import org.obesifix.obesifix.database.room.NutritionRoomDatabase
 
-class HistoryPagingSource(private val application: Application, private val id:String, private val date:String): PagingSource<Int, HistoryNutrition>() {
+class HistoryPagingSource(private val application: Application, private val id:String, private val date:String, private val isLoading: MutableLiveData<Boolean>,): PagingSource<Int, HistoryNutrition>() {
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
@@ -20,6 +21,7 @@ class HistoryPagingSource(private val application: Application, private val id:S
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HistoryNutrition> {
         val nutritionDb: NutritionRoomDatabase = NutritionRoomDatabase.getDatabase(application)
         val nutritionDao: NutritionDao = nutritionDb.nutritionDao()
+        isLoading.postValue(true)
         return try {
             val nextPageNumber = params.key ?: INITIAL_PAGE_INDEX
             val pageSize = params.loadSize
@@ -35,6 +37,8 @@ class HistoryPagingSource(private val application: Application, private val id:S
         } catch (exception: Exception) {
             Log.e("HR", "ADAPTER Exception: ${exception.message}")
             return LoadResult.Error(exception)
+        }finally {
+            isLoading.postValue(false)
         }
     }
 

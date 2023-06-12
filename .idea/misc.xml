@@ -20,11 +20,12 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_profile.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/ic_scan.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/drawable/searchview_backgorund.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_about.xml" value="0.4" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.41759112519809827" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_detail_scan_food.xml" value="0.2" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_history.xml" value="0.18518518518518517" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_list.xml" value="0.2" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_list.xml" value="0.1" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_main.xml" value="0.11851851851851852" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/activity_preference.xml" value="0.2" />
@@ -44,7 +45,7 @@
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/fragment_view_pager.xml" value="0.22826086956521738" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/item_checkbox.xml" value="0.1105072463768116" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/item_col_home_recommendation.xml" value="0.4" />
-        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/item_history.xml" value="0.1" />
+        <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/item_history.xml" value="0.3474903474903475" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/layout/item_loading.xml" value="0.4" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/android-project/Obesifix/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

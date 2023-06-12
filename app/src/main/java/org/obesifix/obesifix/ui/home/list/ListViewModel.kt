@@ -14,7 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewModel@Inject constructor(private val listRepository: ListRepository): ViewModel() {
     val isLoading = listRepository.isLoading
-
     fun getRecommendation(token: String, id: String): LiveData<PagingData<FoodListItem>> =
         listRepository.getRecommendation(token, id).cachedIn(viewModelScope)
 

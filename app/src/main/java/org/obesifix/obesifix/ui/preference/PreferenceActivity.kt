@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -30,13 +32,20 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class PreferenceActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPreferenceBinding
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var userPreference: UserPreference
-    private var isGenderSelected = false
+    private var selectedGender: String = ""
     private lateinit var activitySelectedOption: String
     private lateinit var auth: FirebaseAuth
     private var selectedFoodItems = mutableListOf<String>()
 
-    //dont forget to change the height from cm to m
+    //text watcher
+    private var isAgeEmpty = false
+    private var isWeightEmpty = false
+    private var isHeightEmpty = false
+    private var isGenderSelected = false
+    private var isActivitySelected = false
+    private var isFoodItemsSelected = false
+
+    //don't forget to change the height from cm to m
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPreferenceBinding.inflate(layoutInflater)
@@ -52,18 +61,19 @@ class PreferenceActivity : AppCompatActivity() {
     }
 
     private fun setupAction(){
+
         loginViewModel.isLoading.observe(this){
             showLoading(it)
         }
 
         binding.submitButton.isEnabled = false
-
-        binding.radioButtonMale.setOnCheckedChangeListener { _, isChecked ->
-            isGenderSelected = isChecked
-        }
-
-        binding.radioButtonFemale.setOnCheckedChangeListener { _, isChecked ->
-            isGenderSelected = isChecked
+        updateButtonState()
+        binding.radioGroupGender.setOnCheckedChangeListener { _, checkedId ->
+            val radioButton = findViewById<RadioButton>(checkedId)
+            selectedGender = radioButton.text.toString()
+            updateButtonState()
+            // Trigger the afterTextChanged callback of the textWatcher
+            textWatcher.afterTextChanged(null)
         }
 
         val activityOptions = arrayOf("Sedentary", "Low activity", "Active", "Very active")
@@ -75,12 +85,12 @@ class PreferenceActivity : AppCompatActivity() {
         binding.spinnerActivities.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 activitySelectedOption = activityOptions[position].lowercase()
-                // Trigger textWatcher to reevaluate the button's enabled state
+                updateButtonState()
                 textWatcher.afterTextChanged(null)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle the case where no option is selected
+                updateButtonState()
             }
         }
 
@@ -96,12 +106,15 @@ class PreferenceActivity : AppCompatActivity() {
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     selectedFoodItems.add(item)
+                    updateButtonState()
                 } else {
                     selectedFoodItems.remove(item)
+                    updateButtonState()
                 }
                 // Trigger textWatcher to reevaluate the button's enabled state
                 textWatcher.afterTextChanged(null)
             }
+            updateButtonState()
             binding.chipEating.addView(chip)
         }
 
@@ -109,6 +122,7 @@ class PreferenceActivity : AppCompatActivity() {
         selectedFoodItems.forEach { item ->
             val chip = binding.chipEating.findViewWithTag<Chip>(item)
             chip?.isChecked = true
+            updateButtonState()
         }
 
         val user: FirebaseUser? = auth.currentUser
@@ -117,11 +131,6 @@ class PreferenceActivity : AppCompatActivity() {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     token = task.result?.token
-                    if (token != null) {
-                    } else {
-                        // Token is null
-                        Log.d("TOKEN","TOKEN IS NULL")
-                    }
                 } else {
                     // Task failed
                     Log.d("TOKEN","FAILED TO CONNECT TO FIREBASE CLASS")
@@ -131,13 +140,13 @@ class PreferenceActivity : AppCompatActivity() {
         //NEED ATTENTION
         binding.submitButton.setOnClickListener {
             val age = binding.ageEditText.text.toString().toInt()
-            val gender = if (isGenderSelected) "male" else "female"
+            val gender = selectedGender.toLowerCase()
             val heightCM = binding.heightEditText.text.toString().toFloat()
             val heightM = heightCM.toString().toFloat().div(100)
             val weight = binding.weightEditText.text.toString().toFloat()
             val activityLevel = activitySelectedOption
             val selectedFoodItemsArray = selectedFoodItems.toTypedArray()
-
+            Log.d("sfood","$selectedFoodItemsArray")
             val registerData = RegisterBody(
                 age,gender,heightM,weight,activityLevel,selectedFoodItemsArray
             )
@@ -157,18 +166,23 @@ class PreferenceActivity : AppCompatActivity() {
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            val isAgeEmpty = binding.ageEditText.text.isNullOrBlank()
-            val isWeightEmpty = binding.weightEditText.text.isNullOrBlank()
-            val isHeightEmpty = binding.heightEditText.text.isNullOrBlank()
-            val isFoodItemsEmpty = selectedFoodItems.isEmpty()
-
-            binding.submitButton.isEnabled = !isAgeEmpty && !isWeightEmpty && !isHeightEmpty &&
-                    isGenderSelected && activitySelectedOption.isNotBlank() && !isFoodItemsEmpty
+            isAgeEmpty = binding.ageEditText.text.isNullOrBlank()
+            isWeightEmpty = binding.weightEditText.text.isNullOrBlank()
+            isHeightEmpty = binding.heightEditText.text.isNullOrBlank()
+            isGenderSelected =  selectedGender.isBlank()
+            isActivitySelected = activitySelectedOption.isBlank()
+            isFoodItemsSelected = selectedFoodItems.isEmpty()
+            updateButtonState()
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    private fun updateButtonState() {
+        binding.submitButton.isEnabled = !isAgeEmpty && !isWeightEmpty && !isHeightEmpty && !isGenderSelected
+                && !isActivitySelected && !isFoodItemsSelected
     }
 
     private fun showLoading(isLoading: Boolean) {

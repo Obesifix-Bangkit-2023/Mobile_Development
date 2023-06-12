@@ -21,7 +21,7 @@ class ListRepository {
                 pageSize = 5
             ),
             pagingSourceFactory = {
-                RecommendationPagingSource(ApiConfig.getApiService(),token,id)
+                RecommendationPagingSource(ApiConfig.getApiService(),token,id,_isLoading)
             }
         ).liveData
     }

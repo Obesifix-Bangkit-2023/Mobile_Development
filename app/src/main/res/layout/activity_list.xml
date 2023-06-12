@@ -47,7 +47,9 @@
                     android:queryHint="@string/search_bar"
                     android:iconifiedByDefault="true"
                     android:inputType="text"
-                    android:background="@null"
+                    android:icon="@drawable/ic_baseline_search_24"
+                    android:background="@drawable/searchview_backgorund"
+                    android:queryBackground="@android:color/transparent"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white" />
             </androidx.appcompat.widget.Toolbar>
@@ -80,20 +82,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/not_found"
-                android:layout_width="0dp"
-                android:layout_height="480dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/notfound"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

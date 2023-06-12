@@ -1,5 +1,6 @@
 package org.obesifix.obesifix.adapter
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import org.obesifix.obesifix.network.ApiService
@@ -7,13 +8,16 @@ import org.obesifix.obesifix.network.FoodListItem
 
 class RecommendationPagingSource(private val apiService: ApiService,
                                  private val token: String,
-                                 private val id: String): PagingSource<Int, FoodListItem>() {
+                                 private val id: String,
+                                 private val isLoading: MutableLiveData<Boolean>,
+): PagingSource<Int, FoodListItem>() {
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FoodListItem> {
+        isLoading.postValue(true)
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val response = apiService.getRecommendationUser("Bearer $token", id)
@@ -25,6 +29,8 @@ class RecommendationPagingSource(private val apiService: ApiService,
             )
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
+        }finally {
+            isLoading.postValue(false)
         }
     }
 

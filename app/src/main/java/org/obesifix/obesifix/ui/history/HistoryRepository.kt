@@ -36,7 +36,7 @@ class HistoryRepository@Inject constructor(private val application: Application)
                 pageSize = 5,
             ),
             pagingSourceFactory = {
-                HistoryPagingSource(application, id, date)
+                HistoryPagingSource(application, id, date,_isLoading)
             }
         ).liveData
     }

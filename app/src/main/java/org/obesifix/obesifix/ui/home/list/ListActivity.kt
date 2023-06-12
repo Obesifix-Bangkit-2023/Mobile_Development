@@ -5,8 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -18,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.adapter.LoadingStateAdapter
 import org.obesifix.obesifix.adapter.RecommendationListAdapter
 import org.obesifix.obesifix.databinding.ActivityListBinding
@@ -66,6 +70,21 @@ class ListActivity : AppCompatActivity() {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = binding.editTextSearch
+
+        val closeButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        closeButton.setImageResource(R.drawable.ic_baseline_close_24)
+        closeButton.setColorFilter(ContextCompat.getColor(this, R.color.white))
+
+        val searchIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+        searchIcon.setImageResource(R.drawable.ic_baseline_search_24)
+
+        val queryTextView = searchView.findViewById<AutoCompleteTextView>(androidx.appcompat.R.id.search_src_text)
+        queryTextView.setHintTextColor(ContextCompat.getColor(this, R.color.white))
+        queryTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        binding.editTextSearch.setOnClickListener {
+            binding.editTextSearch.isIconified = false
+        }
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

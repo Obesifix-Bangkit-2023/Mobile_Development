@@ -123,7 +123,7 @@
                         android:id="@+id/tv_recommendation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinsmedium"
+                        android:fontFamily="@font/poppinsbold"
                         android:text="@string/recommendation"
                         android:textSize="15sp" />
 

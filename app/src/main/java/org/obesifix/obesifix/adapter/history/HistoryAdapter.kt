@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.database.entity.HistoryNutrition
 import org.obesifix.obesifix.databinding.ItemHistoryBinding
 import org.obesifix.obesifix.ui.history.HistoryViewModel
@@ -49,14 +50,14 @@ class HistoryAdapter(private val historyViewModel: HistoryViewModel, private val
 
         private fun showRemoveConfirmationDialog(historyNutrition: HistoryNutrition) {
             val dialog = AlertDialog.Builder(context)
-                .setTitle("Confirmation")
-                .setMessage("Are you sure you want to remove this item?")
-                .setPositiveButton("Remove") { dialog, _ ->
+                .setTitle(R.string.confirmation)
+                .setMessage(R.string.message)
+                .setPositiveButton(R.string.positive) { dialog, _ ->
                     historyViewModel.removeHistoryNutritionTodayById(historyNutrition.id)
                     notifyItemRemoved(bindingAdapterPosition)
                     dialog.dismiss()
                 }
-                .setNegativeButton("Cancel") { dialog, _ ->
+                .setNegativeButton(R.string.negative) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
