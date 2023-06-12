@@ -18,6 +18,7 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.history.HistoryActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".ui.about.AboutActivity"
@@ -40,27 +41,25 @@
             android:exported="false" />
         <activity
             android:name=".ui.preference.PreferenceActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" >
+        </activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true" />
+        <activity
+            android:name=".SplashFragment"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".SplashFragment"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
 
         <provider
