@@ -16,14 +16,15 @@
             android:background="@drawable/ellipse_img"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,21 +36,22 @@
                     android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back"
                     android:background="@null"
                     android:padding="8dp"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Back Button" />
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/editTextSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:queryHint="@string/search_bar"
+                    android:background="@drawable/searchview_backgorund"
+                    android:icon="@drawable/ic_baseline_search_24"
                     android:iconifiedByDefault="true"
                     android:inputType="text"
-                    android:icon="@drawable/ic_baseline_search_24"
-                    android:background="@drawable/searchview_backgorund"
                     android:queryBackground="@android:color/transparent"
+                    android:queryHint="@string/search_bar"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white" />
             </androidx.appcompat.widget.Toolbar>
@@ -58,9 +60,10 @@
                 android:id="@+id/cv_rv_list_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="64dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">

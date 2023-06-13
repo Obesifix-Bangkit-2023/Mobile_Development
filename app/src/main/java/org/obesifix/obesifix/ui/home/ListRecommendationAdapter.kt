@@ -25,7 +25,7 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
                 .load(item.image)
                 .into(holder.binding.imgCal)
             holder.binding.tvTitleCal.text = item.name
-            val calKcal = item.calorie?.div(1000).toString()
+            val calKcal = item.calorie?.toString()
             holder.binding.tvCalDesc.text = "$calKcal Kcal"
         }
         holder.itemView.setOnClickListener{

@@ -34,8 +34,7 @@ class RecommendationListAdapter:
                 .into(binding.imgCal)
             with(binding){
                 tvTitleCal.text = data.name
-                val kcal = data.calorie?.div(1000).toString()
-                tvCalDesc.text = kcal
+                tvCalDesc.text = data.calorie.toString()
             }
             itemView.setOnClickListener {
                 val intentDetail = Intent(itemView.context, DetailActivity::class.java)
