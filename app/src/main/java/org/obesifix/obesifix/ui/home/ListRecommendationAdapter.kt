@@ -35,5 +35,5 @@ class ListRecommendationAdapter(private val listRecommendation:List<FoodListItem
         }
     }
 
-    override fun getItemCount() = 4
+    override fun getItemCount() = 3
 }
