@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import okhttp3.MultipartBody
 import org.obesifix.obesifix.databinding.FragmentScanBinding
 import org.obesifix.obesifix.network.ApiService
@@ -48,6 +50,9 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
 
     private val initialProgress = 0
 
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +64,8 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
 
         binding.apply {
             btnCamera.setOnClickListener { askCameraPermission() }
@@ -88,7 +95,10 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
 
         binding.progressBar.progress = 0
         val body = PredictionRequestBody(file, "image", this)
-        val token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3YmFiYWFiYTEwNWFkZDZiM2ZiYjlmZjNmZjVmZTNkY2E0Y2VkYTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTXVjaGFtbWFkIFJhaGFyam8gVyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQWNIVHRlTmpBQ0JPZEhpNEVaS1czRjJVc0t3VTRjdkR0OEdvN3NEbUkzOEJBPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL29iZXNpZml4LWJhbmdraXQyMyIsImF1ZCI6Im9iZXNpZml4LWJhbmdraXQyMyIsImF1dGhfdGltZSI6MTY4NjU2MTk5NCwidXNlcl9pZCI6InVsVGhFTHJhUzZUaWJnNW82emJrREk4U2NSNTMiLCJzdWIiOiJ1bFRoRUxyYVM2VGliZzVvNnpia0RJOFNjUjUzIiwiaWF0IjoxNjg2NjE4OTE3LCJleHAiOjE2ODY2MjI1MTcsImVtYWlsIjoibXJhaGFyam93QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA2Nzk2NTc5NzcwMzkyMjgxMTE2Il0sImVtYWlsIjpbIm1yYWhhcmpvd0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.eSGqt7qRnhlYV1wuc0wBVd0LljcwLRGT85dhudnHR49Upg44QBrUzCHnRlQT7SZa9EagnXYUL2rZI23raX6S6fGrJ989WE9FfGtI5ApHYoXoGg3QrIrSKCGRWIiuCncL9CL5iJKS8DzYFMw6J1lkVyXBWkMCKHvoGAxZ_JL1EIkNl5IQB3c0Kk7XT_DcDzZ6ienDVPmPP4zSfiIMV72_UpDDNcw-A1DOUjwsbUai12EE3RjsGoTydjMLKbsmFu1zKnRg7auGU1TzzAdCZiPQpceFzXlm8d8i-nqD4dW8e1oim_6RmSpv6hVI0uOPKm0sVh2hwhymReBL-Na-_9wtiA"
+
+
+
+        val token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3YmFiYWFiYTEwNWFkZDZiM2ZiYjlmZjNmZjVmZTNkY2E0Y2VkYTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTXVjaGFtbWFkIFJhaGFyam8gVyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQWNIVHRlTmpBQ0JPZEhpNEVaS1czRjJVc0t3VTRjdkR0OEdvN3NEbUkzOEJBPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL29iZXNpZml4LWJhbmdraXQyMyIsImF1ZCI6Im9iZXNpZml4LWJhbmdraXQyMyIsImF1dGhfdGltZSI6MTY4NjU2MTk5NCwidXNlcl9pZCI6InVsVGhFTHJhUzZUaWJnNW82emJrREk4U2NSNTMiLCJzdWIiOiJ1bFRoRUxyYVM2VGliZzVvNnpia0RJOFNjUjUzIiwiaWF0IjoxNjg2NjM5Njk5LCJleHAiOjE2ODY2NDMyOTksImVtYWlsIjoibXJhaGFyam93QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA2Nzk2NTc5NzcwMzkyMjgxMTE2Il0sImVtYWlsIjpbIm1yYWhhcmpvd0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.LGqUaLDaUbv9gngIF__yfsWUqivhUJgV3pdemzAhXT1UajDLzGC0Cpkzpue0NU6J-MI7nFzvC1d1uidBAXmjtV8qojr466XqKQFtFu0wmgMkr1uqHlX9zdiD-avevqfpUqevQuj2Nef4wgK0fAPaxIxOPlwHQv2YXH8bL7p_hyg9J2LRrY1siDpb6juGwh826WGZYa3cpcnKEKCpUPLkGzJYwKIFkLYTVXd3xf0RFFNFsR8y5g0E1eaf8c03_e-zEXEudfdHZMvIfbuTNmvxpFyKgTqCfdFT8QZ_fInG9pSSB5pPGYH_txh_Ri1Dx3xhpe4Om8wwGvxr0pzhHUypOg"
         val bearer = "Bearer $token"
         binding.progressBar.progress = 100
 
@@ -105,33 +115,36 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
                     val predictionResponse = response.body()
                     if (predictionResponse != null) {
                         val foodData = predictionResponse.food_data
-                        val nameFood = foodData.name
-                        val serving = foodData.serving
-                        val calorie = foodData.calorie
-                        val fat = foodData.fat
-                        val protein = foodData.protein
-                        val carbohydrate = foodData.carbohydrate
-                        val description = foodData.description
+                        if (foodData != null) {
+                            val nameFood = foodData.name
+                            val serving = foodData.serving
+                            val calorie = foodData.total_cal
+                            val fat = foodData.total_fat
+                            val protein = foodData.total_protein
+                            val carbohydrate = foodData.total_carb
+                            val description = foodData.description
 
-                        Log.d("upload", "name: $nameFood")
-                        Log.d("upload", "serving: $serving")
-                        Log.d("upload", "calorie: $calorie")
-                        Log.d("upload", "fat: $fat")
-                        Log.d("upload", "protein: $protein")
-                        Log.d("upload", "carbohydrate: $carbohydrate")
-                        Log.d("upload", "description: $description")
+                            Log.d("upload", "name: $nameFood")
+                            Log.d("upload", "serving: $serving")
+                            Log.d("upload", "calorie: $calorie")
+                            Log.d("upload", "fat: $fat")
+                            Log.d("upload", "protein: $protein")
+                            Log.d("upload", "carbohydrate: $carbohydrate")
+                            Log.d("upload", "description: $description")
 
-                        val intent = Intent(requireContext(), DetailScanFood::class.java).apply {
-                            putExtra(DetailScanFood.EXTRA_IMAGE, selectedImage.toString())
-                            putExtra(DetailScanFood.EXTRA_NAME_FOOD, nameFood)
-                            putExtra(DetailScanFood.EXTRA_SERVING, serving)
-                            putExtra(DetailScanFood.EXTRA_CALORIE, calorie)
-                            putExtra(DetailScanFood.EXTRA_FAT, fat)
-                            putExtra(DetailScanFood.EXTRA_PROTEIN, protein)
-                            putExtra(DetailScanFood.EXTRA_CARBOHYDRATE, carbohydrate)
-                            putExtra(DetailScanFood.EXTRA_DESCRIPTION, description)
+                            val intent =
+                                Intent(requireContext(), DetailScanFood::class.java).apply {
+                                    putExtra(DetailScanFood.EXTRA_IMAGE, selectedImage.toString())
+                                    putExtra(DetailScanFood.EXTRA_NAME_FOOD, nameFood)
+                                    putExtra(DetailScanFood.EXTRA_SERVING, serving)
+                                    putExtra(DetailScanFood.EXTRA_CALORIE, calorie)
+                                    putExtra(DetailScanFood.EXTRA_FAT, fat)
+                                    putExtra(DetailScanFood.EXTRA_PROTEIN, protein)
+                                    putExtra(DetailScanFood.EXTRA_CARBOHYDRATE, carbohydrate)
+                                    putExtra(DetailScanFood.EXTRA_DESCRIPTION, description)
+                                }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
                     }
                 } else {
                     Log.d("upload", "Error: ${response.code()}")

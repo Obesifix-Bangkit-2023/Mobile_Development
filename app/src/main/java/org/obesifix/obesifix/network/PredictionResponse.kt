@@ -3,10 +3,10 @@ package org.obesifix.obesifix.network
 data class FoodData(
 	val name: String?,
 	val serving: Int?,
-	val calorie: Double?,
-	val fat: Double?,
-	val protein: Double?,
-	val carbohydrate: Double?,
+	val total_cal: Double?,
+	val total_fat: Double?,
+	val total_protein: Double?,
+	val total_carb: Double?,
 	val description: String?
 )
 

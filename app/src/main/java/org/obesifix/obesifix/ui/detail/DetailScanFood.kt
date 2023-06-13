@@ -1,9 +1,13 @@
 package org.obesifix.obesifix.ui.detail
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
+import java.text.DecimalFormat
 
 class DetailScanFood : AppCompatActivity() {
     companion object {
@@ -18,6 +22,7 @@ class DetailScanFood : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailScanFoodBinding
+    val decimalFormat = DecimalFormat("#.##")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,20 +37,24 @@ class DetailScanFood : AppCompatActivity() {
         var nameFood = intent.getStringExtra(EXTRA_NAME_FOOD)
         nameFood = "$nameFood"
 
-        val serving = intent.getDoubleExtra(EXTRA_SERVING, 0.0)
-        val servingString = serving.toString()
+        val servingInt = intent.getIntExtra(EXTRA_SERVING, 0)
+        val serving = servingInt.toString()
 
         val calorie = intent.getDoubleExtra(EXTRA_CALORIE, 0.0)
-        val calorieString = calorie.toString()
+        val totalCalorie = calorie * servingInt
+        val totalCalorieString = decimalFormat.format(totalCalorie)
 
         val fat = intent.getDoubleExtra(EXTRA_FAT, 0.0)
-        val fatString = fat.toString()
+        val totalFat = fat * servingInt
+        val totalFatString = decimalFormat.format(totalFat)
 
         val protein = intent.getDoubleExtra(EXTRA_PROTEIN, 0.0)
-        val proteinString = protein.toString()
+        val totalProtein = protein * servingInt
+        val totalProteinString = decimalFormat.format(totalProtein)
 
         val carbohydrate = intent.getDoubleExtra(EXTRA_CARBOHYDRATE, 0.0)
-        val carbohydrateString = carbohydrate.toString()
+        val totalCarbohydrate = carbohydrate * servingInt
+        val totalCarbohydrateString = decimalFormat.format(totalCarbohydrate)
 
         var description = intent.getStringExtra(EXTRA_DESCRIPTION)
         description = "$description"
@@ -53,12 +62,13 @@ class DetailScanFood : AppCompatActivity() {
         binding.apply {
             imageView.setImageURI(Uri.parse(image))
             tvnameFood.text = nameFood
-            tvServing.text = servingString
-            tvCalorie.text = calorieString
-            tvFat.text = fatString
-            tvProtein.text = proteinString
-            tvCarbo.text = carbohydrateString
+            tvServing.text = serving
+            tvCalorie.text = totalCalorieString
+            tvFat.text = totalFatString
+            tvProtein.text = totalProteinString
+            tvCarbo.text = totalCarbohydrateString
             tvDesc.text = description
         }
+
+        }
     }
-}

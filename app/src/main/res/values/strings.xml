@@ -94,10 +94,11 @@
     <string name="name_Food">Name Food</string>
     <string name="aboutfood">About Food</string>
     <string name="addfood">Add Food</string>
-    <string name="serving">Serving</string>
-    <string name="protein">Protein</string>
-    <string name="fat">Fat</string>
-    <string name="carbo">Carbo</string>
+    <string name="serving">Serving/g</string>
+    <string name="protein">Protein/g</string>
+    <string name="fat">Fat/g</string>
+    <string name="caloriepergram">Calorie/g</string>
+    <string name="carbo">Carbo/g</string>
     <string name="desc_food">An omelet is a dish you might order for breakfast or brunch — its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It is quite common it to have fillings such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above An omelet is a dish you might order for breakfast or brunch its kind of like a folded pancake made of beaten eggs, sometimes with the addition of fillings. It s fillings can be varied, such as chives, vegetables, mushrooms, meat (often ham or bacon), cheese, onions or some combination of the above
 </string>
     <!-- detail page -->
