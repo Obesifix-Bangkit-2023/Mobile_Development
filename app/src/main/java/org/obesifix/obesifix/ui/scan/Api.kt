@@ -27,7 +27,7 @@ interface Api {
                 .writeTimeout(240, TimeUnit.SECONDS)
                 .build()
             return Retrofit.Builder()
-                .baseUrl("https://test-obesifix-server.et.r.appspot.com/")
+                .baseUrl("https://complete-dot-test-obesifix-server.et.r.appspot.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
