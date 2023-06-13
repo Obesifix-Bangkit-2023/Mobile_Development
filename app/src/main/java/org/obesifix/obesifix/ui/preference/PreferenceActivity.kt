@@ -33,7 +33,7 @@ class PreferenceActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPreferenceBinding
     private lateinit var loginViewModel: LoginViewModel
     private var selectedGender: String = ""
-    private lateinit var activitySelectedOption: String
+    private var activitySelectedOption: String =""
     private lateinit var auth: FirebaseAuth
     private var selectedFoodItems = mutableListOf<String>()
 

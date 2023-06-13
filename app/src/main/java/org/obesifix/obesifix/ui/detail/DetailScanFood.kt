@@ -32,20 +32,20 @@ class DetailScanFood : AppCompatActivity() {
         var nameFood = intent.getStringExtra(EXTRA_NAME_FOOD)
         nameFood = "$nameFood"
 
-        var serving = intent.getStringExtra(EXTRA_SERVING)
-        serving = "$serving"
+        val serving = intent.getDoubleExtra(EXTRA_SERVING, 0.0)
+        val servingString = serving.toString()
 
-        var calorie = intent.getStringExtra(EXTRA_CALORIE)
-        calorie = "$calorie"
+        val calorie = intent.getDoubleExtra(EXTRA_CALORIE, 0.0)
+        val calorieString = calorie.toString()
 
-        var fat = intent.getStringExtra(EXTRA_FAT)
-        fat = "$fat"
+        val fat = intent.getDoubleExtra(EXTRA_FAT, 0.0)
+        val fatString = fat.toString()
 
-        var protein = intent.getStringExtra(EXTRA_PROTEIN)
-        protein = "$protein"
+        val protein = intent.getDoubleExtra(EXTRA_PROTEIN, 0.0)
+        val proteinString = protein.toString()
 
-        var carbohydrate = intent.getStringExtra(EXTRA_CARBOHYDRATE)
-        carbohydrate = "$carbohydrate"
+        val carbohydrate = intent.getDoubleExtra(EXTRA_CARBOHYDRATE, 0.0)
+        val carbohydrateString = carbohydrate.toString()
 
         var description = intent.getStringExtra(EXTRA_DESCRIPTION)
         description = "$description"
@@ -53,11 +53,11 @@ class DetailScanFood : AppCompatActivity() {
         binding.apply {
             imageView.setImageURI(Uri.parse(image))
             tvnameFood.text = nameFood
-            tvServing.text = serving
-            tvCalorie.text = calorie
-            tvFat.text = fat
-            tvProtein.text = protein
-            tvCarbo.text = carbohydrate
+            tvServing.text = servingString
+            tvCalorie.text = calorieString
+            tvFat.text = fatString
+            tvProtein.text = proteinString
+            tvCarbo.text = carbohydrateString
             tvDesc.text = description
         }
     }
