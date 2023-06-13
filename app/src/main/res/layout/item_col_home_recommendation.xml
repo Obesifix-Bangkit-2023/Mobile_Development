@@ -27,12 +27,12 @@
 
         <TextView
             android:id="@+id/tv_title_cal"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:layout_marginTop="16dp"
-            android:text="@string/name_recommendation"
             android:fontFamily="@font/poppinssemibold"
+            android:text="@string/name_recommendation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/img_cal"
@@ -40,17 +40,18 @@
 
         <TextView
             android:id="@+id/tv_cal_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/cal_recommendation"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/poppinsregular"
+            android:text="@string/cal_recommendation"
             app:layout_constraintEnd_toEndOf="@+id/tv_title_cal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_title_cal"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_cal" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_cal"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

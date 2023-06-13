@@ -303,8 +303,9 @@
 
                     <TextView
                         android:id="@+id/tv_title_tag"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:fontFamily="@font/poppinssemibold"
                         android:text="@string/title_tag"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -314,15 +315,18 @@
 
                     <TextView
                         android:id="@+id/tv_tag_desc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/poppinsregular"
                         android:text="@string/tag_desc"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_title_tag"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_title_tag" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title_tag"
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

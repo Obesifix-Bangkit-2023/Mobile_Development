@@ -18,7 +18,7 @@ class ApiConfig {
                 .writeTimeout(240, TimeUnit.SECONDS)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://test-obesifix-server.et.r.appspot.com/")
+                .baseUrl("https://complete-dot-test-obesifix-server.et.r.appspot.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
