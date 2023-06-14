@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
+import org.obesifix.obesifix.ui.scan.ScanViewModel
 import java.text.DecimalFormat
 
 class DetailScanFood : AppCompatActivity() {
@@ -57,7 +58,7 @@ class DetailScanFood : AppCompatActivity() {
         description = "$description"
 
         binding.apply {
-            imageView.setImageURI(Uri.parse(image))
+            imageView2.setImageURI(Uri.parse(image))
             tvnameFood.text = nameFood
             tvServing.text = serving
             tvCalorie.text = totalCalorieString
@@ -67,5 +68,8 @@ class DetailScanFood : AppCompatActivity() {
             tvDesc.text = description
         }
 
+        binding.btnAdd.setOnClickListener {
+
         }
     }
+}

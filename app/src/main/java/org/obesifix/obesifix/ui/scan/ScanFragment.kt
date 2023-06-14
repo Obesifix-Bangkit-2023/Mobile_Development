@@ -96,15 +96,17 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
         val body = PredictionRequestBody(file, "image", this)
 
 
-
-        val token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3YmFiYWFiYTEwNWFkZDZiM2ZiYjlmZjNmZjVmZTNkY2E0Y2VkYTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTXVjaGFtbWFkIFJhaGFyam8gVyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQWNIVHRlTmpBQ0JPZEhpNEVaS1czRjJVc0t3VTRjdkR0OEdvN3NEbUkzOEJBPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL29iZXNpZml4LWJhbmdraXQyMyIsImF1ZCI6Im9iZXNpZml4LWJhbmdraXQyMyIsImF1dGhfdGltZSI6MTY4NjU2MTk5NCwidXNlcl9pZCI6InVsVGhFTHJhUzZUaWJnNW82emJrREk4U2NSNTMiLCJzdWIiOiJ1bFRoRUxyYVM2VGliZzVvNnpia0RJOFNjUjUzIiwiaWF0IjoxNjg2NjM5Njk5LCJleHAiOjE2ODY2NDMyOTksImVtYWlsIjoibXJhaGFyam93QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA2Nzk2NTc5NzcwMzkyMjgxMTE2Il0sImVtYWlsIjpbIm1yYWhhcmpvd0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.LGqUaLDaUbv9gngIF__yfsWUqivhUJgV3pdemzAhXT1UajDLzGC0Cpkzpue0NU6J-MI7nFzvC1d1uidBAXmjtV8qojr466XqKQFtFu0wmgMkr1uqHlX9zdiD-avevqfpUqevQuj2Nef4wgK0fAPaxIxOPlwHQv2YXH8bL7p_hyg9J2LRrY1siDpb6juGwh826WGZYa3cpcnKEKCpUPLkGzJYwKIFkLYTVXd3xf0RFFNFsR8y5g0E1eaf8c03_e-zEXEudfdHZMvIfbuTNmvxpFyKgTqCfdFT8QZ_fInG9pSSB5pPGYH_txh_Ri1Dx3xhpe4Om8wwGvxr0pzhHUypOg"
-        val bearer = "Bearer $token"
-        binding.progressBar.progress = 100
-
-        Api().predictFood(
-            bearer,
-            MultipartBody.Part.createFormData("image", file.name, body)
-        ).enqueue(object : Callback<PredictionResponse> {
+        val user = FirebaseAuth.getInstance().currentUser
+        //retrieve id token
+        user?.getIdToken(true)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result?.token
+                if (token != null) {
+                    val bearer = "Bearer $token"
+                    Api().predictFood(
+                        bearer,
+                        MultipartBody.Part.createFormData("image", file.name, body)
+                    ).enqueue(object : Callback<PredictionResponse> {
 
             override fun onResponse(
                 call: Call<PredictionResponse>,
@@ -150,12 +152,24 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
                 }
             }
 
-            override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
-                binding.root.snackbar(t.message!!)
-                Log.d("upload", "onFailure: ${t.message}")
+                        override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
+                            binding.root.snackbar(t.message!!)
+                            Log.d("upload", "onFailure: ${t.message}")
+                        }
+                    })
+                } else {
+                    // Token is null
+                    Log.d("TOKEN", "TOKEN IS NULL")
+                }
+            } else {
+                // Task failed
+                Log.d("TOKEN", "FAILED TO RETRIEVE TOKEN")
             }
-        })
+        }
+        binding.progressBar.progress = 100
     }
+
+
 
     private fun openImageChooser() {
         Intent(Intent.ACTION_PICK).also {
