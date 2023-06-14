@@ -3,8 +3,9 @@ package org.obesifix.obesifix.ui.detail
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
-import org.obesifix.obesifix.ui.scan.ScanViewModel
 import java.text.DecimalFormat
 
 class DetailScanFood : AppCompatActivity() {
@@ -39,20 +40,16 @@ class DetailScanFood : AppCompatActivity() {
         val serving = servingInt.toString()
 
         val calorie = intent.getDoubleExtra(EXTRA_CALORIE, 0.0)
-        val totalCalorie = calorie * servingInt
-        val totalCalorieString = decimalFormat.format(totalCalorie)
+        val totalCalorieString = decimalFormat.format(calorie)
 
         val fat = intent.getDoubleExtra(EXTRA_FAT, 0.0)
-        val totalFat = fat * servingInt
-        val totalFatString = decimalFormat.format(totalFat)
+        val totalFatString = decimalFormat.format(fat)
 
         val protein = intent.getDoubleExtra(EXTRA_PROTEIN, 0.0)
-        val totalProtein = protein * servingInt
-        val totalProteinString = decimalFormat.format(totalProtein)
+        val totalProteinString = decimalFormat.format(protein)
 
         val carbohydrate = intent.getDoubleExtra(EXTRA_CARBOHYDRATE, 0.0)
-        val totalCarbohydrate = carbohydrate * servingInt
-        val totalCarbohydrateString = decimalFormat.format(totalCarbohydrate)
+        val totalCarbohydrateString = decimalFormat.format(carbohydrate)
 
         var description = intent.getStringExtra(EXTRA_DESCRIPTION)
         description = "$description"
@@ -69,7 +66,6 @@ class DetailScanFood : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener {
-
         }
     }
 }
