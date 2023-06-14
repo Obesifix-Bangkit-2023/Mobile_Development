@@ -38,6 +38,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var adapter: RecommendationListAdapter
     private lateinit var userPreference: UserPreference
     private lateinit var token: String
+    private lateinit var user:FirebaseUser
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,7 +107,7 @@ class ListActivity : AppCompatActivity() {
         binding.rvListRecommendation.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { adapter.retry() }
         )
-        val user: FirebaseUser? = auth.currentUser
+        user = auth.currentUser!!
 
         user?.getIdToken(true)
             ?.addOnCompleteListener { task ->
@@ -140,15 +141,25 @@ class ListActivity : AppCompatActivity() {
         // You can perform your search logic here and update the adapter with the filtered results
         // Make sure to use the appropriate method from your ViewModel to fetch the filtered data
         if (query != null) {
-            val idFlow: Flow<String> = userPreference.getUserId()
-            lifecycleScope.launchWhenStarted {
-                idFlow.collect { id ->
-                    listViewModel.getFilteredRecommendation(token, id, query)
-                        .observe(this@ListActivity) { pagingData ->
-                            adapter.submitData(lifecycle, pagingData)
+            user?.getIdToken(true)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        token = task.result?.token.toString()
+                        // Token retrieval successful
+                        val idFlow: Flow<String> = userPreference.getUserId()
+                        lifecycleScope.launchWhenStarted {
+                            idFlow.collect { id ->
+                                listViewModel.getFilteredRecommendation(token, id, query)
+                                    .observe(this@ListActivity) { pagingData ->
+                                        adapter.submitData(lifecycle, pagingData)
+                                    }
+                            }
                         }
+                    } else {
+                        // Task failed
+                        Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
+                    }
                 }
-            }
         }
     }
 }
