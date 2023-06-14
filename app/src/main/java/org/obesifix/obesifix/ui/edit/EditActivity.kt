@@ -115,7 +115,7 @@ class EditActivity : AppCompatActivity() {
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     selectedFoodItems += if (selectedFoodItems.isNotEmpty()) {
-                        ", $item"
+                        ",$item"
                     } else {
                         item
                     }
