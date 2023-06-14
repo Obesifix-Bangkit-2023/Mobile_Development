@@ -125,4 +125,9 @@
     <string name="enter_age">"Enter Your Age "</string>
     <string name="enter_weight">Enter Your Weight on kg</string>
     <string name="eat_preference">Eating Preference(Multiple Choose)</string>
+    <!-- edit activity   -->
+    <string name="title_edit">Edit Data</string>
+    <string name="button">Update</string>
+    <string name="success_update">Success to Update the Preference</string>
+    <string name="failed_update">Failed to Update</string>
 </resources>

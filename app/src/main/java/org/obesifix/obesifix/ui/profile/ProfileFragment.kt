@@ -1,30 +1,37 @@
 package org.obesifix.obesifix.ui.profile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
+import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.about.AboutActivity
+import org.obesifix.obesifix.ui.edit.EditActivity
 import org.obesifix.obesifix.ui.login.LoginActivity
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class ProfileFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
+    private lateinit var userPreference: UserPreference
     private lateinit var viewModel: ProfileViewModel
 
     override fun onCreateView(
@@ -32,7 +39,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
+        userPreference = UserPreference.getInstance(requireContext().dataStore)
         auth = FirebaseAuth.getInstance()
 
         val user: FirebaseUser? = auth.currentUser
@@ -58,6 +65,12 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), AboutActivity::class.java)
             startActivity(intent)
         }
+
+        binding.MyProfile.setOnClickListener{
+            val intent = Intent(requireContext(), EditActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
@@ -70,6 +83,13 @@ class ProfileFragment : Fragment() {
         alertDialogBuilder.setPositiveButton("Yes") { dialogInterface, _ ->
             // User clicked "Yes," perform logout
             auth.signOut()
+            viewLifecycleOwner.lifecycleScope.launch {
+                // Perform logout within a coroutine
+                withContext(Dispatchers.IO) {
+                    userPreference.logout()
+                }
+            }
+
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
@@ -84,5 +104,9 @@ class ProfileFragment : Fragment() {
         // Show the alert dialog
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    companion object {
+        fun newInstance() = ProfileFragment()
     }
 }

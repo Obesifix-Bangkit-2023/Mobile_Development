@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/desc_login"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_login" />
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="180dp"
             android:text="@string/footer"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signInButton" />
@@ -66,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/term"
+            android:fontFamily="@font/poppinsregular"
             android:textColor="@android:color/holo_blue_dark"
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"

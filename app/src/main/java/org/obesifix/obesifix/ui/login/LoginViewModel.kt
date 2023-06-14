@@ -10,6 +10,7 @@ class LoginViewModel@Inject constructor(private val loginRepository: LoginReposi
 
     val loginResponse = loginRepository.loginResponse
     val registerResponse = loginRepository.registerResponse
+
     val isLoading = loginRepository.isLoading
 
     fun requestLogin(token: String) =
@@ -17,4 +18,6 @@ class LoginViewModel@Inject constructor(private val loginRepository: LoginReposi
 
     fun requestRegister(token: String, registerBody: RegisterBody) =
         loginRepository.requestRegister(token, registerBody)
+
+
 }

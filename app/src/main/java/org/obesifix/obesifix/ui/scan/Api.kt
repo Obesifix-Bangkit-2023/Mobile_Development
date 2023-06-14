@@ -3,7 +3,6 @@ package org.obesifix.obesifix.ui.scan
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.obesifix.obesifix.network.ApiService
 import org.obesifix.obesifix.network.PredictionResponse
 import retrofit2.Call
 import retrofit2.Retrofit

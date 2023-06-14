@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import okhttp3.MultipartBody
 import org.obesifix.obesifix.databinding.FragmentScanBinding
-import org.obesifix.obesifix.network.ApiService
 import org.obesifix.obesifix.network.PredictionResponse
 import org.obesifix.obesifix.network.body.PredictionRequestBody
 import org.obesifix.obesifix.ui.detail.DetailScanFood

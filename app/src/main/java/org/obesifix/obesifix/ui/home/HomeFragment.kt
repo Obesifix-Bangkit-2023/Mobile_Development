@@ -97,13 +97,13 @@ class HomeFragment : Fragment() {
                     token = task.result?.token
                     if (token != null) {
                         // Token retrieval successful
-                        val idFlow: Flow<String> = userPreference.getUserId()
-                        lifecycleScope.launchWhenStarted {
-                            idFlow.collect { id ->
-                                Log.d("TOKEN", "id flow $token")
-                                homeViewModel.getRecommendation(token!!, id)
+                            val idFlow: Flow<String> = userPreference.getUserId()
+                            lifecycleScope.launchWhenStarted {
+                                idFlow.collect { id ->
+                                    Log.d("TOKEN", "id flow $token")
+                                    homeViewModel.getRecommendation(token!!, id)
+                                }
                             }
-                        }
                     } else {
                         // Token is null
                         Log.d("TOKEN", "TOKEN IS NULL")

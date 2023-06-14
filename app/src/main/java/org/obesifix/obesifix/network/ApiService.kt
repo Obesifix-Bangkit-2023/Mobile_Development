@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.network
 
 import okhttp3.MultipartBody
+import org.obesifix.obesifix.network.body.EditBody
 import org.obesifix.obesifix.network.body.RegisterBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -27,7 +28,8 @@ interface ApiService {
     @PUT("user/{userId}")
     fun editDataUser(
         @Header("Authorization") token: String,
-        @Body registerBody: RegisterBody
+        @Body editBody: EditBody,
+        @Path("userId") userId: String? = null,
     ): Call<EditResponse>
 
     @Multipart

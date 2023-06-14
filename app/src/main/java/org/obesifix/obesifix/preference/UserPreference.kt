@@ -30,6 +30,12 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    fun getUserLogin(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[STATE_KEY] ?: false
+        }
+    }
+
     suspend fun logout() {
         dataStore.edit { preferences ->
             preferences[USERID_KEY] =""

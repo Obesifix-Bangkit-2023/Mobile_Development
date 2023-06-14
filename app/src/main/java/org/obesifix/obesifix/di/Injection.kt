@@ -6,6 +6,7 @@ import org.obesifix.obesifix.MainRepository
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateRepository
 import org.obesifix.obesifix.ui.detail.DetailRepository
+import org.obesifix.obesifix.ui.edit.EditRepository
 import org.obesifix.obesifix.ui.history.HistoryRepository
 import org.obesifix.obesifix.ui.home.HomeRepository
 import org.obesifix.obesifix.ui.home.list.ListRepository
@@ -14,6 +15,10 @@ import org.obesifix.obesifix.ui.login.LoginRepository
 object Injection {
     fun loginRepository(context: Context, userPreference: UserPreference):LoginRepository{
         return LoginRepository(context,userPreference)
+    }
+
+    fun editRepository(context: Context):EditRepository{
+        return EditRepository(context)
     }
 
     fun calculateRepository(context: Context, application: Application):CalculateRepository{

@@ -28,8 +28,6 @@ class DetailActivity : AppCompatActivity() {
     private var data: FoodListItem? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var detailViewModel: DetailViewModel
-    //calendar
-    private val calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

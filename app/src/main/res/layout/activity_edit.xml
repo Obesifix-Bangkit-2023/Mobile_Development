@@ -8,64 +8,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.preference.PreferenceActivity">
+        tools:context=".ui.edit.EditActivity">
+
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="23dp"
+            android:background="@null"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintBottom_toTopOf="@+id/titleAge"
+            app:layout_constraintEnd_toEndOf="@+id/titleAge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/title_preference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="282dp"
+            android:layout_height="71dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
-            android:gravity="center"
             android:fontFamily="@font/poppinsbold"
-            android:text="@string/title_preference"
+            android:gravity="center"
+            android:text="@string/title_edit"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.601"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupGender"
-            android:layout_width="347dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/title_gender"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/title_gender"
-            app:layout_constraintTop_toBottomOf="@+id/title_gender">
-
-            <RadioButton
-                android:id="@+id/radioButtonMale"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/poppinsregular"
-                android:text="@string/male" />
-
-            <RadioButton
-                android:id="@+id/radioButtonFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppinsregular"
-                android:text="@string/female" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/title_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/gender"
-            android:fontFamily="@font/poppinsregular"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/title_preference"
-            app:layout_constraintHorizontal_bias="0.101"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_preference" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ageEditTextLayout"
@@ -76,7 +54,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/radioGroupGender"
+            app:layout_constraintStart_toStartOf="@+id/titleAge"
             app:layout_constraintTop_toBottomOf="@+id/titleAge">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -151,8 +129,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:chipSpacing="8dp"
-            android:fontFamily="@font/poppinsregular"
             app:singleSelection="false"
+            android:fontFamily="@font/poppinsregular"
             app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
             app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
             app:layout_constraintTop_toBottomOf="@+id/eatingPreference" />
@@ -163,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/submit_button"
+            android:text="@string/button"
             android:fontFamily="@font/poppinsregular"
             app:layout_constraintEnd_toEndOf="@+id/chipEating"
             app:layout_constraintStart_toStartOf="@+id/chipEating"
@@ -173,14 +151,14 @@
             android:id="@+id/titleAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/age"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppinsregular"
+            android:text="@string/age"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/radioGroupGender"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/radioGroupGender"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.095"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_preference" />
 
         <TextView
             android:id="@+id/titleWeight"
@@ -201,8 +179,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/height"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/weightEditTextLayout"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/weightEditTextLayout"
@@ -214,8 +192,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/activity_level"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
@@ -227,8 +205,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/eat_preference"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/spinnerActivities"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/spinnerActivities"

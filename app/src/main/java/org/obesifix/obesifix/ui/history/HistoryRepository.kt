@@ -10,7 +10,6 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.obesifix.obesifix.adapter.history.HistoryPagingSource
 import org.obesifix.obesifix.database.entity.HistoryNutrition

@@ -1,11 +1,8 @@
 package org.obesifix.obesifix.ui.detail
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
 import java.text.DecimalFormat
 

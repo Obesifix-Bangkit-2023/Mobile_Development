@@ -9,6 +9,7 @@ import org.obesifix.obesifix.di.Injection
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.calculate.CalculateViewModel
 import org.obesifix.obesifix.ui.detail.DetailViewModel
+import org.obesifix.obesifix.ui.edit.EditViewModel
 import org.obesifix.obesifix.ui.history.HistoryViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.home.list.ListViewModel
@@ -21,6 +22,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(Injection.loginRepository(context, pref)) as T
+            }
+            modelClass.isAssignableFrom(EditViewModel::class.java) -> {
+                EditViewModel(Injection.editRepository(context)) as T
             }
             modelClass.isAssignableFrom(CalculateViewModel::class.java) -> {
                 CalculateViewModel(Injection.calculateRepository(context, application)) as T
