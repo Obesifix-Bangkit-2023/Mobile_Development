@@ -14,11 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.about.AboutActivity
@@ -29,6 +33,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class ProfileFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
@@ -43,6 +48,15 @@ class ProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         val user: FirebaseUser? = auth.currentUser
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
         val profileImageUrl: String? = user?.photoUrl?.toString()
         profileImageUrl?.let {
             Glide.with(this)
@@ -83,6 +97,7 @@ class ProfileFragment : Fragment() {
         alertDialogBuilder.setPositiveButton("Yes") { dialogInterface, _ ->
             // User clicked "Yes," perform logout
             auth.signOut()
+            googleSignInClient.signOut()
             viewLifecycleOwner.lifecycleScope.launch {
                 // Perform logout within a coroutine
                 withContext(Dispatchers.IO) {
