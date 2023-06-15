@@ -124,7 +124,7 @@
     <string name="message">Apakah kamu yakin ingin menhapus?</string>
     <string name="title_home">Beranda</string>
     <string name="eat_preference">Preferensi Makanan(Pilih banyak)</string>
-    <string name="caloriepergram">Calorie/k</string>
+    <string name="caloriepergram">Kalori</string>
     <string name="title_edit">Ganti Data</string>
     <string name="button">Perbarui</string>
     <string name="success_update">Sukses merubah data preferensi</string>
