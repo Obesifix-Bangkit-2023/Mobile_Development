@@ -131,6 +131,7 @@ class DetailScanFood : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener {
+            data = FoodListItem(image)
             Log.d("DATA PARCELDCT", "${data?.calorie}, ${data?.image}")
 
             if (userid != null && calculateCalorie != null && calculateFat != null && calculateProtein != null && calculateCarbo != null && nameFood != null) {
