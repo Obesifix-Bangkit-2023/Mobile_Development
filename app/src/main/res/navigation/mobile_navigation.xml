@@ -72,4 +72,10 @@
         android:name="org.obesifix.obesifix.ui.login.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+
+    <activity
+        android:id="@+id/detailScanFood"
+        android:name="org.obesifix.obesifix.ui.detail.DetailScanFood"
+        android:label="activity_detail_scan_food"
+        tools:layout="@layout/activity_detail_scan_food" />
 </navigation>

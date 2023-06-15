@@ -14,6 +14,7 @@ import org.obesifix.obesifix.ui.history.HistoryViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.home.list.ListViewModel
 import org.obesifix.obesifix.ui.login.LoginViewModel
+import org.obesifix.obesifix.ui.scan.ScanViewModel
 
 
 class ViewModelFactory(private val context: Context, private val pref: UserPreference, private val application: Application) : ViewModelProvider.NewInstanceFactory() {
@@ -43,6 +44,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
             }
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
                 HistoryViewModel(Injection.historyRepository(application)) as T
+            }
+            modelClass.isAssignableFrom(ScanViewModel::class.java) -> {
+                ScanViewModel(application,Injection.detailRepository(application)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

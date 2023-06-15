@@ -1,13 +1,33 @@
 package org.obesifix.obesifix.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import org.obesifix.obesifix.MainActivity
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
+import org.obesifix.obesifix.factory.ViewModelFactory
+import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.preference.UserPreference
+import org.obesifix.obesifix.ui.calculate.CalculateFragment
+import org.obesifix.obesifix.ui.scan.ScanViewModel
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class DetailScanFood : AppCompatActivity() {
     companion object {
         const val EXTRA_IMAGE = "extra_image"
@@ -20,8 +40,14 @@ class DetailScanFood : AppCompatActivity() {
         const val EXTRA_DESCRIPTION = "extra_description"
     }
 
+    private var data: FoodListItem? = null
+    private lateinit var scanViewModel: ScanViewModel
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityDetailScanFoodBinding
     val decimalFormat = DecimalFormat("#.##")
+    val calendar = Calendar.getInstance()
+    val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +56,13 @@ class DetailScanFood : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.backButton.setOnClickListener { onBackPressed() }
+
+        scanViewModel =
+            ViewModelProvider(this,
+                ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore), application)
+            )[ScanViewModel::class.java]
+        auth = FirebaseAuth.getInstance()
+        val userid = auth.currentUser?.uid
 
         val image = intent.getStringExtra(EXTRA_IMAGE)
 
@@ -40,16 +73,48 @@ class DetailScanFood : AppCompatActivity() {
         val serving = servingInt.toString()
 
         val calorie = intent.getDoubleExtra(EXTRA_CALORIE, 0.0)
-        val totalCalorieString = decimalFormat.format(calorie)
+        val totalCalorie = decimalFormat.format(calorie)
+
+        //float function
+        val calorie2 = intent.getDoubleExtra(EXTRA_CALORIE, 0.0)
+        val calculateCalorie = try {
+            (calorie2.toFloat())
+        } catch (e: NumberFormatException) {
+            0f
+        }
 
         val fat = intent.getDoubleExtra(EXTRA_FAT, 0.0)
-        val totalFatString = decimalFormat.format(fat)
+        val totalFat = decimalFormat.format(fat)
+
+        //float function
+        val fat2 = intent.getDoubleExtra(EXTRA_FAT, 0.0)
+        val calculateFat = try {
+            (fat2.toFloat())
+        } catch (e: NumberFormatException) {
+            0f
+        }
 
         val protein = intent.getDoubleExtra(EXTRA_PROTEIN, 0.0)
-        val totalProteinString = decimalFormat.format(protein)
+        val totalProtein = decimalFormat.format(protein)
+
+        //float function
+        val protein2 = intent.getDoubleExtra(EXTRA_PROTEIN, 0.0)
+        val calculateProtein = try {
+            (protein2.toFloat())
+        } catch (e: NumberFormatException) {
+            0f
+        }
 
         val carbohydrate = intent.getDoubleExtra(EXTRA_CARBOHYDRATE, 0.0)
-        val totalCarbohydrateString = decimalFormat.format(carbohydrate)
+        val totalCarbohydrate = decimalFormat.format(carbohydrate)
+
+        //float function
+        val carbo2 = intent.getDoubleExtra(EXTRA_CARBOHYDRATE, 0.0)
+        val calculateCarbo = try {
+            (carbo2.toFloat())
+        } catch (e: NumberFormatException) {
+            0f
+        }
 
         var description = intent.getStringExtra(EXTRA_DESCRIPTION)
         description = "$description"
@@ -58,14 +123,24 @@ class DetailScanFood : AppCompatActivity() {
             imageView2.setImageURI(Uri.parse(image))
             tvnameFood.text = nameFood
             tvServing.text = serving
-            tvCalorie.text = totalCalorieString
-            tvFat.text = totalFatString
-            tvProtein.text = totalProteinString
-            tvCarbo.text = totalCarbohydrateString
+            tvCalorie.text = totalCalorie
+            tvFat.text = totalFat
+            tvProtein.text = totalProtein
+            tvCarbo.text = totalCarbohydrate
             tvDesc.text = description
         }
 
         binding.btnAdd.setOnClickListener {
+            Log.d("DATA PARCELDCT", "${data?.calorie}, ${data?.image}")
+
+            if (userid != null && calculateCalorie != null && calculateFat != null && calculateProtein != null && calculateCarbo != null && nameFood != null) {
+                scanViewModel.addNutrition(userid,nameFood,calculateCalorie,calculateFat,calculateProtein,calculateCarbo,currentDate)
+                Log.d("DB DETAIL", "INSIDE")
+            }
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("data", data)
+            startActivity(intent)
         }
     }
 }
