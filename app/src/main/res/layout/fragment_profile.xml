@@ -24,7 +24,7 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppinsbold"
             android:text="@string/name"
             android:textSize="16sp"
@@ -45,9 +45,9 @@
 
         <ImageView
             android:id="@+id/profile_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="80dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/profile_personal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,15 +55,17 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/MyProfile"
-            android:layout_width="380dp"
+            android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="290dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="5dp"
+            app:cardElevation="4dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/tv_email">
 
             <ImageView
                 android:layout_width="40dp"
@@ -92,15 +94,19 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/About"
-            android:layout_width="380dp"
+            android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="370dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="5dp"
+            app:cardElevation="4dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/MyProfile">
 
             <ImageView
                 android:layout_width="30dp"
@@ -127,23 +133,46 @@
                 android:textSize="18sp" />
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/logout"
+            android:layout_width="150dp"
             android:layout_height="60dp"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/white"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="4dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:drawableLeft="@drawable/logout_icon"
-            android:focusable="true"
-            android:text="@string/logout"
-            android:textAllCaps="false"
-            android:textColor="@color/primaryblue"
-            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/About" />
+            app:layout_constraintTop_toBottomOf="@+id/About">
 
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/logout_icon" />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="160dp"
+                android:background="@drawable/arrow_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="64dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/logout"
+                android:textColor="@color/primaryblue"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

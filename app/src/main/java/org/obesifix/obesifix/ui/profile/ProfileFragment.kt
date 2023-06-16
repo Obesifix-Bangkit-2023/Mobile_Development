@@ -71,7 +71,7 @@ class ProfileFragment : Fragment() {
         val email: String? = auth.currentUser?.email
         binding.tvEmail.text = email
 
-        binding.btnLogout.setOnClickListener {
+        binding.logout.setOnClickListener {
             logoutUser()
         }
 
