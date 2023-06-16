@@ -86,6 +86,16 @@
 
 
             <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/serving_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
@@ -93,16 +103,6 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/calorie_static"
                 app:layout_constraintStart_toEndOf="@+id/imageView10"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/serving_icon"
-                app:layout_constraintStart_toStartOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <ImageView
