@@ -136,6 +136,7 @@
                             android:id="@+id/tv_see_all_recommendation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
                             android:layout_alignParentEnd="true"
                             android:layout_gravity="center_vertical"
                             android:clickable="true"
@@ -153,6 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
+                    android:padding="8dp"
                     android:layout_marginBottom="10dp" />
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>

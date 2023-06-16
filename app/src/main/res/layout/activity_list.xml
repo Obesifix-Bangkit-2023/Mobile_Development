@@ -72,6 +72,7 @@
                     android:id="@+id/rv_list_recommendation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="8dp"
                     tools:listitem="@layout/item_col_home_recommendation" />
             </androidx.cardview.widget.CardView>
 
