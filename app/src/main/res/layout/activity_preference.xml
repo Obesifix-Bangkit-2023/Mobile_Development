@@ -344,7 +344,8 @@
             android:background="@drawable/bg_rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/titleName"
-            app:layout_constraintTop_toBottomOf="@+id/titlePassword">
+            app:layout_constraintTop_toBottomOf="@+id/titlePassword"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
@@ -353,8 +354,7 @@
                 android:ems="10"
                 android:fontFamily="@font/poppinsregular"
                 android:hint="@string/password_hint"
-                android:inputType="textPassword"
-                app:passwordToggleEnabled="true" />
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

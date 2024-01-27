@@ -79,7 +79,8 @@
             app:layout_constraintEnd_toEndOf="@+id/img"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/emailEditTextLayout"
-            app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout">
+            app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
