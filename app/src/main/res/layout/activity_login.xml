@@ -47,7 +47,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailEditTextLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="310dp"
+            android:layout_width="311dp"
             android:layout_height="70dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_rounded_edittext"
@@ -71,7 +71,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordEditTextLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="310dp"
+            android:layout_width="311dp"
             android:layout_height="70dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="32dp"
