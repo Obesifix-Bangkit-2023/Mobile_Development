@@ -9,14 +9,6 @@
         android:layout_height="wrap_content"
         tools:context=".ui.login.LoginActivity">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/signInButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/img"
-            app:layout_constraintStart_toStartOf="@+id/img"
-            app:layout_constraintTop_toBottomOf="@+id/img" />
-
         <TextView
             android:id="@+id/header_login"
             android:layout_width="wrap_content"
@@ -52,30 +44,81 @@
             app:layout_constraintTop_toBottomOf="@+id/desc_login"
             app:srcCompat="@drawable/login" />
 
-        <TextView
-            android:id="@+id/footer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
-            android:text="@string/footer"
-            android:fontFamily="@font/poppinsregular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signInButton" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailEditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="310dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_rounded_edittext"
+            app:layout_constraintEnd_toEndOf="@+id/img"
+            app:layout_constraintHorizontal_bias="0.426"
+            app:layout_constraintStart_toStartOf="@+id/img"
+            app:layout_constraintTop_toBottomOf="@+id/img">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/black"
+                app:passwordToggleEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordEditTextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="310dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_rounded_edittext"
+            app:layout_constraintEnd_toEndOf="@+id/img"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/emailEditTextLayout"
+            app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                app:passwordToggleEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/termsTextView"
+            android:id="@+id/registerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/term"
-            android:fontFamily="@font/poppinsregular"
-            android:textColor="@android:color/holo_blue_dark"
+            android:layout_marginTop="20dp"
             android:clickable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/footer"
-            android:focusable="true" />
+            android:focusable="true"
+            android:fontFamily="@font/poppinsregular"
+            android:text="@string/register1"
+            app:layout_constraintEnd_toEndOf="@+id/passwordEditTextLayout"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditTextLayout"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
 
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="@string/login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/passwordEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditTextLayout"
+            app:layout_constraintTop_toBottomOf="@+id/registerTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

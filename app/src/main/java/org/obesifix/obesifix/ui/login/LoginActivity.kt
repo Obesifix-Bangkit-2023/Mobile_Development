@@ -4,10 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -61,7 +65,20 @@ class LoginActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = Firebase.auth
 
-        binding.signInButton.setOnClickListener {
+        // Set text color for the register TextView
+        val registerText = "Don\'t have account ? Register"
+        val spannableString = SpannableString(registerText)
+
+        // Define the range of text to be colored (start index, end index)
+        val blueColor = ContextCompat.getColor(this, R.color.primaryblue)
+        spannableString.setSpan(ForegroundColorSpan(blueColor), 21, registerText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.registerTextView.text = spannableString
+        binding.registerTextView.setOnClickListener {
+            //move to preference activity
+
+        }
+        binding.loginButton.setOnClickListener {
             signIn()
         }
 

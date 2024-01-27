@@ -26,6 +26,10 @@
     <string name="term">Read our Terms and Conditions</string>
     <string name="failed_login">Failed to login</string>
     <string name="new_user">Register First</string>
+    <string name="enter_email" translatable="false">"Email"</string>
+    <string name="enter_password">"Password"</string>
+    <string name="register1">Don\'t have account ? Register</string>
+    <string name="login">Login</string>
     <!-- profile -->
     <string name="my_profil">My Profile</string>
     <string name="about">About Obesifix</string>

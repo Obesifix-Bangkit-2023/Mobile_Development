@@ -129,4 +129,7 @@
     <string name="button">Perbarui</string>
     <string name="success_update">Sukses merubah data preferensi</string>
     <string name="failed_update">Failed to Update</string>
+    <string name="register1">"Tidak punya akun ? "</string>
+    <string name="enter_password">Kata Sandi</string>
+    <string name="login">Masuk</string>
 </resources>
