@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
         binding.registerTextView.text = spannableString
         binding.registerTextView.setOnClickListener {
             //move to preference activity
-
+            startActivity(Intent(this@LoginActivity, PreferenceActivity::class.java))
         }
         binding.loginButton.setOnClickListener {
             signIn()

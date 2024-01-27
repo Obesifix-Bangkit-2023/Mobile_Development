@@ -132,4 +132,8 @@
     <string name="register1">"Tidak punya akun ? "</string>
     <string name="enter_password">Kata Sandi</string>
     <string name="login">Masuk</string>
+    <string name="name_tv">Nama</string>
+    <string name="name_hint">Masukkan nama anda</string>
+    <string name="email_hint">Masukkan email anda</string>
+    <string name="password_hint">Masukkan kata sandi anda</string>
 </resources>

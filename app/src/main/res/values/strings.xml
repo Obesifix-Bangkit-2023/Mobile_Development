@@ -50,6 +50,11 @@
     <string name="activity_level">Level Aktifitas</string>
     <string name="submit_button">Submit</string>
     <string name="selected_foods">Selected Food Items:</string>
+    <string name="name_tv">Name</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="email_tv" translatable="false">Email</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="password_hint">Enter your password</string>
     <!--home fragment-->
     <string name="motivation_card">Let’s Explore the nutritional insights of your food!</string>
     <string name="recommendation">Recommendation for you</string>
