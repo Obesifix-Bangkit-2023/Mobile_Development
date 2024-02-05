@@ -1,4 +1,4 @@
-package org.obesifix.obesifix.network
+package org.obesifix.obesifix.network.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

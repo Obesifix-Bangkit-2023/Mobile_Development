@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.obesifix.obesifix.network.ApiConfig
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
 import javax.inject.Inject
 

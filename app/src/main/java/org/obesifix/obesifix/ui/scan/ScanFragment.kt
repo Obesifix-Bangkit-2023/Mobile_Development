@@ -20,8 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import okhttp3.MultipartBody
 import org.obesifix.obesifix.databinding.FragmentScanBinding
-import org.obesifix.obesifix.network.PredictionResponse
-import org.obesifix.obesifix.network.body.PredictionRequestBody
+import org.obesifix.obesifix.network.payload.PredictionRequestBody
+import org.obesifix.obesifix.network.response.PredictionResponse
 import org.obesifix.obesifix.ui.detail.DetailScanFood
 import retrofit2.Call
 import retrofit2.Callback
@@ -115,14 +115,14 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
                 if (response.isSuccessful) {
                     val predictionResponse = response.body()
                     if (predictionResponse != null) {
-                        val foodData = predictionResponse.food_data
+                        val foodData = predictionResponse.foodData
                         if (foodData != null) {
                             val nameFood = foodData.name
                             val serving = foodData.serving
-                            val calorie = foodData.total_cal
-                            val fat = foodData.total_fat
-                            val protein = foodData.total_protein
-                            val carbohydrate = foodData.total_carb
+                            val calorie = foodData.totalCal
+                            val fat = foodData.totalFat
+                            val protein = foodData.totalProtein
+                            val carbohydrate = foodData.totalCarb
                             val description = foodData.description
 
                             Log.d("upload", "name: $nameFood")

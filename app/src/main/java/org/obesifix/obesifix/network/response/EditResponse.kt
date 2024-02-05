@@ -1,9 +1,8 @@
-package org.obesifix.obesifix.network
+package org.obesifix.obesifix.network.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponse(
-
+data class EditResponse(
 	@field:SerializedName("status")
 	val status: Boolean? = null,
 
@@ -13,6 +12,5 @@ data class RegisterResponse(
 	@field:SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("userId")
-	val userId: String? = null,
+
 )

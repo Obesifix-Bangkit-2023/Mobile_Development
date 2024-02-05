@@ -16,7 +16,7 @@ import com.google.firebase.ktx.Firebase
 import org.obesifix.obesifix.MainActivity
 import org.obesifix.obesifix.databinding.ActivityDetailBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
 import java.text.SimpleDateFormat
 import java.util.*

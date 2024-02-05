@@ -12,6 +12,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         return dataStore.data.map { preferences ->
             UserModel(
                 preferences[USERID_KEY] ?:"",
+                preferences[ACCESSTOKEN_KEY] ?:"",
+                preferences[REFRESHTOKEN_KEY] ?:"",
                 preferences[STATE_KEY] ?: false,
             )
         }
@@ -19,7 +21,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     suspend fun saveUser(user: UserModel) { //login
         dataStore.edit { preferences ->
-            preferences[USERID_KEY] = user.user_id
+            preferences[USERID_KEY] = user.userId
+            preferences[ACCESSTOKEN_KEY] = user.accessToken
+            preferences[REFRESHTOKEN_KEY] =user.refreshToken
             preferences[STATE_KEY] = user.isLogin
         }
     }
@@ -46,11 +50,10 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
-
-        //api
         private val USERID_KEY = stringPreferencesKey("user_id")
-        //firebase
-        private val STATE_KEY = booleanPreferencesKey("state") //isLogin
+        private val ACCESSTOKEN_KEY = stringPreferencesKey("access_token_id")
+        private val REFRESHTOKEN_KEY = stringPreferencesKey("refresh_token_id")
+        private val STATE_KEY = booleanPreferencesKey("state")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

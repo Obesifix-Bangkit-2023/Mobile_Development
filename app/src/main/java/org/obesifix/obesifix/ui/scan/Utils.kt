@@ -1,5 +1,6 @@
 package org.obesifix.obesifix.ui.scan
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
@@ -18,6 +19,7 @@ fun View.snackbar(message: String) {
     }.show()
 }
 
+@SuppressLint("Range")
 fun ContentResolver.getFileName(uri: Uri): String {
     var name = ""
     val cursor = query(uri, null, null, null, null)

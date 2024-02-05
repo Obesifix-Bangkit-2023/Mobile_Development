@@ -1,4 +1,4 @@
-package org.obesifix.obesifix.network.body
+package org.obesifix.obesifix.network.payload
 
 data class EditBody (
     var name: String,

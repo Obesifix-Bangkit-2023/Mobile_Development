@@ -3,7 +3,7 @@ package org.obesifix.obesifix.ui.scan
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.obesifix.obesifix.network.PredictionResponse
+import org.obesifix.obesifix.network.response.PredictionResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +26,7 @@ interface Api {
                 .writeTimeout(240, TimeUnit.SECONDS)
                 .build()
             return Retrofit.Builder()
-                .baseUrl("https://complete-dot-test-obesifix-server.et.r.appspot.com/")
+                .baseUrl("https://be-obesifix-3ait7rquuq-as.a.run.app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
@@ -35,9 +35,10 @@ interface Api {
     }
 
     @Multipart
-    @POST("/prediction")
+    @POST("prediction")
     fun predictFood(
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
     ): Call<PredictionResponse>
+
 }

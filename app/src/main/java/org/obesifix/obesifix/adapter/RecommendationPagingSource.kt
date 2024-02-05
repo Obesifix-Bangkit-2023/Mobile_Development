@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import org.obesifix.obesifix.network.ApiService
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 
 class RecommendationPagingSource(private val apiService: ApiService,
                                  private val token: String,

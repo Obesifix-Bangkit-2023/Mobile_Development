@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import org.obesifix.obesifix.adapter.RecommendationPagingSource
 import org.obesifix.obesifix.network.ApiConfig
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 
 class ListRepository {
 

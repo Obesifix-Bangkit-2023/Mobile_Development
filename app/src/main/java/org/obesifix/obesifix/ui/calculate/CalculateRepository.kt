@@ -12,7 +12,7 @@ import org.obesifix.obesifix.database.entity.NutritionSummary
 import org.obesifix.obesifix.database.room.NutritionDao
 import org.obesifix.obesifix.database.room.NutritionRoomDatabase
 import org.obesifix.obesifix.network.ApiConfig
-import org.obesifix.obesifix.network.DataUserResponse
+import org.obesifix.obesifix.network.response.UserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +38,7 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     private val _proteinNeed = MutableLiveData<Float>()
     val proteinNeed = _proteinNeed
 
-    private val _userDataResponse = MutableLiveData<DataUserResponse>()
+    private val _userDataResponse = MutableLiveData<UserResponse>()
     val userDataResponse = _userDataResponse
 
     private var nutritionDao: NutritionDao?
@@ -52,8 +52,8 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     fun getUserData(token:String, id: String){
         _isLoading.value = true
         val client = ApiConfig.getApiService().getDataUser("Bearer $token", id)
-        client.enqueue(object : Callback<DataUserResponse> {
-            override fun onResponse(call: Call<DataUserResponse>, response: Response<DataUserResponse>) {
+        client.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 _isLoading.value = false
                 if(response.isSuccessful){
                     _userDataResponse.value = response.body()
@@ -68,7 +68,7 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
                 }
             }
 
-            override fun onFailure(call: Call<DataUserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
                 Toast.makeText(context,  context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
                 Log.d(ContentValues.TAG, "Request get user data is Failed: ${t.message}")
@@ -78,8 +78,8 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     }
 
     fun getUserStatus(){
-        val weight = _userDataResponse.value?.data?.weight
-        val height = _userDataResponse.value?.data?.height
+        val weight = _userDataResponse.value?.userData?.weight
+        val height = _userDataResponse.value?.userData?.height
         val powHeight = height?.toDouble()?.pow(2.0)?.toFloat()
 
         val status = powHeight?.let { weight?.div(it) ?: 0f }
@@ -103,12 +103,12 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     fun getCalNeed(){
         if(_status.value.equals("Underweight") || _status.value.equals("Normal")){
             //underweight and normal
-            if(_userDataResponse.value?.data?.gender.equals("male")){
+            if(_userDataResponse.value?.userData?.gender.equals("male")){
                 //Male
-                val age = _userDataResponse.value?.data?.age
-                val activity = _userDataResponse.value?.data?.activity
-                val weight = _userDataResponse.value?.data?.weight
-                val height = _userDataResponse.value?.data?.height
+                val age = _userDataResponse.value?.userData?.age
+                val activity = _userDataResponse.value?.userData?.activity
+                val weight = _userDataResponse.value?.userData?.weight
+                val height = _userDataResponse.value?.userData?.height
 
                 val activityPoint = when (activity) {
                     "sedentary" -> 1.00f
@@ -123,10 +123,10 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
                 Log.d(ContentValues.TAG, "getCalNeed undernormal male${_calNeed.value}")
             }else{
                 //Female
-                val age = _userDataResponse.value?.data?.age
-                val activity = _userDataResponse.value?.data?.activity
-                val weight = _userDataResponse.value?.data?.weight
-                val height = _userDataResponse.value?.data?.height
+                val age = _userDataResponse.value?.userData?.age
+                val activity = _userDataResponse.value?.userData?.activity
+                val weight = _userDataResponse.value?.userData?.weight
+                val height = _userDataResponse.value?.userData?.height
 
                 val activityPoint: Float = when (activity) {
                     "sedentary" -> 1.00f
@@ -143,12 +143,12 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
 
         }else{
             //overweight and obes person
-            if(_userDataResponse.value?.data?.gender.equals("male")){
+            if(_userDataResponse.value?.userData?.gender.equals("male")){
                 //Male
-                val age = _userDataResponse.value?.data?.age
-                val activity = _userDataResponse.value?.data?.activity
-                val weight = _userDataResponse.value?.data?.weight
-                val height = _userDataResponse.value?.data?.height
+                val age = _userDataResponse.value?.userData?.age
+                val activity = _userDataResponse.value?.userData?.activity
+                val weight = _userDataResponse.value?.userData?.weight
+                val height = _userDataResponse.value?.userData?.height
 
                 val activityPoint = when (activity) {
                     "sedentary" -> 1.00f
@@ -163,10 +163,10 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
                 Log.d(ContentValues.TAG, "getCalNeed over male${_calNeed.value}")
             }else{
                 //Female
-                val age = _userDataResponse.value?.data?.age
-                val activity = _userDataResponse.value?.data?.activity
-                val weight = _userDataResponse.value?.data?.weight
-                val height = _userDataResponse.value?.data?.height
+                val age = _userDataResponse.value?.userData?.age
+                val activity = _userDataResponse.value?.userData?.activity
+                val weight = _userDataResponse.value?.userData?.weight
+                val height = _userDataResponse.value?.userData?.height
 
                 val activityPoint: Float = when (activity) {
                     "sedentary" -> 1.00f

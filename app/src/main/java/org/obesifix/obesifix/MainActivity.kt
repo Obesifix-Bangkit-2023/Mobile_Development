@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import org.obesifix.obesifix.databinding.ActivityMainBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.login.LoginActivity
 
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
-//    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 //        just for moving to fragment calculate
         if (parcelData != null) {
-//            sharedViewModel.setParcelData(parcelData)
+//          sharedViewModel.setParcelData(parcelData)
             val desiredTabId = R.id.navigation_calculate
             navView.selectedItemId = desiredTabId
         }

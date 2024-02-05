@@ -19,12 +19,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import org.obesifix.obesifix.databinding.ActivityEditBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.network.body.EditBody
+import org.obesifix.obesifix.network.payload.EditBody
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.preference.FoodOptions
 

@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.network.ApiConfig
-import org.obesifix.obesifix.network.EditResponse
-import org.obesifix.obesifix.network.body.EditBody
+import org.obesifix.obesifix.network.response.EditResponse
+import org.obesifix.obesifix.network.payload.EditBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

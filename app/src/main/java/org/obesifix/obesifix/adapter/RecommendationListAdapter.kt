@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.obesifix.obesifix.databinding.ItemColHomeRecommendationBinding
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.ui.detail.DetailActivity
 
 class RecommendationListAdapter:

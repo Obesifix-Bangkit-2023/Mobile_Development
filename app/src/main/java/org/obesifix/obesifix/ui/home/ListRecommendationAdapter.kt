@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.obesifix.obesifix.databinding.ItemColHomeRecommendationBinding
-import org.obesifix.obesifix.network.FoodListItem
+import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.ui.detail.DetailActivity
 
 // to connect between fragment home recycler view that can move to detail activity and item_col_home_recommendation

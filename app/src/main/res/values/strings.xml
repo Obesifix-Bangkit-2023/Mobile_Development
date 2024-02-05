@@ -30,6 +30,7 @@
     <string name="enter_password">"Password"</string>
     <string name="register1">Don\'t have account ? Register</string>
     <string name="login">Login</string>
+    <string name="register_result">Success Register New Account</string>
     <!-- profile -->
     <string name="my_profil">My Profile</string>
     <string name="about">About Obesifix</string>

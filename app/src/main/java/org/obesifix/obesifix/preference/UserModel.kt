@@ -1,7 +1,8 @@
 package org.obesifix.obesifix.preference
 
 data class UserModel(
-    //api
-    val user_id: String,
+    val userId: String,
+    val accessToken: String,
+    val refreshToken: String,
     val isLogin: Boolean,
 )

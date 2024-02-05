@@ -14,6 +14,7 @@ import org.obesifix.obesifix.ui.history.HistoryViewModel
 import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.home.list.ListViewModel
 import org.obesifix.obesifix.ui.login.LoginViewModel
+import org.obesifix.obesifix.ui.preference.PreferenceViewModel
 import org.obesifix.obesifix.ui.scan.ScanViewModel
 
 
@@ -23,6 +24,9 @@ class ViewModelFactory(private val context: Context, private val pref: UserPrefe
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(Injection.loginRepository(context, pref)) as T
+            }
+            modelClass.isAssignableFrom(PreferenceViewModel::class.java) -> {
+                PreferenceViewModel(Injection.preferenceRepository(context, pref)) as T
             }
             modelClass.isAssignableFrom(EditViewModel::class.java) -> {
                 EditViewModel(Injection.editRepository(context)) as T

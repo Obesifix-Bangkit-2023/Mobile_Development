@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -23,20 +24,22 @@ import com.google.firebase.ktx.Firebase
 import org.obesifix.obesifix.MainActivity
 import org.obesifix.obesifix.databinding.ActivityPreferenceBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
-import org.obesifix.obesifix.network.body.RegisterBody
+import org.obesifix.obesifix.network.payload.RegisterBody
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.login.LoginViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class PreferenceActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPreferenceBinding
-    private lateinit var loginViewModel: LoginViewModel
     private var selectedGender: String = ""
     private var activitySelectedOption: String =""
     private lateinit var auth: FirebaseAuth
     private var selectedFoodItems = mutableListOf<String>()
 
     //text watcher
+    private var isNameEmpty = false
+    private var isEmailEmpty = false
+    private var isPasswordEmpty = false
     private var isAgeEmpty = false
     private var isWeightEmpty = false
     private var isHeightEmpty = false
@@ -44,16 +47,17 @@ class PreferenceActivity : AppCompatActivity() {
     private var isActivitySelected = false
     private var isFoodItemsSelected = false
 
+    private lateinit var preferenceViewModel: PreferenceViewModel
     //don't forget to change the height from cm to m
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide() // Hide the default action bar
-        loginViewModel =
+        supportActionBar?.hide()
+        preferenceViewModel =
             ViewModelProvider(this,
                 ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore),application)
-            )[LoginViewModel::class.java]
+            )[PreferenceViewModel::class.java]
 
         auth = Firebase.auth
         setupAction()
@@ -61,7 +65,7 @@ class PreferenceActivity : AppCompatActivity() {
 
     private fun setupAction(){
 
-        loginViewModel.isLoading.observe(this){
+        preferenceViewModel.isLoading.observe(this){
             showLoading(it)
         }
 
@@ -96,6 +100,9 @@ class PreferenceActivity : AppCompatActivity() {
         binding.ageEditText.addTextChangedListener(textWatcher)
         binding.weightEditText.addTextChangedListener(textWatcher)
         binding.heightEditText.addTextChangedListener(textWatcher)
+        binding.nameEditText.addTextChangedListener(textWatcher)
+        binding.emailEditText.addTextChangedListener(textWatcher)
+        binding.passwordEditText.addTextChangedListener(textWatcher)
 
         val foodOptions = FoodOptions.foodOptions
         foodOptions.forEach { item ->
@@ -124,50 +131,39 @@ class PreferenceActivity : AppCompatActivity() {
             updateButtonState()
         }
 
-        val user: FirebaseUser? = auth.currentUser
-        var token: String? = null
-        user?.getIdToken(false)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token
-                } else {
-                    // Task failed
-                    Log.d("TOKEN","FAILED TO CONNECT TO FIREBASE CLASS")
-                }
-            }
-
-        //NEED ATTENTION
         binding.submitButton.setOnClickListener {
+            val name = binding.nameEditText.text.toString()
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
             val age = binding.ageEditText.text.toString().toInt()
             val gender = selectedGender.toLowerCase()
             val heightCM = binding.heightEditText.text.toString().toFloat()
             val heightM = heightCM.toString().toFloat().div(100)
             val weight = binding.weightEditText.text.toString().toFloat()
             val activityLevel = activitySelectedOption
-            val selectedFoodItemsArray = selectedFoodItems.toTypedArray()
+            val selectedFoodItemsArray = selectedFoodItems.joinToString(",")
             Log.d("sfood","$selectedFoodItemsArray")
             val registerData = RegisterBody(
-                age,gender,heightM,weight,activityLevel,selectedFoodItemsArray
+                name, email, password, age, gender, heightM, weight, activityLevel, selectedFoodItemsArray
             )
 
-            //if token null then no action
-            token?.let { token -> loginViewModel.requestRegister(token,registerData) }
-            Log.d("TOKEN","$token")
-
-
-            loginViewModel.registerResponse.observe(this){ response ->
-                if(response.status?.equals(true) == true){
-                    startActivity(Intent(this@PreferenceActivity, MainActivity::class.java))
+            preferenceViewModel.requestRegister(registerData)
+            preferenceViewModel.preferenceResponse.observe(this){ response ->
+                if(response.statusCode == 201){
+                    Toast.makeText(this@PreferenceActivity, "Success to register. Try to login.", Toast.LENGTH_SHORT).show()
                     finish()
+                }else{
+                    Toast.makeText(this@PreferenceActivity, "Failed to register. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            isAgeEmpty = binding.ageEditText.text.isNullOrBlank()
+            isNameEmpty = binding.nameEditText.text.isNullOrBlank()
+            isEmailEmpty = binding.emailEditText.text.isNullOrBlank()
+            isPasswordEmpty = binding.passwordEditText.text.isNullOrBlank()
             isWeightEmpty = binding.weightEditText.text.isNullOrBlank()
             isHeightEmpty = binding.heightEditText.text.isNullOrBlank()
             isGenderSelected =  selectedGender.isBlank()
@@ -182,7 +178,7 @@ class PreferenceActivity : AppCompatActivity() {
     }
 
     private fun updateButtonState() {
-        binding.submitButton.isEnabled = !isAgeEmpty && !isWeightEmpty && !isHeightEmpty && !isGenderSelected
+        binding.submitButton.isEnabled = !isNameEmpty&& !isEmailEmpty && !isPasswordEmpty && !isAgeEmpty && !isWeightEmpty && !isHeightEmpty && !isGenderSelected
                 && !isActivitySelected && !isFoodItemsSelected
     }
 
