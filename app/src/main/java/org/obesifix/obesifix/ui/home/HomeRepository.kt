@@ -6,10 +6,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.network.ApiConfig
 import org.obesifix.obesifix.network.response.FoodListItem
 import org.obesifix.obesifix.network.response.UserResponse
+import org.obesifix.obesifix.preference.UserDataModel
 import org.obesifix.obesifix.preference.UserPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,17 +56,38 @@ class HomeRepository@Inject constructor(private val context: Context, private va
                 _isLoading.value = false
                 if(response.isSuccessful){
                     _userDataResponse.value = response.body()
-                    Toast.makeText(context, "Response is success: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    val model = response.body()?.userData?.run {
+                        UserDataModel(
+                            userId = userId ?: "",
+                            name = name ?: "",
+                            email = email ?: "",
+                            picture = picture ?: "",
+                            age = age ?: 0,
+                            gender = gender ?: "",
+                            height = height ?: 0.0,
+                            weight = weight ?: 0.0,
+                            activity = activity ?: "",
+                            foodType = foodType ?: "",
+                            createdAt = createdAt ?: "",
+                            updatedAt = updatedAt ?: ""
+                        )
+                    }
+                    if (model != null) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            pref.saveUserData(model)
+                        }
+                    }
+                    Toast.makeText(context, "Response is success ${response.message()}", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
+                    Toast.makeText(context, "Response is failed ${response.message()}", Toast.LENGTH_SHORT).show()
+                    Log.d(ContentValues.TAG, "Response is failed ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
-                Toast.makeText(context, "Response is failed: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.d(ContentValues.TAG, "Request get user data is Failed: ${t.message}")
+                Toast.makeText(context, "Response is failed ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.d(ContentValues.TAG, "Request get user data is Failed ${t.message}")
             }
 
         })

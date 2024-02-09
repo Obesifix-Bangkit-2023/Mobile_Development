@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
+import org.obesifix.obesifix.preference.UserDataModel
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.about.AboutActivity
 import org.obesifix.obesifix.ui.edit.EditActivity
@@ -56,20 +57,19 @@ class ProfileFragment : Fragment() {
             ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore), application)
         )[ProfileViewModel::class.java]
 
-//        val profileImageUrl: String? = user?.photoUrl?.toString()
-//        profileImageUrl?.let {
-//            Glide.with(this)
-//                .load(it)
-//                .transform(CircleCrop())
-//                .into(binding.profileImg)
-//        }
-//
-//        val userName: String? = auth.currentUser?.displayName
-//        binding.tvUsername.text = userName
-//
-//        val email: String? = auth.currentUser?.email
-//        binding.tvEmail.text = email
+        lifecycleScope.launch {
+            val userDataModel: UserDataModel = userPreference.getUserData().first()
 
+            userDataModel.let {
+                Glide.with(this@ProfileFragment) // Make sure to replace with your actual fragment or activity reference
+                    .load(it.picture)
+                    .transform(CircleCrop())
+                    .into(binding.profileImg)
+            }
+
+            binding.tvUsername.text = userDataModel.name
+            binding.tvEmail.text = userDataModel.email
+        }
         binding.logout.setOnClickListener {
             logoutUser()
         }

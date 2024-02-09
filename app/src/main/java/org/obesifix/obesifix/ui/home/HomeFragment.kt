@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -91,6 +92,7 @@ class HomeFragment : Fragment() {
                 profileImageUrl?.let {
                     Glide.with(requireContext())
                         .load(it)
+                        .transform(CircleCrop())
                         .into(binding.profileImg)
                 }
 
