@@ -9,10 +9,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.databinding.ActivityMainBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.response.FoodListItem
@@ -35,8 +37,6 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelFactory(this, UserPreference.getInstance(dataStore), application)
         )[MainViewModel::class.java]
-//        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-
         val navView: BottomNavigationView = binding.navView
 
         navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         val parcelData: FoodListItem? = intent.getParcelableExtra("data")
 
-//        just for moving to fragment calculate
         if (parcelData != null) {
-//          sharedViewModel.setParcelData(parcelData)
             val desiredTabId = R.id.navigation_calculate
             navView.selectedItemId = desiredTabId
         }

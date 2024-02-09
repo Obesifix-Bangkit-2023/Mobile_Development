@@ -12,11 +12,17 @@ import org.obesifix.obesifix.ui.home.HomeRepository
 import org.obesifix.obesifix.ui.home.list.ListRepository
 import org.obesifix.obesifix.ui.login.LoginRepository
 import org.obesifix.obesifix.ui.preference.PreferenceRepository
+import org.obesifix.obesifix.ui.profile.ProfileRepository
 
 object Injection {
     fun loginRepository(context: Context, userPreference: UserPreference):LoginRepository{
         return LoginRepository(context,userPreference)
     }
+
+    fun profileRepository(context: Context, userPreference: UserPreference):ProfileRepository{
+        return ProfileRepository(context,userPreference)
+    }
+
 
     fun preferenceRepository(context: Context, userPreference: UserPreference):PreferenceRepository{
         return PreferenceRepository(context,userPreference)

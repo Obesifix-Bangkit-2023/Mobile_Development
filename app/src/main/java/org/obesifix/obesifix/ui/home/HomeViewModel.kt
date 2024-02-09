@@ -9,12 +9,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel@Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
     val listItem = homeRepository.listItem
+    val userData = homeRepository.userDataResponse
     val isLoading = homeRepository.isLoading
 
     fun getRecommendation(token:String, id:String){
         viewModelScope.launch {
             homeRepository.getRecommendation(token,id)
         }
+    }
+
+    fun getUserData(token: String, id: String){
+        homeRepository.getUserData(token, id)
     }
 
 }

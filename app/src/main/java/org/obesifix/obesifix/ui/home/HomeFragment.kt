@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
@@ -35,7 +37,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +57,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        auth = Firebase.auth
 
         binding.tvSeeAllRecommendation.setOnClickListener {
             val intent = Intent(requireContext(), ListActivity::class.java)
@@ -74,48 +74,37 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
-        homeViewModel.listItem.observe(viewLifecycleOwner){items->
+        homeViewModel.listItem.observe(viewLifecycleOwner) { items ->
             val adapter = items?.let { ListRecommendationAdapter(it) }
             binding.innerRecyclerView.adapter = adapter
         }
 
-        val user: FirebaseUser? = auth.currentUser
-        val profileImageUrl: String? = user?.photoUrl?.toString()
-        profileImageUrl?.let {
-            Glide.with(this)
-                .load(it)
-                .into(binding.profileImg)
-        }
+        lifecycleScope.launch {
+            val token: String = userPreference.getAccessTokenUser().first()
+            val id: String = userPreference.getUserId().first()
+            Log.d("token home", "token home $token")
+            Log.d("id home", "id home $id")
+            homeViewModel.getUserData(token, id)
+            homeViewModel.userData.observe(viewLifecycleOwner) { user ->
 
-        val userName: String? = auth.currentUser?.displayName
-        binding.tvName.text = userName
+                val profileImageUrl: String? = user?.userData?.picture
+                profileImageUrl?.let {
+                    Glide.with(requireContext())
+                        .load(it)
+                        .into(binding.profileImg)
+                }
 
-        var token: String?
-        user?.getIdToken(true)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token
-                    if (token != null) {
-                        // Token retrieval successful
-                            val idFlow: Flow<String> = userPreference.getUserId()
-                            lifecycleScope.launchWhenStarted {
-                                idFlow.collect { id ->
-                                    Log.d("TOKEN", "id flow $token")
-                                    homeViewModel.getRecommendation(token!!, id)
-                                }
-                            }
-                    } else {
-                        // Token is null
-                        Log.d("TOKEN", "TOKEN IS NULL")
-                    }
-                } else {
-                    // Task failed
-                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
+                binding.tvName.text = user?.userData?.name
+
+                // Check if user data is available before calling getRecommendation
+                if (user != null) {
+                    homeViewModel.getRecommendation(token, id)
                 }
             }
+        }
     }
 
-    override fun onDestroyView() {
+        override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }

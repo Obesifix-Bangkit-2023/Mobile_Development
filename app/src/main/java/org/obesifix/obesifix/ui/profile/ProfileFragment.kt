@@ -1,8 +1,11 @@
 package org.obesifix.obesifix.ui.profile
 
+import android.app.Application
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +14,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -20,20 +24,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentProfileBinding
+import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.about.AboutActivity
 import org.obesifix.obesifix.ui.edit.EditActivity
+import org.obesifix.obesifix.ui.home.HomeViewModel
 import org.obesifix.obesifix.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class ProfileFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
@@ -45,31 +50,24 @@ class ProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         userPreference = UserPreference.getInstance(requireContext().dataStore)
-        auth = FirebaseAuth.getInstance()
-
-        val user: FirebaseUser? = auth.currentUser
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-
-        val profileImageUrl: String? = user?.photoUrl?.toString()
-        profileImageUrl?.let {
-            Glide.with(this)
-                .load(it)
-                .transform(CircleCrop())
-                .into(binding.profileImg)
-        }
-
-        val userName: String? = auth.currentUser?.displayName
-        binding.tvUsername.text = userName
-
-        val email: String? = auth.currentUser?.email
-        binding.tvEmail.text = email
+        val application = requireContext().applicationContext as Application
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore), application)
+        )[ProfileViewModel::class.java]
+//        val profileImageUrl: String? = user?.photoUrl?.toString()
+//        profileImageUrl?.let {
+//            Glide.with(this)
+//                .load(it)
+//                .transform(CircleCrop())
+//                .into(binding.profileImg)
+//        }
+//
+//        val userName: String? = auth.currentUser?.displayName
+//        binding.tvUsername.text = userName
+//
+//        val email: String? = auth.currentUser?.email
+//        binding.tvEmail.text = email
 
         binding.logout.setOnClickListener {
             logoutUser()
@@ -89,34 +87,34 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logoutUser() {
-        // Build the alert dialog
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Logout")
         alertDialogBuilder.setMessage("Are you sure you want to logout?")
 
         alertDialogBuilder.setPositiveButton("Yes") { dialogInterface, _ ->
-            // User clicked "Yes," perform logout
-            auth.signOut()
-            googleSignInClient.signOut()
-            viewLifecycleOwner.lifecycleScope.launch {
-                // Perform logout within a coroutine
-                withContext(Dispatchers.IO) {
-                    userPreference.logout()
+            lifecycleScope.launch {
+                val token: String = userPreference.getAccessTokenUser().first()
+                Log.d(ContentValues.TAG, "token profile: $token")
+                viewModel.requestLogout(token = token)
+                viewModel.isNavigate.observe(viewLifecycleOwner) { shouldNavigate ->
+                    if (shouldNavigate) {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            withContext(Dispatchers.IO) {
+                                userPreference.logout()
+                            }
+                        }
+                        startActivity(Intent(context, LoginActivity::class.java))
+                        requireActivity().finish()
+                        dialogInterface.dismiss()
+                    }
                 }
             }
-
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-            dialogInterface.dismiss()
         }
 
         alertDialogBuilder.setNegativeButton("No") { dialogInterface, _ ->
-            // User clicked "No," dismiss the dialog
             dialogInterface.dismiss()
         }
 
-        // Show the alert dialog
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }

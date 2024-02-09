@@ -6,6 +6,7 @@ import org.obesifix.obesifix.network.payload.RegisterBody
 import org.obesifix.obesifix.network.payload.LoginBody
 import org.obesifix.obesifix.network.response.EditResponse
 import org.obesifix.obesifix.network.response.LoginResponse
+import org.obesifix.obesifix.network.response.LogoutResponse
 import org.obesifix.obesifix.network.response.PredictionResponse
 import org.obesifix.obesifix.network.response.RecommendationResponse
 import org.obesifix.obesifix.network.response.RegisterResponse
@@ -27,13 +28,13 @@ interface ApiService {
 
     @GET("user/{userId}")  //finish
     fun getDataUser(
-        @Header("Authorization") token: String,
+        @Header("X-API-TOKEN") token: String,
         @Path("userId") userId: String? = null,
     ): Call<UserResponse>
 
     @PUT("user/{userId}") // finish
     fun editDataUser(
-        @Header("Authorization") token: String,
+        @Header("X-API-TOKEN") token: String,
         @Body editBody: EditBody,
         @Path("userId") userId: String? = null,
     ): Call<EditResponse>
@@ -41,13 +42,18 @@ interface ApiService {
     @Multipart
     @POST("prediction") // finish
     fun predictFood(
-        @Header("Authorization") token: String,
+        @Header("X-API-TOKEN") token: String,
         @Part file: MultipartBody.Part
     ): Call<PredictionResponse>
 
     @GET("recomendation/{userId}") //finish
     suspend fun getRecommendationUser(
-        @Header("Authorization") token: String,
+        @Header("X-API-TOKEN") token: String,
         @Path("userId") userId: String? = null,
     ): RecommendationResponse
+
+    @DELETE("logout")
+    fun logout(
+        @Header("X-API-TOKEN") token: String,
+    ) : Call<LogoutResponse>
 }

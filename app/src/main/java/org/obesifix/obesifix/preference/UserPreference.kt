@@ -33,6 +33,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[USERID_KEY] ?: ""
         }
     }
+    fun getAccessTokenUser(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[ACCESSTOKEN_KEY] ?: ""
+        }
+    }
 
     fun getUserLogin(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
@@ -43,6 +48,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     suspend fun logout() {
         dataStore.edit { preferences ->
             preferences[USERID_KEY] =""
+            preferences[ACCESSTOKEN_KEY] = ""
+            preferences[REFRESHTOKEN_KEY] = ""
             preferences[STATE_KEY] = false
         }
     }
