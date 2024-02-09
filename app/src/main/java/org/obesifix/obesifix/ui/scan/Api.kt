@@ -37,7 +37,7 @@ interface Api {
     @Multipart
     @POST("prediction")
     fun predictFood(
-        @Header("Authorization") token: String,
+        @Header("X-API-TOKEN") token: String,
         @Part image: MultipartBody.Part
     ): Call<PredictionResponse>
 

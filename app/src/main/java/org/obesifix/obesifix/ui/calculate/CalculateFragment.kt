@@ -19,12 +19,11 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
@@ -41,7 +40,6 @@ class CalculateFragment : Fragment() {
     private var _binding: FragmentCalculateBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreference: UserPreference
-    private lateinit var auth: FirebaseAuth
     private val calendar = Calendar.getInstance()
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
@@ -69,7 +67,7 @@ class CalculateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val application = requireContext().applicationContext as Application
         calculateViewModel = ViewModelProvider(
             this,
@@ -88,7 +86,6 @@ class CalculateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCalculateBinding.bind(view)
-        auth = Firebase.auth
         setupAction()
     }
 
@@ -97,10 +94,6 @@ class CalculateFragment : Fragment() {
             binding.tvStatusDesc.text = status
         }
 
-        val user: FirebaseUser? = auth.currentUser
-        val userName: String? = auth.currentUser?.displayName
-        var token: String?
-
         binding.cardView3.visibility = View.GONE
 
         formattedDate = dateFormat.format(currentDate)
@@ -108,42 +101,30 @@ class CalculateFragment : Fragment() {
 
         binding.tvDate.setOnClickListener { showDatePickerDialog() }
 
-        user?.getIdToken(true)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token
-                    if (token != null) {
-                        // Token retrieval successful
-                        val idFlow: Flow<String> = userPreference.getUserId()
-                        lifecycleScope.launchWhenStarted {
-                            idFlow.collect { id ->
-                                calculateViewModel.getDataNutritionByIdAndDate(id, formattedDate)
-                                calculateViewModel.getUserData(token!!, id)
+        lifecycleScope.launch {
+            val token: String = userPreference.getAccessTokenUser().first()
+            val id: String = userPreference.getUserId().first()
+            Log.d("token home", "token home $token")
+            Log.d("id home", "id home $id")
 
-                                Log.d(
-                                    "Date",
-                                    "sd:$selectedDate, cd:$currentDate"
-                                )
-                                if (selectedDate.equals(currentDate)) {
-                                    currentDateData()
-                                }
-                            }
-                        }
-                    } else {
-                        // Token is null
-                        Log.d("TOKEN", "TOKEN IS NULL")
-                    }
-                } else {
-                    // Task failed
-                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
-                }
+            calculateViewModel.getDataNutritionByIdAndDate(id, formattedDate)
+            calculateViewModel.getUserData(token, id)
+            calculateViewModel.userData.observe(viewLifecycleOwner){ userData ->
+                binding.tvNameDesc.text = userData.userData?.name
             }
+            Log.d(
+                "Date",
+                "sd:$selectedDate, cd:$currentDate"
+            )
+            if (selectedDate.equals(currentDate)) {
+                currentDateData()
+            }
+        }
 
         calculateViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        binding.tvNameDesc.text = "$userName"
 
         val bottomNavigationView =
             requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
@@ -172,9 +153,14 @@ class CalculateFragment : Fragment() {
                 formattedDate = selectedDate.let { dateFormat.format(it) }.toString()
 
                 binding.tvDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
-                val userid = auth.currentUser?.uid
-                if (userid != null) {
-                    calculateViewModel.getDataNutritionByIdAndDate(userid, formattedDate)
+
+                lifecycleScope.launch {
+                    val token: String = userPreference.getAccessTokenUser().first()
+                    val id: String = userPreference.getUserId().first()
+                    Log.d("token home", "token home $token")
+                    Log.d("id home", "id home $id")
+
+                    calculateViewModel.getDataNutritionByIdAndDate(id, formattedDate)
                     if (selectedDate.equals(currentDate)) {
                         currentDateData()
                     } else {

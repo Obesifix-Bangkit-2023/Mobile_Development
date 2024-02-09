@@ -12,7 +12,7 @@ import javax.inject.Inject
 class CalculateViewModel@Inject constructor(private val calculateRepository: CalculateRepository) : ViewModel() {
     val isLoading = calculateRepository.isLoading
     val status = calculateRepository.status
-
+    val userData = calculateRepository.userDataResponse
     private val nutritionData = MutableLiveData<NutritionData>()
     val nutritionLiveData: LiveData<NutritionData> = nutritionData
 

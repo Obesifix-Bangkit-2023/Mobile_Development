@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.ui.scan
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,13 +16,21 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import org.obesifix.obesifix.databinding.FragmentScanBinding
 import org.obesifix.obesifix.network.payload.PredictionRequestBody
 import org.obesifix.obesifix.network.response.PredictionResponse
+import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.detail.DetailScanFood
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +41,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
 
     companion object {
@@ -49,8 +58,7 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
 
     private val initialProgress = 0
 
-    private lateinit var auth: FirebaseAuth
-    private var currentUser: FirebaseUser? = null
+    private lateinit var userPreference: UserPreference
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,13 +66,12 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentScanBinding.inflate(inflater, container, false)
+        userPreference = UserPreference.getInstance(requireContext().dataStore)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        auth = FirebaseAuth.getInstance()
 
         binding.apply {
             btnCamera.setOnClickListener { askCameraPermission() }
@@ -95,77 +102,82 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
         binding.progressBar.progress = 0
         val body = PredictionRequestBody(file, "image", this)
 
+        lifecycleScope.launch {
+            val token: String = userPreference.getAccessTokenUser().first()
+            val id: String = userPreference.getUserId().first()
+            Log.d("token home", "token home $token")
+            Log.d("id home", "id home $id")
+            val bearer = "Bearer $token"
+            Api().predictFood(
+                bearer,
+                MultipartBody.Part.createFormData("image", file.name, body)
+            ).enqueue(object : Callback<PredictionResponse> {
 
-        val user = FirebaseAuth.getInstance().currentUser
-        //retrieve id token
-        user?.getIdToken(true)?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val token = task.result?.token
-                if (token != null) {
-                    val bearer = "Bearer $token"
-                    Api().predictFood(
-                        bearer,
-                        MultipartBody.Part.createFormData("image", file.name, body)
-                    ).enqueue(object : Callback<PredictionResponse> {
+                override fun onResponse(
+                    call: Call<PredictionResponse>,
+                    response: Response<PredictionResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val predictionResponse = response.body()
+                        if (predictionResponse != null) {
+                            val foodData = predictionResponse.foodData
+                            if (foodData != null) {
+                                val nameFood = foodData.name
+                                val serving = foodData.serving
+                                val calorie = foodData.totalCal
+                                val fat = foodData.totalFat
+                                val protein = foodData.totalProtein
+                                val carbohydrate = foodData.totalCarb
+                                val description = foodData.description
 
-            override fun onResponse(
-                call: Call<PredictionResponse>,
-                response: Response<PredictionResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val predictionResponse = response.body()
-                    if (predictionResponse != null) {
-                        val foodData = predictionResponse.foodData
-                        if (foodData != null) {
-                            val nameFood = foodData.name
-                            val serving = foodData.serving
-                            val calorie = foodData.totalCal
-                            val fat = foodData.totalFat
-                            val protein = foodData.totalProtein
-                            val carbohydrate = foodData.totalCarb
-                            val description = foodData.description
+                                Log.d("upload", "name: $nameFood")
+                                Log.d("upload", "serving: $serving")
+                                Log.d("upload", "calorie: $calorie")
+                                Log.d("upload", "fat: $fat")
+                                Log.d("upload", "protein: $protein")
+                                Log.d("upload", "carbohydrate: $carbohydrate")
+                                Log.d("upload", "description: $description")
 
-                            Log.d("upload", "name: $nameFood")
-                            Log.d("upload", "serving: $serving")
-                            Log.d("upload", "calorie: $calorie")
-                            Log.d("upload", "fat: $fat")
-                            Log.d("upload", "protein: $protein")
-                            Log.d("upload", "carbohydrate: $carbohydrate")
-                            Log.d("upload", "description: $description")
-
-                            val intent =
-                                Intent(requireContext(), DetailScanFood::class.java).apply {
-                                    putExtra(DetailScanFood.EXTRA_IMAGE, selectedImage.toString())
-                                    putExtra(DetailScanFood.EXTRA_NAME_FOOD, nameFood)
-                                    putExtra(DetailScanFood.EXTRA_SERVING, serving)
-                                    putExtra(DetailScanFood.EXTRA_CALORIE, calorie)
-                                    putExtra(DetailScanFood.EXTRA_FAT, fat)
-                                    putExtra(DetailScanFood.EXTRA_PROTEIN, protein)
-                                    putExtra(DetailScanFood.EXTRA_CARBOHYDRATE, carbohydrate)
-                                    putExtra(DetailScanFood.EXTRA_DESCRIPTION, description)
-                                }
-                            startActivity(intent)
+                                val intent =
+                                    Intent(requireContext(), DetailScanFood::class.java).apply {
+                                        putExtra(DetailScanFood.EXTRA_IMAGE, selectedImage.toString())
+                                        putExtra(DetailScanFood.EXTRA_NAME_FOOD, nameFood)
+                                        putExtra(DetailScanFood.EXTRA_SERVING, serving)
+                                        putExtra(DetailScanFood.EXTRA_CALORIE, calorie)
+                                        putExtra(DetailScanFood.EXTRA_FAT, fat)
+                                        putExtra(DetailScanFood.EXTRA_PROTEIN, protein)
+                                        putExtra(DetailScanFood.EXTRA_CARBOHYDRATE, carbohydrate)
+                                        putExtra(DetailScanFood.EXTRA_DESCRIPTION, description)
+                                    }
+                                startActivity(intent)
+                            }
                         }
+                    } else {
+                        Log.d("upload", "Error: ${response.code()}")
                     }
-                } else {
-                    Log.d("upload", "Error: ${response.code()}")
                 }
-            }
 
-                        override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
-                            binding.root.snackbar(t.message!!)
-                            Log.d("upload", "onFailure: ${t.message}")
-                        }
-                    })
-                } else {
-                    // Token is null
-                    Log.d("TOKEN", "TOKEN IS NULL")
+                override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
+                    binding.root.snackbar(t.message!!)
+                    Log.d("upload", "onFailure: ${t.message}")
                 }
-            } else {
-                // Task failed
-                Log.d("TOKEN", "FAILED TO RETRIEVE TOKEN")
-            }
+            })
         }
+
+//        user?.getIdToken(true)?.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                val token = task.result?.token
+//                if (token != null) {
+//
+//                } else {
+//                    // Token is null
+//                    Log.d("TOKEN", "TOKEN IS NULL")
+//                }
+//            } else {
+//                // Task failed
+//                Log.d("TOKEN", "FAILED TO RETRIEVE TOKEN")
+//            }
+//        }
         binding.progressBar.progress = 100
     }
 
