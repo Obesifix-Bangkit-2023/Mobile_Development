@@ -16,11 +16,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.adapter.LoadingStateAdapter
 import org.obesifix.obesifix.adapter.RecommendationListAdapter
@@ -33,13 +36,10 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class ListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListBinding
-    private lateinit var auth: FirebaseAuth
     private lateinit var listViewModel: ListViewModel
     private lateinit var adapter: RecommendationListAdapter
     private lateinit var userPreference: UserPreference
     private lateinit var token: String
-    private lateinit var user:FirebaseUser
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,6 @@ class ListActivity : AppCompatActivity() {
                 )
             )[ListViewModel::class.java]
         userPreference = UserPreference.getInstance(dataStore)
-        auth = Firebase.auth
         supportActionBar?.hide()
         setupAction()
     }
@@ -107,28 +106,17 @@ class ListActivity : AppCompatActivity() {
         binding.rvListRecommendation.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { adapter.retry() }
         )
-        user = auth.currentUser!!
 
-        user?.getIdToken(true)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token.toString()
-                    // Token retrieval successful
-                    val idFlow: Flow<String> = userPreference.getUserId()
-                    Log.d("id flow list", "list act $idFlow")
-                    lifecycleScope.launchWhenStarted {
-                        idFlow.collect { id ->
-                            listViewModel.getRecommendation(token, id)
-                                .observe(this@ListActivity) { pagingData ->
-                                    adapter.submitData(lifecycle, pagingData)
-                                }
-                        }
-                    }
-                } else {
-                    // Task failed
-                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
-                }
+        lifecycleScope.launch {
+            val token: String = userPreference.getAccessTokenUser().first()
+            val id: String = userPreference.getUserId().first()
+            Log.d("token home", "token home $token")
+            Log.d("id home", "id home $id")
+
+            listViewModel.getRecommendation(token,id).observe(this@ListActivity){
+                pagingData -> adapter.submitData(lifecycle, pagingData)
             }
+        }
 
 
     }
@@ -141,25 +129,17 @@ class ListActivity : AppCompatActivity() {
         // You can perform your search logic here and update the adapter with the filtered results
         // Make sure to use the appropriate method from your ViewModel to fetch the filtered data
         if (query != null) {
-            user?.getIdToken(true)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        token = task.result?.token.toString()
-                        // Token retrieval successful
-                        val idFlow: Flow<String> = userPreference.getUserId()
-                        lifecycleScope.launchWhenStarted {
-                            idFlow.collect { id ->
-                                listViewModel.getFilteredRecommendation(token, id, query)
+            lifecycleScope.launch {
+                val token: String = userPreference.getAccessTokenUser().first()
+                val id: String = userPreference.getUserId().first()
+                Log.d("token home", "token home $token")
+                Log.d("id home", "id home $id")
+
+                listViewModel.getFilteredRecommendation(token, id, query)
                                     .observe(this@ListActivity) { pagingData ->
                                         adapter.submitData(lifecycle, pagingData)
                                     }
-                            }
-                        }
-                    } else {
-                        // Task failed
-                        Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
-                    }
-                }
+            }
         }
     }
 }

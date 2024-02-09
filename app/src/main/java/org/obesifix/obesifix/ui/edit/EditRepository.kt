@@ -36,7 +36,7 @@ class EditRepository@Inject constructor(private val context: Context){
                 } else {
                     if (response.code() == 403) {
                         // Handle 403 status code (Unauthorized/Session Expired)
-                        Toast.makeText(context, "Response is success: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                         Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
