@@ -1,6 +1,8 @@
 package org.obesifix.obesifix.ui.edit
 
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,11 +21,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.databinding.ActivityEditBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.network.payload.EditBody
 import org.obesifix.obesifix.preference.UserPreference
+import org.obesifix.obesifix.ui.login.LoginActivity
 import org.obesifix.obesifix.ui.preference.FoodOptions
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -33,11 +40,11 @@ class EditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditBinding
     private lateinit var editViewModel: EditViewModel
     private var activitySelectedOption: String = ""
-    private lateinit var auth: FirebaseAuth
     private lateinit var userPreference: UserPreference
     private var selectedFoodItems:String = ""
 
     //text watcher
+    private var isNameEmpty = false
     private var isAgeEmpty = false
     private var isWeightEmpty = false
     private var isHeightEmpty = false
@@ -61,7 +68,6 @@ class EditActivity : AppCompatActivity() {
             )[EditViewModel::class.java]
         userPreference = UserPreference.getInstance(applicationContext.dataStore)
 
-        auth = Firebase.auth
         setupAction()
     }
 
@@ -101,6 +107,8 @@ class EditActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             onBackPressed()
         }
+
+        binding.nameEditText.addTextChangedListener(textWatcher)
         binding.ageEditText.addTextChangedListener(textWatcher)
         binding.weightEditText.addTextChangedListener(textWatcher)
         binding.heightEditText.addTextChangedListener(textWatcher)
@@ -136,20 +144,9 @@ class EditActivity : AppCompatActivity() {
             updateButtonState()
         }
 
-        val user: FirebaseUser? = auth.currentUser
-        var token: String? = null
-        user?.getIdToken(false)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token
-                } else {
-                    // Task failed
-                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
-                }
-            }
 
         binding.submitButton.setOnClickListener {
-            val name = user?.displayName
+            val name = binding.nameEditText.text.toString()
             val age = binding.ageEditText.text.toString().toInt()
             val heightCM = binding.heightEditText.text.toString().toFloat()
             val heightM = heightCM.toString().toFloat().div(100)
@@ -157,30 +154,22 @@ class EditActivity : AppCompatActivity() {
             val activityLevel = activitySelectedOption
             val selectedFoodItemsArray = selectedFoodItems
             Log.d("sfood", "$selectedFoodItemsArray")
-            val editData = name?.let { name ->
+            val editData =
                 EditBody(
                     name, age, heightM, weight, activityLevel, selectedFoodItemsArray
                 )
-            }
 
-            //if token null then no action
-            val idFlow: Flow<String> = userPreference.getUserId()
-            lifecycleScope.launchWhenStarted{
-                idFlow.collect { id ->
-                    Log.d("id", "$id")
-                    token?.let { it1 ->
-                        if (editData != null) {
-                            editViewModel.requestUpdateProfile(it1, editData, id)
-                        }
-                    }
-                }
+            lifecycleScope.launch {
+                val token: String = userPreference.getAccessTokenUser().first()
+                val id: String = userPreference.getUserId().first()
+                Log.d(ContentValues.TAG, "token profile: $token")
+                editViewModel.requestUpdateProfile(token = token, editBody = editData, userId = id)
             }
 
 
-            Log.d("TOKEN", "$token")
             editViewModel.editResponse.observe(this) { response ->
-                if (response.status?.equals(true) == true) {
-                    onBackPressed()
+                if (response.statusCode == 200) {
+                   finish()
                 }
             }
         }
@@ -189,6 +178,7 @@ class EditActivity : AppCompatActivity() {
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
+            isNameEmpty = binding.nameEditText.text.isNullOrBlank()
             isAgeEmpty = binding.ageEditText.text.isNullOrBlank()
             isWeightEmpty = binding.weightEditText.text.isNullOrBlank()
             isHeightEmpty = binding.heightEditText.text.isNullOrBlank()
@@ -204,7 +194,7 @@ class EditActivity : AppCompatActivity() {
 
     private fun updateButtonState() {
         binding.submitButton.isEnabled = !isAgeEmpty && !isWeightEmpty && !isHeightEmpty
-                && !isActivitySelected && !isFoodItemsSelected
+                && !isActivitySelected && !isFoodItemsSelected && !isNameEmpty
     }
 
     private fun showLoading(isLoading: Boolean) {

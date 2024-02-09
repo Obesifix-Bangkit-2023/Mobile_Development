@@ -55,6 +55,7 @@ class ProfileFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), UserPreference.getInstance(requireContext().dataStore), application)
         )[ProfileViewModel::class.java]
+
 //        val profileImageUrl: String? = user?.photoUrl?.toString()
 //        profileImageUrl?.let {
 //            Glide.with(this)
