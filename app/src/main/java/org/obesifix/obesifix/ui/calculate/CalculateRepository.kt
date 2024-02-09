@@ -18,6 +18,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 import kotlin.math.pow
+import java.math.BigDecimal
+import java.math.BigInteger
+
+
 
 class CalculateRepository@Inject constructor(private val context: Context, application: Application) {
     private val _isLoading = MutableLiveData(false)
@@ -77,28 +81,26 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
         })
     }
 
-    fun getUserStatus(){
-        val weight = _userDataResponse.value?.userData?.weight
-        val height = _userDataResponse.value?.userData?.height
-        val powHeight = height?.toDouble()?.pow(2.0)?.toFloat()
+    fun getUserStatus() {
+        val weight = _userDataResponse.value?.userData?.weight ?: 0.0
+        val height = _userDataResponse.value?.userData?.height ?: 0.0
+        val powHeight = height.pow(2.0)
 
-        val status = powHeight?.let { weight?.div(it) ?: 0f }
+        val status = if (powHeight != 0.0) weight / powHeight else 0.0
 
-        if (status != null) {
-            if(status < 18.5){
-                _status.value = "Underweight"
-            }else if(status in 18.5..24.9){
-                _status.value = "Normal"
-            }else if(status in 25.0..29.9){
-                _status.value = "Overweight"
-            }else if(status >= 30){
-                _status.value = "Obese"
-            }else{
-                _status.value = "Cannot Recognized"
-            }
+        val scaledStatus = (status * 10).toInt()
+
+        _status.value = when {
+            scaledStatus < 185 -> "Underweight"
+            scaledStatus in 185..249 -> "Normal"
+            scaledStatus in 250..299 -> "Overweight"
+            scaledStatus >= 300 -> "Obese"
+            else -> "Cannot Recognize"
         }
+
         Log.d(ContentValues.TAG, "getUserStatus ${_status.value}")
     }
+
 
     fun getCalNeed(){
         if(_status.value.equals("Underweight") || _status.value.equals("Normal")){

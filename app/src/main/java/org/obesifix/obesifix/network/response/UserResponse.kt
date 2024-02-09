@@ -35,7 +35,7 @@ data class UserData(
 	val name: String? = null,
 
 	@field:SerializedName("weight")
-	val weight: Int? = null,
+	val weight: Double? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
@@ -53,5 +53,5 @@ data class UserData(
 	val age: Int? = null,
 
 	@field:SerializedName("height")
-	val height: Int? = null
+	val height: Double? = null
 )

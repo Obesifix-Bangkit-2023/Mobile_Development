@@ -37,7 +37,7 @@ class ProfileRepository@Inject constructor(private val context: Context, private
                 } else {
                     if (response.code() == 403) {
                         // Handle 403 status code (Unauthorized/Session Expired)
-                        Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Response is success: ${response.message()}", Toast.LENGTH_SHORT).show()
                         _navigateToLogin.value = true
                     } else {
                         _navigateToLogin.value = false
