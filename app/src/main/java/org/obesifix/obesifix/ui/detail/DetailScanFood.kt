@@ -10,7 +10,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.obesifix.obesifix.MainActivity
 import org.obesifix.obesifix.databinding.ActivityDetailScanFoodBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
@@ -36,7 +39,7 @@ class DetailScanFood : AppCompatActivity() {
 
     private var data: FoodListItem? = null
     private lateinit var scanViewModel: ScanViewModel
-    private lateinit var auth: FirebaseAuth
+    private lateinit var userPreference: UserPreference
     private lateinit var binding: ActivityDetailScanFoodBinding
     val decimalFormat = DecimalFormat("#.##")
     val calendar = Calendar.getInstance()
@@ -48,15 +51,13 @@ class DetailScanFood : AppCompatActivity() {
         supportActionBar?.hide()
         binding = ActivityDetailScanFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        userPreference = UserPreference.getInstance(dataStore)
         binding.backButton.setOnClickListener { onBackPressed() }
-
         scanViewModel =
             ViewModelProvider(this,
                 ViewModelFactory(applicationContext, UserPreference.getInstance(applicationContext.dataStore), application)
             )[ScanViewModel::class.java]
-        auth = FirebaseAuth.getInstance()
-        val userid = auth.currentUser?.uid
+
 
         val image = intent.getStringExtra(EXTRA_IMAGE)
 
@@ -128,8 +129,9 @@ class DetailScanFood : AppCompatActivity() {
             data = FoodListItem(image)
             Log.d("DATA PARCELDCT", "${data?.calorie}, ${data?.image}")
 
-            if (userid != null && calculateCalorie != null && calculateFat != null && calculateProtein != null && calculateCarbo != null && nameFood != null) {
-                scanViewModel.addNutrition(userid,nameFood,calculateCalorie,calculateFat,calculateProtein,calculateCarbo,currentDate)
+            lifecycleScope.launch {
+                val id: String = userPreference.getUserId().first()
+                scanViewModel.addNutrition(id,nameFood,calculateCalorie,calculateFat,calculateProtein,calculateCarbo,currentDate)
                 Log.d("DB DETAIL", "INSIDE")
             }
 

@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.obesifix.obesifix.adapter.LoadingStateAdapter
 import org.obesifix.obesifix.adapter.history.HistoryAdapter
@@ -33,7 +34,7 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.OnRemoveClickListene
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var adapter: HistoryAdapter
     private lateinit var userPreference: UserPreference
-    private lateinit var auth: FirebaseAuth
+
     private val calendar = Calendar.getInstance()
 
     //current Date
@@ -62,7 +63,7 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.OnRemoveClickListene
         adapter = HistoryAdapter(historyViewModel, this)
         adapter.onRemoveClickListener = this
         userPreference = UserPreference.getInstance(dataStore)
-        auth = Firebase.auth
+
         setupAction()
     }
 
@@ -84,35 +85,15 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.OnRemoveClickListene
         val idFlow = userPreference.getUserId().toString()
         Log.d("id", "idFlow Inside setupAction")
 
-        val user: FirebaseUser? = auth.currentUser
-        var token: String?
-
-        user?.getIdToken(true)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    token = task.result?.token
-                    if (token != null) {
-                        // Token retrieval successful
-                        val idFlow: Flow<String> = userPreference.getUserId()
-                        lifecycleScope.launchWhenStarted {
-                            idFlow.collect { id ->
-                                historyViewModel.getListNutritionByIdAndDate(id, formattedDate)
-                                    .observe(this@HistoryActivity) {
-                                        lifecycleScope.launch {
-                                            adapter.submitData(it)
-                                        }
-                                    }
-                            }
-                        }
-                    } else {
-                        // Token is null
-                        Log.d("TOKEN", "TOKEN IS NULL")
+        lifecycleScope.launch {
+            val id: String = userPreference.getUserId().first()
+                historyViewModel.getListNutritionByIdAndDate(id, formattedDate)
+                    .observe(this@HistoryActivity) {
+                    lifecycleScope.launch {
+                        adapter.submitData(it)
                     }
-                } else {
-                    // Task failed
-                    Log.d("TOKEN", "FAILED TO CONNECT TO FIREBASE CLASS")
-                }
             }
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
