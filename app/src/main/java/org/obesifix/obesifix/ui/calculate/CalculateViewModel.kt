@@ -15,6 +15,7 @@ class CalculateViewModel@Inject constructor(private val calculateRepository: Cal
     val userData = calculateRepository.userDataResponse
     private val nutritionData = MutableLiveData<NutritionData>()
     val nutritionLiveData: LiveData<NutritionData> = nutritionData
+    val isNavigate = calculateRepository.navigateToLogin
 
     init {
         calculateRepository.calNeed.observeForever {

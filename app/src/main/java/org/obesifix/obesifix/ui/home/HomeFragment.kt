@@ -22,13 +22,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.databinding.FragmentHomeBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.home.list.ListActivity
+import org.obesifix.obesifix.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class HomeFragment : Fragment() {
@@ -101,6 +104,18 @@ class HomeFragment : Fragment() {
                 // Check if user data is available before calling getRecommendation
                 if (user != null) {
                     homeViewModel.getRecommendation(token, id)
+                }
+            }
+
+            homeViewModel.isNavigate.observe(viewLifecycleOwner) { shouldNavigate ->
+                if (shouldNavigate) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            userPreference.logout()
+                        }
+                    }
+                    startActivity(Intent(context, LoginActivity::class.java))
+                    requireActivity().finish()
                 }
             }
         }

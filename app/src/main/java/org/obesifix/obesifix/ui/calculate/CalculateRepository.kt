@@ -48,6 +48,9 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
     private var nutritionDao: NutritionDao?
     private var nutritionDb: NutritionRoomDatabase?
 
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean> = _navigateToLogin
+
     init{
         nutritionDb = NutritionRoomDatabase.getDatabase(application)
         nutritionDao = nutritionDb?.nutritionDao()
@@ -67,13 +70,20 @@ class CalculateRepository@Inject constructor(private val context: Context, appli
                     getProteinNeed()
                     getFatNeed()
                 }else{
-                    Toast.makeText(context, context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
-                    Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
+                    if (response.code() == 403) {
+                        Toast.makeText(context, "Unauthorized : ${response.message()}", Toast.LENGTH_SHORT).show()
+                        _navigateToLogin.value = true
+                    } else {
+                        _navigateToLogin.value = false
+                        Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
+                    }
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
+                _navigateToLogin.value = false
                 Toast.makeText(context,  context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
                 Log.d(ContentValues.TAG, "Request get user data is Failed: ${t.message}")
             }

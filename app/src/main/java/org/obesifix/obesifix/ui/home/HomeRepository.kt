@@ -31,6 +31,9 @@ class HomeRepository@Inject constructor(private val context: Context, private va
     private val _userDataResponse = MutableLiveData<UserResponse>()
     val userDataResponse = _userDataResponse
 
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean> = _navigateToLogin
+
     suspend fun getRecommendation(token:String, id:String){
         _isLoading.value = true
         try{
@@ -79,13 +82,20 @@ class HomeRepository@Inject constructor(private val context: Context, private va
                     }
                     Toast.makeText(context, "Response is success ${response.message()}", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(context, "Response is failed ${response.message()}", Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG, "Response is failed ${response.message()}")
+                    if (response.code() == 403) {
+                        Toast.makeText(context, "Unauthorized : ${response.message()}", Toast.LENGTH_SHORT).show()
+                        _navigateToLogin.value = true
+                    } else {
+                        _navigateToLogin.value = false
+                        Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
+                    }
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
+                _navigateToLogin.value = false
                 Toast.makeText(context, "Response is failed ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.d(ContentValues.TAG, "Request get user data is Failed ${t.message}")
             }

@@ -22,6 +22,9 @@ class EditRepository@Inject constructor(private val context: Context){
     private val _editResponse = MutableLiveData<EditResponse>()
     val editResponse = _editResponse
 
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean> = _navigateToLogin
+
     fun requestUpdateProfile(token: String, editBody: EditBody, userId:String){
         _isLoading.value = true
         val client = ApiConfig.getApiService().editDataUser("Bearer $token",editBody,userId)
@@ -35,9 +38,10 @@ class EditRepository@Inject constructor(private val context: Context){
                     Toast.makeText(context,  context.getString(R.string.success_update), Toast.LENGTH_SHORT ).show()
                 } else {
                     if (response.code() == 403) {
-                        // Handle 403 status code (Unauthorized/Session Expired)
-                        Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Unauthorized : ${response.message()}", Toast.LENGTH_SHORT).show()
+                        _navigateToLogin.value = true
                     } else {
+                        _navigateToLogin.value = false
                         Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                         Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
                     }
@@ -46,6 +50,7 @@ class EditRepository@Inject constructor(private val context: Context){
 
             override fun onFailure(call: Call<EditResponse>, t: Throwable) {
                 _isLoading.value = false
+                _navigateToLogin.value = false
                 Toast.makeText(context,  context.getString(R.string.failed_update), Toast.LENGTH_SHORT ).show()
                 Log.d(ContentValues.TAG, "Request Login is Failed: ${t.message}")
             }

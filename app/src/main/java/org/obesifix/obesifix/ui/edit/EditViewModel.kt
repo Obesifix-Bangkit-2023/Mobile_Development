@@ -8,6 +8,7 @@ class EditViewModel@Inject constructor(private val editRepository: EditRepositor
     val isLoading = editRepository.isLoading
     val editResponse = editRepository.editResponse
 
+    val isNavigate = editRepository.navigateToLogin
     fun requestUpdateProfile(token: String, editBody: EditBody, userId:String){
         editRepository.requestUpdateProfile(token, editBody,userId)
     }

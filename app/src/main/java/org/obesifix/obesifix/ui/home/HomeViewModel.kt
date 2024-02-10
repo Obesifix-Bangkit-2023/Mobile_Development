@@ -11,7 +11,7 @@ class HomeViewModel@Inject constructor(private val homeRepository: HomeRepositor
     val listItem = homeRepository.listItem
     val userData = homeRepository.userDataResponse
     val isLoading = homeRepository.isLoading
-
+    val isNavigate = homeRepository.navigateToLogin
     fun getRecommendation(token:String, id:String){
         viewModelScope.launch {
             homeRepository.getRecommendation(token,id)

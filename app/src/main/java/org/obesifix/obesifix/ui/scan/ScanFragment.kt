@@ -1,6 +1,7 @@
 package org.obesifix.obesifix.ui.scan
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,14 +25,17 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import org.obesifix.obesifix.databinding.FragmentScanBinding
 import org.obesifix.obesifix.network.payload.PredictionRequestBody
 import org.obesifix.obesifix.network.response.PredictionResponse
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.detail.DetailScanFood
+import org.obesifix.obesifix.ui.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -153,7 +157,20 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
                             }
                         }
                     } else {
-                        Log.d("upload", "Error: ${response.code()}")
+                        if (response.code() == 403) {
+                            Toast.makeText(context, "Unauthorized : ${response.message()}", Toast.LENGTH_SHORT).show()
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                withContext(Dispatchers.IO) {
+                                    userPreference.logout()
+                                }
+                            }
+                            startActivity(Intent(context, LoginActivity::class.java))
+                            requireActivity().finish()
+                        } else {
+                            Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                            Log.d("upload", "Error: ${response.code()}")
+                        }
+
                     }
                 }
 
@@ -164,20 +181,6 @@ class ScanFragment : Fragment(), PredictionRequestBody.UploadCallback {
             })
         }
 
-//        user?.getIdToken(true)?.addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                val token = task.result?.token
-//                if (token != null) {
-//
-//                } else {
-//                    // Token is null
-//                    Log.d("TOKEN", "TOKEN IS NULL")
-//                }
-//            } else {
-//                // Task failed
-//                Log.d("TOKEN", "FAILED TO RETRIEVE TOKEN")
-//            }
-//        }
         binding.progressBar.progress = 100
     }
 

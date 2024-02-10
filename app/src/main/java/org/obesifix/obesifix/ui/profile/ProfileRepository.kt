@@ -29,15 +29,16 @@ class ProfileRepository@Inject constructor(private val context: Context, private
     val navigateToLogin: LiveData<Boolean> = _navigateToLogin
 
     fun requestLogout(token: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().logout(token = "Bearer $token")
         client.enqueue(object : Callback<LogoutResponse> {
             override fun onResponse(call: Call<LogoutResponse>, response: Response<LogoutResponse>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _navigateToLogin.value = response.body()?.statusCode == 200
                 } else {
                     if (response.code() == 403) {
-                        // Handle 403 status code (Unauthorized/Session Expired)
-                        Toast.makeText(context, "Response is success: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Unauthorized : ${response.message()}", Toast.LENGTH_SHORT).show()
                         _navigateToLogin.value = true
                     } else {
                         _navigateToLogin.value = false
@@ -48,6 +49,7 @@ class ProfileRepository@Inject constructor(private val context: Context, private
             }
 
             override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                _isLoading.value = false
                 _navigateToLogin.value = false
                 Toast.makeText(context, "Request Logout is Failed: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.d(ContentValues.TAG, "Request Logout is Failed: ${t.message}")

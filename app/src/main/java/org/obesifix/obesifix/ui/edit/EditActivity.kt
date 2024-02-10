@@ -164,6 +164,17 @@ class EditActivity : AppCompatActivity() {
                 val id: String = userPreference.getUserId().first()
                 Log.d(ContentValues.TAG, "token profile: $token")
                 editViewModel.requestUpdateProfile(token = token, editBody = editData, userId = id)
+                editViewModel.isNavigate.observe(this@EditActivity) { shouldNavigate ->
+                    if (shouldNavigate) {
+                        this@EditActivity.lifecycleScope.launch {
+                            withContext(Dispatchers.IO) {
+                                userPreference.logout()
+                            }
+                        }
+                        startActivity(Intent(this@EditActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                }
             }
 
 

@@ -21,14 +21,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.obesifix.obesifix.R
 import org.obesifix.obesifix.databinding.FragmentCalculateBinding
 import org.obesifix.obesifix.factory.ViewModelFactory
 import org.obesifix.obesifix.preference.UserPreference
 import org.obesifix.obesifix.ui.history.HistoryActivity
+import org.obesifix.obesifix.ui.login.LoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -112,6 +115,19 @@ class CalculateFragment : Fragment() {
             calculateViewModel.userData.observe(viewLifecycleOwner){ userData ->
                 binding.tvNameDesc.text = userData.userData?.name
             }
+
+            calculateViewModel.isNavigate.observe(viewLifecycleOwner) { shouldNavigate ->
+                if (shouldNavigate) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            userPreference.logout()
+                        }
+                    }
+                    startActivity(Intent(context, LoginActivity::class.java))
+                    requireActivity().finish()
+                }
+            }
+
             Log.d(
                 "Date",
                 "sd:$selectedDate, cd:$currentDate"
