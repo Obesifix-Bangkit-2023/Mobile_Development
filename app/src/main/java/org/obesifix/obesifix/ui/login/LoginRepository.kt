@@ -57,14 +57,14 @@ class LoginRepository@Inject constructor(private val context: Context, private v
                     }
                 } else {
                     _loginResponse.value = LoginResponse(status = false)
-                    Toast.makeText(context, context.getString(R.string.new_user), Toast.LENGTH_SHORT ).show()
+                    Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(context,  context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
-                Log.d(ContentValues.TAG, "Request Login is Failed: ${t.message}")
+                Toast.makeText(context, "Request is Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.d(ContentValues.TAG, "Request is Failed: ${t.message}")
             }
 
         })

@@ -150,10 +150,10 @@ class PreferenceActivity : AppCompatActivity() {
             preferenceViewModel.requestRegister(registerData)
             preferenceViewModel.preferenceResponse.observe(this){ response ->
                 if(response.statusCode == 201){
-                    Toast.makeText(this@PreferenceActivity, "Success to register. Try to login.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PreferenceActivity, "${response.message}", Toast.LENGTH_SHORT).show()
                     finish()
                 }else{
-                    Toast.makeText(this@PreferenceActivity, "Failed to register. Please try again.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PreferenceActivity, "${response.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

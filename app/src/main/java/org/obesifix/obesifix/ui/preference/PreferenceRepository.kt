@@ -33,18 +33,17 @@ class PreferenceRepository@Inject constructor(private val context: Context, priv
                 if(response.isSuccessful){
                     Log.d("REQ REG","SUCCESS")
                     _registerResponse.value = response.body()
-                    // Invoke the callback to navigate back
-                    Toast.makeText(context, context.getString(R.string.success_update), Toast.LENGTH_SHORT ).show()
+                    Log.d(ContentValues.TAG, "Response: ${response.message()}")
                 }else{
-                    Toast.makeText(context, context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
+                    Toast.makeText(context, "Response is failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, "Response is failed: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 _isLoading.value = false
-                Toast.makeText(context,  context.getString(R.string.failed_login), Toast.LENGTH_SHORT ).show()
-                Log.d(ContentValues.TAG, "Request Login is Failed: ${t.message}")
+                Toast.makeText(context, "Request is Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.d(ContentValues.TAG, "Request is Failed: ${t.message}")
             }
 
         })
