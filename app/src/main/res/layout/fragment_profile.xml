@@ -27,6 +27,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppinsbold"
             android:text="@string/name"
+            android:textColor="@color/grey"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/profile_img"
             app:layout_constraintStart_toStartOf="@+id/profile_img"
@@ -39,6 +40,7 @@
             android:fontFamily="@font/poppinsmedium"
             android:text="@string/email"
             android:textSize="16sp"
+            android:textColor="@color/grey"
             app:layout_constraintEnd_toEndOf="@+id/tv_username"
             app:layout_constraintStart_toStartOf="@+id/tv_username"
             app:layout_constraintTop_toBottomOf="@+id/tv_username" />

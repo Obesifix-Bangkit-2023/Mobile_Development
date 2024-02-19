@@ -66,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:layout_marginTop="70dp"
+                    android:textColor="@color/grey"
                     android:fontFamily="@font/poppinsmedium"
                     android:text="@string/motivation_card"
                     android:textSize="16sp" />
@@ -125,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinsbold"
+                        android:textColor="@color/grey"
                         android:text="@string/recommendation"
                         android:textSize="15sp" />
 

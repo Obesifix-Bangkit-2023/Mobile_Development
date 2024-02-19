@@ -88,6 +88,7 @@
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppinsregular"
                         android:text="@string/about_detail_text"
+                        android:textColor="@color/grey"
                         app:layout_constraintEnd_toEndOf="@+id/img_logo"
                         app:layout_constraintStart_toStartOf="@+id/img_logo"
                         app:layout_constraintTop_toBottomOf="@+id/img_logo" />
