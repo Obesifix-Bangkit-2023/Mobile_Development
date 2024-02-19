@@ -78,7 +78,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/passwordEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleAge"
             app:layout_constraintTop_toBottomOf="@+id/titleAge">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -101,7 +101,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ageEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleWeight"
             app:layout_constraintTop_toBottomOf="@+id/titleWeight">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -124,7 +124,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ageEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleHeight"
             app:layout_constraintTop_toBottomOf="@+id/titleHeight">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -145,7 +145,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppinsregular"
             app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
-            app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
+            app:layout_constraintStart_toStartOf="@+id/titleActivityLevel"
             app:layout_constraintTop_toBottomOf="@+id/titleActivityLevel" />
 
         <com.google.android.material.chip.ChipGroup
@@ -177,28 +177,28 @@
             android:id="@+id/titleAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/age"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/poppinsregular"
-            android:textStyle="bold"
+            android:text="@string/age"
             android:textColor="@color/grey"
-            app:layout_constraintEnd_toEndOf="@+id/radioGroupGender"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/radioGroupGender"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
 
         <TextView
             android:id="@+id/titleWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/weight"
+            android:layout_marginTop="14dp"
             android:fontFamily="@font/poppinsregular"
-            android:textStyle="bold"
+            android:text="@string/weight"
             android:textColor="@color/grey"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/ageEditTextLayout"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ageEditTextLayout"
+            app:layout_constraintHorizontal_bias="0.105"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ageEditTextLayout" />
 
         <TextView
@@ -206,13 +206,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/height"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:text="@string/height"
             android:textColor="@color/grey"
-            app:layout_constraintEnd_toEndOf="@+id/weightEditTextLayout"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/weightEditTextLayout"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/weightEditTextLayout" />
 
         <TextView
@@ -220,13 +220,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/activity_level"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:text="@string/activity_level"
             android:textColor="@color/grey"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/heightEditTextLayout"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/heightEditTextLayout"
+            app:layout_constraintHorizontal_bias="0.115"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/heightEditTextLayout" />
 
         <TextView
@@ -234,13 +234,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/eat_preference"
-            android:textStyle="bold"
             android:fontFamily="@font/poppinsregular"
+            android:text="@string/eat_preference"
             android:textColor="@color/grey"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/spinnerActivities"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/spinnerActivities"
+            app:layout_constraintHorizontal_bias="0.246"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerActivities" />
 
         <ProgressBar
